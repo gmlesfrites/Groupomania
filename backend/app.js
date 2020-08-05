@@ -14,14 +14,31 @@ const app = express();
 //Importation du package body-parser 
 const bodyParser = require('body-parser');
 
+// Importation du package mysql
+const database = require('mysql');
+
 //Importation du chemin des fichiers multimédia
 const path = require('path');
 
 //Importation des routes
-const discussionRoutes = require('./routes/discussion');
+const messageRoutes = require('./routes/message');
 const userRoutes = require('./routes/user');
 
-// TODO connexion à BDD
+// connexion à BDD
+const connectToDatabase = mysql.createConnection({
+  host: "localhost",
+  user: process.env.USERNAME,
+  password: process.env.PASSWORD
+});
+
+connectToDatabase.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  connectToDatabase.query("CREATE DATABASE mydb", function (err, result) {
+    if (err) throw err;
+    console.log("Database created");
+  });
+});
 
 //Middleware pour autorisation headers CORS
 app.use((req, res, next) => {
@@ -40,11 +57,11 @@ app.use(bodyParser.json());
 //Middleware gestion des cookies
 app.use(manageCookie);
 
-//TODO middleware pour l'accès aux ressources statiques 
-app.use('/images', express.static(path.join(__dirname, 'BDD')));
+//middleware pour l'accès aux ressources statiques 
+app.use('/sgbdr', express.static(path.join(__dirname, 'sgbdr')));
 
 //middleware utilisation des routes
-app.use('/api/discussion', discussionRoutes);
+app.use('/api/discussion', messageRoutes);
 app.use('/api/auth', userRoutes);
 
 //Export de l'app Express pour utilisation server.js

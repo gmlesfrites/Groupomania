@@ -1,1 +1,0 @@
-// TODO reste à faire en fonction de sequelize ??

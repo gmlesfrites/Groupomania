@@ -9,24 +9,24 @@ const authentication = require('../middleware/auth');
 const multer = require ('../middleware/multer-config');
 
 //nécessite le fichier post du dossier controllers
-const postControllers = require('../controllers/discussion');
+const messageControllers = require('../controllers/message');
 
 //route pour créer un post
-router.post('/', authentication, multer, postControllers.createPost);
+router.post('/', authentication, multer, messageControllers.createMessage);
 
 //route pour modifier les posts par id
-router.put('/:id', authentication, multer, postControllers.modifyPost);
+router.put('/:id', authentication, multer, messageControllers.modifyMessage);
 
 //route pour supprimer les posts par id
-router.delete('/:id', authentication, postControllers.deletePost);
+router.delete('/:id', authentication, messageControllers.deleteMessage);
 
 //route pour afficher les posts par id
-router.get('/:id', authentication, postControllers.createOnePost);
+router.get('/:id', authentication, messageControllers.createOneMessage);
 
 //route pour afficher toutes les sauces
-router.get('/', authentication, postControllers.createPosts);
+router.get('/', authentication, messageControllers.createMessages);
 
 //route pour 'like/dislike'
-router.post('/:id/like', authentication, postControllers.postLikeOrDislike);
+router.post('/:id/like', authentication, messageControllers.messageLikeOrDislike);
 
 module.exports = router;
