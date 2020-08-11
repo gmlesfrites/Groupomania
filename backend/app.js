@@ -1,5 +1,7 @@
 // Importation du package dotenv
-const dotenv = require('dotenv').config();
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './.env'});
 
 // Importation du package Helmet (sécurité recommandée par Express)
 const helmet = require ('helmet');
@@ -14,9 +16,6 @@ const app = express();
 //Importation du package body-parser 
 const bodyParser = require('body-parser');
 
-// Importation du package mysql
-const database = require('mysql');
-
 //Importation du chemin des fichiers multimédia
 const path = require('path');
 
@@ -24,20 +23,19 @@ const path = require('path');
 const messageRoutes = require('./routes/message');
 const userRoutes = require('./routes/user');
 
-// connexion à BDD
-const connectToDatabase = mysql.createConnection({
-  host: "localhost",
-  user: process.env.USERNAME,
-  password: process.env.PASSWORD
+const mysql      = require('mysql');
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: process.env.USER,
+    password: process.env.PASSWORD
 });
-
-connectToDatabase.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  connectToDatabase.query("CREATE DATABASE mydb", function (err, result) {
-    if (err) throw err;
-    console.log("Database created");
-  });
+ 
+connection.connect(function (error) {
+    if (error) {
+        console.log("connection to MySQL failed");
+        throw error
+    }
+    else { console.log('All is under controle =)'); }
 });
 
 //Middleware pour autorisation headers CORS

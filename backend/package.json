@@ -13,8 +13,10 @@
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
-    "mysql": "^2.18.1",
-    "password-validator": "^5.0.3"
+    "mysql": "github:mysqljs/mysql",
+    "mysql2": "^2.1.0",
+    "password-validator": "^5.0.3",
+    "sequelize": "^6.3.4"
   },
   "devDependencies": {},
   "scripts": {
