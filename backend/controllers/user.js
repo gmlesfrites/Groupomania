@@ -1,106 +1,163 @@
-console.log('banana controller message')
+// Importation du package dotenv
+const dotenv = require('dotenv');
 
+dotenv.config({ path: './.env'});
 
+//Importation du package bcrypt
+const bcrypt = require('bcrypt');
 
+// Immportation du package express-rate-limit qui va empêcher la force brute
+const expressRateLimit = require('express-rate-limit');
 
+//Importation du package jsonwebtoken
+const jwt = require('jsonwebtoken')
 
-//Importation de la configuration de connexion à mysql
-const conn = require('../mysql/mysqlConnect');
+//Importation du modèle User
+const models = require('../models');
 
-// // Importation du package dotenv
-// const dotenv = require('dotenv').config();
+// Middleware limitation de demandes (5 par minute)
+exports.limiter = expressRateLimit ({
+    windowMs: 60 * 1000,
+    max: 5
+})
 
-// //Importation du package bcrypt
-// const bcrypt = require('bcrypt');
+exports.signup = (req, res, next) => { //Inscription au site
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
 
-// // Immportation du package express-rate-limit qui va empêcher la force brute
-// const expressRateLimit = require('express-rate-limit');
+    if (username === null || email === null || password === null) {
+        return res.status(400).json({ message: 'Veuillez remplir tous les champs requis.'});
+    }
 
-// //Importation du package jsonwebtoken
-// const jwt = require('jsonwebtoken')
-
-// //Importation du modèle User
-// const User = require('../models/User');
-
-// exports.signup = (req, res, next) => {
-//     const user = req.body
+    if (username.length < 5 || firstName.length >= 15 ) {
+        return res.status(400).json({ message: "Votre nom d'utilisateur doit contenir entre 5 et 15 caractères ! "});
+    }
     
-//     bcrypt.hash(user.password, 10).then((hash) => {
-//         user.password = hash
-//         conn.query('INSERT INTO users SET ?', user, function (error, results, fields) {
-//       if (error) {
-//         return res.status(400).json(error.sqlMessage)
-//       } 
-//       return res.status(201).json({ message: 'Votre compte a bien été créé ! ' })
-//     })
-//   })
-// }
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ message: "Votre email est invalide !"});
+    }
 
-// exports.login = (req, res, next) => {
-//     const username = req.body.username
-//     const password = req.body.password
-    
-//     if (username && password) {
-//         conn.query(
-//             'SELECT * FROM database_development_groupomania.users WHERE username= ?',
-//             username,
-//             function (_error, results, _fields) {
-//                 if (results.length > 0) {
-//                 bcrypt.compare(password, results[0].password).then((valid) => {
-//                     if (!valid) {
-//                         res.status(401).json({ message: 'Utilisateur ou mot de passe inconnu' })
-//                     } else {
-//                         let privilege = ''
-//                         if (results[0].isAdmin === 1) {
-//                             privilege = 'admin'
-//                         } else {
-//                             privilege = 'member'
-//                         }
-//                         res.status(200).json({
-//                             userId: results[0].iduser,
-//                             username: results[0].username,
-//                             email: results[0].email,
-//                             privilege: privilege,
-//                             accessToken: jwt.sign({
-//                                 userId: results[0].iduser, 
-//                                 role: privilege
-//                             },
-//                             process.env.TOKEN,
-//                             { expiresIn: '12h' }
-//                         )})
-//                     }
-//                 })
-//                 } else {
-//                     res.status(401).json({ message: 'Utilisateur ou mot de passe inconnu' })
-//                 }
-//             }
-//         )
-//     } else {
-//         res.status(500).json({ message: "Entrez un nom d'utilisateur et un mot de passe" })
-//     }
-// }
+    if (!pwRegex.test(password)) {
+        return res.status(400).json({ message : 'Votre mot de passe doit contenir entre 4 et 8 caractères et contenir au moins 1 nombre'});
+    }
 
-// exports.getAllUsers = (req, res, next) => {
-//     conn.query(
-//         'SELECT iduser, username, isAdmin, comment, email FROM database_development_groupomania.users',
-//         function (error, results, fields) {
-//         if (error) {
-//             return res.status(400).json(error)
-//         }
-//       return res.status(200).json({ results })
-//     }
-//   )
-// }
+    models.User.findOne({ // Je vérifie que l'email n'existe pas déjà
+        attributes: ['email'],
+        where: { email: email }
+    })
+    .then((userFound) => {
+        if (!userFound) {
+            bcrypt.hash(password, 10, function(err, bcryptedPassword) { //Hashage du mot de passe
+                let newUser = models.User.create({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: bcryptedPassword,
+                    job: job,
+                    isAdmin: 0
+                })
+                .then(function(newUser) {
+                    return res.status(201).json({ 'userId': newUser});
+                })
+                .catch(function(err) {
+                    return res.status(500).json({ err });
+                });
+            });
+            
+        } else {
+            return res.status(403).json({ message : " L'utilisateur existe déjà !"});
+        }
+    })
+    .catch(error => res.status(500).json({ message: "Impossible de créer l'utilisateur.", error }));
+   
+};
 
-// exports.deleteUser = (req, res, next) => {
-//     conn.query(
-//         `DELETE FROM users WHERE iduser=${req.params.id}`,
-//         req.params.id,
-//         function (error, results, fields) {
-//         if (error) {
-//             return res.status(400).json(error)
-//         }
-//         return res.status(200).json({ message: 'Votre compte a été supprimé !' })
-//         }
-//     )
-// }
+exports.login = (req, res, next) => { // Connexion à un compte existant
+    let email = req.body.email;
+    let password = req.body.password;
+
+    if(email === null || password === null) {
+        return res.status(400).json({ message: 'Veuillez remplir tous les champs !'});
+    }
+
+    models.User.findOne({
+        where: { email: email }
+    })
+    .then((userFound) => {
+        if(userFound) {
+            bcrypt.compare(password, userFound.password, function(errBycrypt, resBycrypt) {
+                if(resBycrypt) {
+                    return res.status(200).json({
+                        'userId': userFound.id, 
+                        token: jwt.sign({userId: userFound.id }, 'RANDOM_TOKEN_SECRET', { expiresIn: '2h'})
+                    });
+                } else {
+                    return res.status(401).json({message: 'Mot de passe incorrect.'});
+                }
+            })
+
+        }else {
+            return res.status(404).json({message: "L'utilisateur n'existe pas dans la BD."});
+        }
+
+    })
+    .catch(error => res.status(500).json ({ error }));
+};
+
+exports.getProfile = (req, res, next) => { //Profil Utilisateur
+
+    models.User.findOne({
+        attributes: ['firstName', 'lastName', 'email', 'job'],
+        where: { id: req.params.id }
+    })
+    .then( User => {
+        if(User) {
+            return res.status(200).json({ User });
+        }else {
+            return res.status(400).json({ message: "Impossible de récupérer votre profil utilisateur" });
+        }
+    })
+    .catch(error => res.status(500).json({ error}));
+};
+
+exports.updateProfil = (req, res, next) => { // Modification du Profil Utilisateur
+    models.User.findOne({
+        attributes: ['job', 'id'],
+        where: { id: req.params.id}
+    })
+    .then((userFound) => {
+        if (userFound) {
+            userFound.update({
+               job:  req.body.job
+            })
+            .then(userFound => {
+                return res.status(200).json({ User: userFound, message: "Profil modifié !"})
+            })
+            .catch(error => res.status(500).json({ error, message: "Impossible de modifié votre profil."}));
+        } else {
+            return res.status(400).json({ message: "Utilisateur introuvable."});
+        }
+    })
+    .catch(error => res.status(500).json({ error, message: "Impossible de récupérer l'utilisateur"}));
+};
+
+exports.deleteUser = (req, res, next) => { // Suppression d'un compte utilisateur
+
+    models.User.findOne({
+        where: { id: req.params.id}
+    })
+    .then((userFoundForDelete) => {
+        if(userFoundForDelete) {
+            userFoundForDelete.destroy({
+                email: userFoundForDelete.email
+            })
+            .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
+            .catch( error => res.status(500).json({ error, message: "L'utilisateur n'a pas été supprimé."}));
+        }else {
+            return res.status(400).json({ message: "L'utilisateur n'a pas été trouvé, il ne peut être supprimé." });
+
+        }
+    })
+    .catch( error => res.status(500).json({ error, message: 'Impossible de supprimer le compte.'}));
+};
