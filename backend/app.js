@@ -32,10 +32,10 @@ const connection = mysql.createConnection({
  
 connection.connect(function (error) {
     if (error) {
-        console.log("connection to MySQL failed");
+        console.log("oh oh ! connection to MySQL failed");
         throw error
     }
-    else { console.log('All is under controle =)'); }
+    else { console.log('All is under controle :-)'); }
 });
 
 //Middleware pour autorisation headers CORS

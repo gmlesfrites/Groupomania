@@ -21,6 +21,8 @@ exports.signup = (req, res, next) => {
             //Création de l'utilisateur
             const user = new User({
                 email: req.body.email,
+                username:req.body.username,
+                comment:req.body.comment,
                 password: hash
             });
             //Sauvegarde dans la base de données
