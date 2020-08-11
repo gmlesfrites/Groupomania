@@ -21,22 +21,7 @@ const path = require('path');
 
 //Importation des routes
 const messageRoutes = require('./routes/message');
-const userRoutes = require('./routes/user');
-
-const mysql      = require('mysql');
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: process.env.USER,
-    password: process.env.PASSWORD
-});
- 
-connection.connect(function (error) {
-    if (error) {
-        console.log("oh oh ! connection to MySQL failed");
-        throw error
-    }
-    else { console.log('All is under controle :-)'); }
-});
+// const userRoutes = require('./routes/user');
 
 //Middleware pour autorisation headers CORS
 app.use((req, res, next) => {
@@ -56,11 +41,11 @@ app.use(bodyParser.json());
 app.use(manageCookie);
 
 //middleware pour l'accès aux ressources statiques 
-app.use('/sgbdr', express.static(path.join(__dirname, 'sgbdr')));
+app.use('/mysql', express.static(path.join(__dirname, 'mysql')));
 
 //middleware utilisation des routes
-app.use('/api/discussion', messageRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/message', messageRoutes);
+// app.use('/api/auth', userRoutes);
 
 //Export de l'app Express pour utilisation server.js
 module.exports = app;

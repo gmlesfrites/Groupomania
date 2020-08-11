@@ -3,18 +3,18 @@ const multer = require('multer');
 
 //gestion du type MIME des fichiers images 
 const MIME_TYPES = {
-    'sgbdr/jpg' : 'jpg',
-    'sgbdr/jpeg': 'jpg',
-    'sgbdr/png' : 'png',
-    'sgbdr/gif' : 'gif',
-    'sgbdr/mp4' : 'mp4',
-    'sgbdr/mov' : 'mov'
+    'mysql/jpg' : 'jpg',
+    'mysql/jpeg': 'jpg',
+    'mysql/png' : 'png',
+    'mysql/gif' : 'gif',
+    'mysql/mp4' : 'mp4',
+    'mysql/mov' : 'mov'
 };
 
 //Pour l'enregistrement des images
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, 'sgbdr');
+        callback(null, 'mysql');
     },
     //nom et extension du fichier + ajout timestamp pour creation d'un fichier daté
     filename: (req, file, callback) => {
@@ -32,4 +32,4 @@ const storage = multer.diskStorage({
     }
 });
 
-module.exports = multer({storage: storage}).single('sgbdr');
+module.exports = multer({storage: storage}).single('mysql');
