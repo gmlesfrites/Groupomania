@@ -13,10 +13,10 @@ const conn= mysql.createConnection({
  
 conn.connect(function (error) {
     if (error) {
-        console.log("connection to MySQL failed");
+        console.log("connexion to MySQL failed");
         throw error
     }
-    else { console.log('All is under control :-)'); }
+    else { console.log('Connexion to mySQL : All is under control :-)'); }
 });
 
 module.exports = conn;
