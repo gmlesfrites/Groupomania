@@ -12,7 +12,7 @@ const multer = require ('../middleware/multer-config');
 const messageControllers = require('../controllers/message');
 
 // //route pour créer un message
-// router.post('/', authentication, multer, messageControllers.createMessage);
+router.post('/create',  multer, messageControllers.createMessage);
 
 // //route pour modifier les messages par id
 // router.put('/:id', authentication, multer, messageControllers.modifyMessage);
@@ -24,7 +24,7 @@ const messageControllers = require('../controllers/message');
 // router.get('/:id', authentication, messageControllers.createOneMessage);
 
 // //route pour afficher toutes les messages
-// router.get('/', authentication, messageControllers.createMessages);
+router.get('/', authentication, messageControllers.getAllMessages);
 
 // //route pour 'like/dislike'
 // router.post('/:id/like', authentication, messageControllers.messageLikeOrDislike);

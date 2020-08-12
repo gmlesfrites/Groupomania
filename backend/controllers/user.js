@@ -14,9 +14,8 @@ const jwt = require('jsonwebtoken')
 //Connexion à la BDD
 const conn = require('../middleware/mysql')
 
-
-//Importation du modèle User
-const models = require('../models/User');
+// //Importation du modèle User
+// const models = require('../models/User');
 
 //Constante regex pour vérification de l'email
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -29,7 +28,6 @@ exports.signup = (req, res, next) => {
     const lastName = req.body.lastname;
     const email = req.body.email;
     const password = req.body.password;
-    const bio = req.body.bio;
 
     if (firstName === null || lastName === null || email === null || password === null) {
         return res.status(400).json({ message: 'Veuillez remplir tous les champs requis.'});
@@ -56,7 +54,7 @@ exports.signup = (req, res, next) => {
         user.password = hash
         conn.query('INSERT INTO users SET ?', user, (error,results,fields) => {
         if (error) {
-            return res.status(400).json(error.sqlMessage)
+            return res.status(400).json({message: 'Avez-vous renseigné les champs requis ? Votre mot de passe est-il bien configuré ? Avez-vous déjà un compte ? ' + error})
         } 
         return res.status(201).json({ message: 'Votre compte a bien été créé !'})
         })
@@ -130,8 +128,6 @@ exports.getAllUsers = (req, res, next) => {
         }
     )
 }
-
-
 
 //TODO à vérifier
 exports.deleteUser = (req, res, next) => {    
