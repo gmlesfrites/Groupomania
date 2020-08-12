@@ -1,23 +1,21 @@
 // Importation du package dotenv
 const dotenv = require('dotenv').config();
 
-// Importation du package jsonwebtoken
-const jsonwebtoken = require ('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
     try {
-        // récupération du token
         const token = req.headers.authorization.split(' ')[1];
-        const readToken = jsonwebtoken.verify(token, process.env.TOKEN);
-        const userId = readToken.userId;
-        if (req.body.userId && req.body.userId !== userId) {
-            throw 'User ID non valable';
+        const decodedToken = jwt.verify(token, process.env.TOKEN);
+        const userId = decodedToken.userId;
+        if (req.body.id && req.body.id !== userId) {
+            throw "l'identifiant de l'utilisateur est invalide !"
         } else {
             next();
         }
     } catch {
-        res.status(401).json({
-            error: new Error ('Requête non authentifiée')
+        res.status(401).json({ 
+            error : new Error('Requête invalide !')
         });
     }
 };

@@ -1,6 +1,5 @@
 // Importation du package dotenv
 const dotenv = require('dotenv');
-
 dotenv.config({ path: './.env'});
 
 // Importation du package Helmet (sécurité recommandée par Express)
@@ -23,23 +22,6 @@ const path = require('path');
 const messageRoutes = require('./routes/message');
 const userRoutes = require('./routes/user');
 
-//Connexion à MySql
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: process.env.USER,
-    password: process.env.PASSWORD
-});
- 
-connection.connect(function (error) {
-    if (error) {
-        console.log("connection to MySQL failed");
-        throw error
-    }
-    else { console.log('All is under control :-)'); }
-});
-
-
 //Middleware pour autorisation headers CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -52,13 +34,15 @@ app.use((req, res, next) => {
 app.use(helmet());
 
 //Middleware utilisation bodyParser
+app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(bodyParser.json());
+
 
 //Middleware gestion des cookies
 app.use(manageCookie);
 
-//middleware pour l'accès aux ressources statiques 
-app.use('/mysql', express.static(path.join(__dirname, 'mysql')));
+// //middleware pour l'accès aux ressources statiques 
+// app.use('/mysql', express.static(path.join(__dirname, 'mysql')));
 
 //middleware utilisation des routes
 app.use('/api/message', messageRoutes);

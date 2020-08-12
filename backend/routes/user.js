@@ -2,25 +2,26 @@
 const express = require('express');
 const router = express.Router();
 
-//nécessite le fichier user du dossier controllers
-const userControllers = require('../controllers/user');
-
-//nécessite le fichier checkPassword du dossier middleware
-const checkPassword = require('../middleware/checkPassword');
-
 //nécessite le fichier auth du dossier middleware
 const auth = require('../middleware/auth');
 
+//nécessite le fichier user du dossier controllers
+const userControllers = require('../controllers/user');
+
 //Route pour la première authentification
-router.post('/signup', checkPassword, userControllers.limiter, userControllers.signup);
+router.post('/signup',  userControllers.limiter, userControllers.signup);
 
 //Route pour l'identification (avec limite de connexion pour éviter force brute)
 router.post('/login', userControllers.limiter, userControllers.login);
 
-//Route pour avoir tous les utilisateurs
-router.get('/', userControllers.getAllUsers);
+//Route pour mettre à jour le profil
+router.put('/:id', auth, userControllers.updateProfile)
 
 //route pour supprimer un utilisateur
 router.delete('/:id', auth, userControllers.deleteUser);
 
+//Route pour avoir tous les utilisateurs
+router.get('/', userControllers.getAllUsers);
+
 module.exports = router;
+
