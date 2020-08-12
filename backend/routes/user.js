@@ -14,13 +14,7 @@ router.post('/signup',  userControllers.limiter, userControllers.signup);
 //Route pour l'identification (avec limite de connexion pour éviter force brute)
 router.post('/login', userControllers.limiter, userControllers.login);
 
-//Route pour mettre à jour le profil
-router.put('/:id', auth, userControllers.updateProfile)
-
-//route pour supprimer un utilisateur
-router.delete('/:id', auth, userControllers.deleteUser);
-
-//Route pour avoir tous les utilisateurs
+//Route pour récupérer tous les utilisateurs
 router.get('/', userControllers.getAllUsers);
 
 module.exports = router;

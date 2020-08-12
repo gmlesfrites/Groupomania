@@ -65,116 +65,72 @@ exports.signup = (req, res, next) => {
 
 // Connexion à son compte
 exports.login = (req, res, next) => { 
-    const email = req.body.email;
-    const password = req.body.password;
+    const emailReq = req.body.email;
+    const passwordReq = req.body.password;
 
-    if (email && password) {
+    if (emailReq && passwordReq) {
+        
         conn.query(
-            'SELECT * FROM (process.env.DATABASE).users WHERE email= ?',
-            email,
-            function (error, results, fields) {
+            // recherche email dans la base de données
+            'SELECT * FROM development_groupomania.users WHERE email = ?',
+            emailReq,
+          
+            (error, results, fields) => {
                 if (results) {
-                bcrypt.compare(password, results[0].password).then((valid) => {
-                    if (!valid) {
-                    res
-                        .status(401)
-                        .json({ message: 'Utilisateur ou mot de passe inconnu' })
-                    } else {
-                        let privilege = ''
-                        if (results[0].isAdmin === 1) {
-                            privilege = 'admin'
+                    bcrypt.compare(passwordReq, results[0].password).then((valid) => {
+                        if (!valid) {
+                            res
+                            .status(401)
+                            .json({ message: 'Utilisateur ou mot de passe inconnu' })
                         } else {
-                            privilege = 'member'
+                            let role = ''
+                            if (results[0].isAdmin === 1) {
+                                role = 'admin'
+                            } else {
+                                role = 'member'
+                            }
+                            res.status(200).json({
+                                userId: results[0].userId,
+                                username: results[0].username,
+                                email: results[0].email,
+                                role: role,
+                                accessToken: jwt.sign(
+                                    {
+                                    userId: results[0].userId, 
+                                    role: role 
+                                    },
+                                    process.env.TOKEN,
+                                    { expiresIn: '24h' }
+                                )   
+                            })
                         }
-                        res.status(200).json({
-                        id: results[0].id,
-                        firstname: results[0].firstname,
-                        lastname: results[0].lastname,
-                        email: results[0].email,
-                        privilege: privilege,
-                        accessToken: jwt.sign({
-                            id: results[0].id, 
-                            role: privilege 
-                            },
-                            process.env.TOKEN,
-                            { expiresIn: '12h' }
-                        )})
-                    }
-                })
+                    })
                 } else {
                     res
                     .status(401)
-                    .json({ message: "l'adresse mail et/ou le mot de passe sont inconnus. Avez-vous déjà créé un compte ?" })
+                    .json({ message: 'Utilisateur ou mot de passe inconnu' })
                 }
             }
         )
     } else {
         res
-          .status(500)
-          .json({ message: "Entrez votre nom d'utilisateur et votre mot de passe" })
+        .status(500)
+        .json({ message: "l'adresse mail et/ou le mot de passe sont absents. Merci de renseigner les champs requis" })
     }
 };
-    
 
-// Modification du Profil Utilisateu
-exports.updateProfile = (req, res, next) => { r
-    models.User.findOne({
-        attributes: ['bio', 'id'],
-        where: { id: req.params.id}
-    })
-    .then((userFound) => {
-        if (userFound) {
-            userFound.update({
-               bio:  req.body.bio
-            })
-            .then(userFound => {
-                return res.status(200).json({ User: userFound, message: "Profil modifié !"})
-            })
-            .catch(error => res.status(500).json({ error, message: "Impossible de modifier votre profil."}));
-        } else {
-            return res.status(400).json({ message: "Utilisateur introuvable."});
+//Sélection de tous les utilisateurs
+exports.getAllUsers = (req, res, next) => {
+    conn.query(
+        'SELECT * FROM development_groupomania.users',
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+            return res.status(200).json({ results })
         }
-    })
-    .catch(error => res.status(500).json({ error, message: "Impossible de récupérer l'utilisateur"}));
-};
-
-// Suppression d'un compte utilisateur
-exports.deleteUser = (req, res, next) => { 
-
-    models.User.findOne({
-        where: { id: req.params.id}
-    })
-    .then((userFoundForDelete) => {
-        if(userFoundForDelete) {
-            userFoundForDelete.destroy({
-                email: userFoundForDelete.email
-            })
-            .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
-            .catch( error => res.status(500).json({ error, message: "L'utilisateur n'a pas été supprimé."}));
-        }else {
-            return res.status(400).json({ message: "L'utilisateur n'a pas été trouvé, il ne peut pas être supprimé." });
-
-        }
-    })
-    .catch( error => res.status(500).json({ error, message: 'Impossible de supprimer le compte.'}));
-};
-
-//Profil de tous les utilisateurs
-exports.getAllUsers = (req, res, next) => { 
-
-    models.User.findOne({
-        attributes: ['firstName', 'lastName', 'email', 'bio'],
-        where: { id: req.params.id }
-    })
-    .then( User => {
-        if(User) {
-            return res.status(200).json({ User });
-        }else {
-            return res.status(400).json({ message: "Impossible de récupérer votre profil utilisateur" });
-        }
-    })
-    .catch(error => res.status(500).json({ error}));
-};
+    )
+}
 
 // Middleware limitation de demandes (5 par minute)
 exports.limiter = expressRateLimit ({
