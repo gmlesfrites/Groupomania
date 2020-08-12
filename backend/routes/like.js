@@ -12,4 +12,8 @@ const likeControllers = require('../controllers/like');
 // http://localhost:3000/
 router.post('/:id/like', authentication, likeControllers.likePost);
 
+// route pour poster un dislike
+// http://localhost:3000/
+router.post('/:id/dislike', authentication, likeControllers.dislikePost);
+
 module.exports = router;
