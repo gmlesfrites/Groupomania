@@ -131,10 +131,11 @@ exports.getAllUsers = (req, res, next) => {
     )
 }
 
+
+
 //TODO à vérifier
 exports.deleteUser = (req, res, next) => {    
     const id = req.params.id;
-    console.log((id));
     conn.query(
         `DELETE FROM users WHERE id = ? `, id, 
         (error, results, fields) => {
