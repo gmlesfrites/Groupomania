@@ -1,7 +1,7 @@
 //Connexion à la BDD
 const conn = require('../middleware/mysql')
 
-// création d'un message  http://localhost:3000/api/message/create
+// Middleware d'ajout d'un like  
 exports.likePost = (req, res, next) => {
   const like = req.body;
   

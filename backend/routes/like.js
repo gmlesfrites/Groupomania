@@ -5,10 +5,11 @@ const router = express.Router();
 //Nécessite le middleware authentification
 const authentication = require('../middleware/auth');
 
-//nécessite le fichier message du dossier controllers
+//nécessite le fichier like du dossier controllers
 const likeControllers = require('../controllers/like');
 
-// Like
+// route pour poster un like
+// http://localhost:3000/
 router.post('/:id/like', authentication, likeControllers.likePost);
 
 module.exports = router;

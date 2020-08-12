@@ -1,7 +1,10 @@
 //Connexion à la BDD
 const conn = require('../middleware/mysql')
 
-// création d'un message  http://localhost:3000/api/message/create
+//Importation du package jsonwebtoken
+const jwt = require('jsonwebtoken')
+
+// Middleware de création d'un message
 exports.createMessage = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
@@ -24,7 +27,79 @@ exports.createMessage = (req, res, next) => {
     })
 }
 
-// Afficher tous les messages    http://localhost:3000/api/message
+// Middleware de mise à jour d'un message
+exports.updateMessage = (req, res, next) => {
+    conn.query(
+        'SELECT * FROM messages WHERE id=?',
+        req.params.id,
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+            const token = req.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, process.env.TOKEN);
+            const userId = decodedToken.userId;
+            const role = decodedToken.role;
+            const messageId = results[0].userId;
+        
+        
+            if (userId !== messageId || role !== 'admin') {
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
+            }
+        
+            const updatedMessage = req.body
+            conn.query('UPDATE messages SET ? WHERE id=?',
+                [updatedMessage, req.params.id],
+                (error, results, fields) => {
+                    if (error) {
+                        return res.status(400).json(error)
+                    }
+                    return res
+                    .status(200)
+                    .json({ message: 'Le message a bien été modifié !' })
+                }
+            )
+        }
+    )
+}
+
+// Middleware de suppresion d'un message
+exports.deleteMessage = (req, res, next) => {
+    const id =  req.params.id;
+    
+    conn.query(
+            'SELECT * FROM messages WHERE id=?', id,
+            (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+        
+            const token = req.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, process.env.TOKEN);
+            const userId = decodedToken.userId;
+            const role = decodedToken.role;
+            const messageId = results[0].userId;
+            
+            if (userId !== messageId && role !== 'admin') {
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
+            }
+            
+            conn.query(
+                `DELETE FROM messages WHERE id= ?`, id,
+                (error, results, fields) => {
+                    if (error) {
+                        return res.status(400).json(error)
+                    }
+                    return res
+                    .status(200)
+                    .json({ message: 'Le message a bien été supprimé !' })
+                }
+            )
+        }
+    )
+}
+  
+// Middleware pour afficher tous les messages
 exports.getAllMessages = (req, res, next) => {
     conn.query(
         // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
