@@ -27,10 +27,11 @@ exports.createMessage = (req, res, next) => {
 // Afficher tous les messages    http://localhost:3000/api/message
 exports.getAllMessages = (req, res, next) => {
     conn.query(
-        'SELECT * FROM development_groupomania.messages',
+        // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
+        'SELECT createdAt, title, content, likes FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
         (error, results, fields) => {
             if (error) {
-                return res.status(400).json(error)
+                return res.status(404).json({ message: " Pas de message trouvé !"})
             }
             return res.status(200).json({ results })
         }
