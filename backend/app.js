@@ -21,6 +21,7 @@ const path = require('path');
 //Importation des routes
 const messageRoutes = require('./routes/message');
 const userRoutes = require('./routes/user');
+const likesRoutes = require('./routes/like');
 
 //Middleware pour autorisation headers CORS
 app.use((req, res, next) => {
@@ -47,6 +48,7 @@ app.use(manageCookie);
 //middleware utilisation des routes
 app.use('/api/message', messageRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/vote', likesRoutes );    //TODO /api/messages/:messageId/vote
 
 //Export de l'app Express pour utilisation server.js
 module.exports = app;
