@@ -17,5 +17,9 @@ router.post('/login', userControllers.limiter, userControllers.login);
 //Route pour récupérer tous les utilisateurs
 router.get('/', userControllers.getAllUsers);
 
+
+// Route pour supprimer un utilisateur
+// router.delete('/:id', auth, userControllers.deleteUser)
+
 module.exports = router;
 

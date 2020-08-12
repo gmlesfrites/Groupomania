@@ -54,7 +54,7 @@ exports.signup = (req, res, next) => {
     const user = req.body
     bcrypt.hash(user.password, 10).then((hash) => {
         user.password = hash
-        conn.query('INSERT INTO users SET ?', user, function (error,results,fields) {
+        conn.query('INSERT INTO users SET ?', user, (error,results,fields) => {
         if (error) {
             return res.status(400).json(error.sqlMessage)
         } 
@@ -69,7 +69,6 @@ exports.login = (req, res, next) => {
     const passwordReq = req.body.password;
 
     if (emailReq && passwordReq) {
-        
         conn.query(
             // recherche email dans la base de données
             'SELECT * FROM development_groupomania.users WHERE email = ?',
@@ -131,6 +130,23 @@ exports.getAllUsers = (req, res, next) => {
         }
     )
 }
+
+exports.deleteUser = (req, res, next) => {
+    conn.query(
+        // TODO vérifier la requete delete 
+        `DELETE FROM development_groupomania.users WHERE userId=${req.params.id}`,
+        req.params.id,
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+            return res
+            .status(200)
+            .json({ message: 'Votre compte a bien été supprimé !' })
+        }
+    )
+}
+
 
 // Middleware limitation de demandes (5 par minute)
 exports.limiter = expressRateLimit ({
