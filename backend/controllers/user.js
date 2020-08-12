@@ -82,21 +82,21 @@ exports.login = (req, res, next) => {
                             .status(401)
                             .json({ message: 'Utilisateur ou mot de passe inconnu' })
                         } else {
-                            let role = ''
+                            let privilege = ''
                             if (results[0].isAdmin === 1) {
-                                role = 'admin'
+                                privilege = 'admin'
                             } else {
-                                role = 'member'
+                                privilege = 'member'
                             }
                             res.status(200).json({
                                 userId: results[0].userId,
                                 username: results[0].username,
                                 email: results[0].email,
-                                role: role,
+                                privilege: privilege,
                                 accessToken: jwt.sign(
                                     {
                                     userId: results[0].userId, 
-                                    role: role 
+                                    privilege : privilege, 
                                     },
                                     process.env.TOKEN,
                                     { expiresIn: '24h' }
@@ -131,11 +131,12 @@ exports.getAllUsers = (req, res, next) => {
     )
 }
 
-exports.deleteUser = (req, res, next) => {
+//TODO à vérifier
+exports.deleteUser = (req, res, next) => {    
+    const id = req.params.id;
+    console.log((id));
     conn.query(
-        // TODO vérifier la requete delete 
-        `DELETE FROM development_groupomania.users WHERE userId=${req.params.id}`,
-        req.params.id,
+        `DELETE FROM users WHERE id = ? `, id, 
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
@@ -146,7 +147,6 @@ exports.deleteUser = (req, res, next) => {
         }
     )
 }
-
 
 // Middleware limitation de demandes (5 par minute)
 exports.limiter = expressRateLimit ({
