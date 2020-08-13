@@ -133,38 +133,36 @@ exports.getAllUsers = (req, res, next) => {
 
 // Middleware de suppression d'un utilisateur
 exports.deleteUser = (req, res, next) => {    
-    const id = req.params.id;
-    
     conn.query(
-        'SELECT * FROM users WHERE id=?', id,
+        'SELECT * FROM users WHERE id=?', req.params.id,
         (error, results, fields) => {
-        if (error) {
-            return res.status(400).json(error)
-        }
-    
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, process.env.TOKEN);
-        const userId = decodedToken.userId;
-        const role = decodedToken.role;
-        const messageId = results[0].userId;
-        
-        if (userId !== messageId && role !== 'admin') {
-            return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
-        }
-        
-        conn.query(
-            `DELETE FROM users WHERE id= ?`, id,
-            (error, results, fields) => {
-                if (error) {
-                    return res.status(400).json(error)
-                }
-                return res
-                .status(200)
-                .json({ message: 'Le compte a bien été supprimé !' })
+            if (error) {
+                return res.status(400).json(error)
             }
-        )
-    }
-)
+        
+            const token = req.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, process.env.TOKEN);
+            const userId = decodedToken.userId;
+            const role = decodedToken.role;
+            const messageId = results[0].userId;
+            
+            if (userId !== messageId && role === 'admin') {
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
+            }
+            
+            conn.query(
+                `DELETE FROM users WHERE id= ?`, req.params.id,
+                (error, results, fields) => {
+                    if (error) {
+                        return res.status(400).json(error)
+                    }
+                    return res
+                    .status(200)
+                    .json({ message: 'Le compte a bien été supprimé !' })
+                }
+            )
+        }
+    )
 }
 
 // Middleware limitation de demandes (5 par minute)

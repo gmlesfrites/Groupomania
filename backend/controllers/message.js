@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 // Middleware de création d'un message
 exports.createMessage = (req, res, next) => {
+    const message = req.body;
     const title = req.body.title;
     const content = req.body.content;
 
@@ -16,21 +17,79 @@ exports.createMessage = (req, res, next) => {
     if (title.length < 5  || content.length < 5) {
         return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
     }
-    
-    const message = req.body;
-    conn.query('INSERT INTO messages SET ?', message, (error, results, fields) => {
-      if (error) {
-        return res.status(400).json(error)
-      }
-      return res.status(201).json({ message: 'Votre message a bien été posté !' })
+
+    conn.query(
+        'INSERT INTO messages SET ?', message, (error, results, fields) => {
+        if (error) {
+            return res.status(400).json(error)
+        }
+
+        return res.status(201).json({ message: 'Votre message a bien été posté !' })
     })
+}
+
+// Middleware de réponse à un message
+exports.answerMessage = (req, res, next) => {
+    const message = req.body;
+    const title = req.body.title;
+    const content = req.body.content;
+
+    if (title === null || content === null) {
+        return res.status(400).json({message: "Pour être valide, votre publication doit contenir un titre et un contenu."})
+    }
+
+    if (title.length < 5  || content.length < 5) {
+        return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
+    }
+    conn.query(
+        'INSERT INTO messages SET ?', message, (error, results, fields) => {
+        if (error) {
+            return res.status(400).json(error)
+        }
+        return res.status(201).json({ message: 'Votre réponse a bien été postée !' })
+    })
+}
+
+// Middleware de suppresion d'un message
+exports.deleteMessage = (req, res, next) => {
+    conn.query(
+        'SELECT * FROM messages WHERE id=?', req.params.id,
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+        
+            const token = req.headers.authorization.split(' ')[1];
+            const decodedToken = jwt.verify(token, process.env.TOKEN);
+            const userId = decodedToken.userId;
+            const role = decodedToken.role;
+            const messageId = results[0].userId;
+            
+            if (userId !== messageId && role === 'admin') {
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
+            }
+            
+            conn.query(
+                `DELETE FROM messages WHERE id= ?`, req.params.id,
+                (error, results, fields) => {
+                    if (error) {
+                        return res.status(400).json(error)
+                    }
+                    return res
+                    .status(200)
+                    .json({ message: 'Le message a bien été supprimé !' })
+                }
+            )
+        }
+    )
 }
 
 // Middleware de mise à jour d'un message
 exports.updateMessage = (req, res, next) => {
+    const id = req.params.id;
+
     conn.query(
-        'SELECT * FROM messages WHERE id=?',
-        req.params.id,
+        'SELECT * FROM messages WHERE id=?', id,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
@@ -38,11 +97,10 @@ exports.updateMessage = (req, res, next) => {
             const token = req.headers.authorization.split(' ')[1];
             const decodedToken = jwt.verify(token, process.env.TOKEN);
             const userId = decodedToken.userId;
-            const role = decodedToken.role;
             const messageId = results[0].userId;
+            const role = decodedToken.role;
         
-        
-            if (userId !== messageId && role !== 'admin') {
+            if (userId !== messageId && !role === 'admin') {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
             }
         
@@ -62,63 +120,11 @@ exports.updateMessage = (req, res, next) => {
     )
 }
 
-// Middleware de suppresion d'un message
-exports.deleteMessage = (req, res, next) => {
-    const id =  req.params.id;
-    
-    conn.query(
-            'SELECT * FROM messages WHERE id=?', id,
-            (error, results, fields) => {
-            if (error) {
-                return res.status(400).json(error)
-            }
-        
-            const token = req.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, process.env.TOKEN);
-            const userId = decodedToken.userId;
-            const role = decodedToken.role;
-            const messageId = results[0].userId;
-            
-            if (userId !== messageId && role !== 'admin') {
-                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
-            }
-            
-            conn.query(
-                `DELETE FROM messages WHERE id= ?`, id,
-                (error, results, fields) => {
-                    if (error) {
-                        return res.status(400).json(error)
-                    }
-                    return res
-                    .status(200)
-                    .json({ message: 'Le message a bien été supprimé !' })
-                }
-            )
-        }
-    )
-}
-  
 // Middleware pour afficher tous les messages
 exports.getAllMessages = (req, res, next) => {
     conn.query(
         // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
         'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i:%s\"), title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
-        'SELECT COUNT(like.userId), FROM development_groupomania.likes',
-        
-        (error, results, fields) => {
-            if (error) {
-                return res.status(404).json({ message: " Pas de message trouvé !"})
-            }
-            return res.status(200).json({ results })
-        }
-    )
-}
-
-// Middleware pour afficher tous les messages par identifiant de message et d'utilisateur
-exports.getAllMessagesPerUser = (req, res, next) => {
-    conn.query(
-        // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
-        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i:%s\"), title, content, userId, id FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
         'SELECT COUNT(like.userId), FROM development_groupomania.likes',
         
         (error, results, fields) => {
