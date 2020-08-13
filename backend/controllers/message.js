@@ -46,7 +46,7 @@ exports.updateMessage = (req, res, next) => {
             const messageId = results[0].userId;
         
         
-            if (userId !== messageId || role !== 'admin') {
+            if (userId !== messageId && role !== 'admin') {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
             }
         
