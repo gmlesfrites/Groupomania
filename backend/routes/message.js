@@ -12,8 +12,8 @@ const multer = require ('../middleware/multer-config');
 const messageControllers = require('../controllers/message');
 
 //route pour créer un message       
-// http://localhost:3000/api/message
-router.post('/',  multer, messageControllers.createMessage);
+// http://localhost:3000/api/message/create
+router.post('/create',  multer, messageControllers.createMessage);
 
 // http://localhost:3000/api/message/:id
 router.post('/:id',  multer, messageControllers.answerMessage);

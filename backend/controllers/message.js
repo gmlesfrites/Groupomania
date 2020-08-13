@@ -86,8 +86,10 @@ exports.deleteMessage = (req, res, next) => {
 
 // Middleware de mise à jour d'un message
 exports.updateMessage = (req, res, next) => {
+    const id = req.params.id;
+
     conn.query(
-        'SELECT * FROM messages WHERE id=?', req.params.id,
+        'SELECT * FROM messages WHERE id=?', id,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
@@ -122,8 +124,9 @@ exports.updateMessage = (req, res, next) => {
 exports.getAllMessages = (req, res, next) => {
     conn.query(
         // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
-        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i:%s\"), title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
-        'SELECT COUNT(like.userId), FROM development_groupomania.likes',
+        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\"), title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+        'SELECT COUNT(likes.like) FROM development_groupomania.likes',
+        // 'SELECT * FROM development_groupomania.likes LEFT JOIN likes ON messages.id = likes.messageId ',
         
         (error, results, fields) => {
             if (error) {
