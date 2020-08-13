@@ -14,7 +14,7 @@ const MIME_TYPES = {
 //Pour l'enregistrement des images
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, 'mysql');
+        callback(null, 'images');
     },
     //nom et extension du fichier + ajout timestamp pour creation d'un fichier daté
     filename: (req, file, callback) => {
@@ -32,4 +32,4 @@ const storage = multer.diskStorage({
     }
 });
 
-module.exports = multer({storage: storage}).single('mysql');
+module.exports = multer({storage: storage}).single('images');

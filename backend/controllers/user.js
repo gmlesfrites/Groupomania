@@ -15,12 +15,13 @@ const jwt = require('jsonwebtoken')
 const conn = require('../middleware/mysql')
 
 // //Importation du modèle User
-// const models = require('../models/User');
+const models = require('../models/User');
 
 //Constante regex pour vérification de l'email
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+// Constante regex pour vérfification du mot de passe : doit contenir au moins 1 chiffre, 1 lettre majuscule, 1 lettre minuscule et compter au moins 8 caractères 
 const passwordRegex  = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/;
-// doit contenir au moins 1 chiffre, 1 lettre majuscule, 1 lettre minuscule et compter au moins 8 caractères 
 
 //Inscription au site
 exports.signup = (req, res, next) => { 
@@ -49,7 +50,7 @@ exports.signup = (req, res, next) => {
         return res.status(400).json({ message : 'Votre mot de passe doit contenir au minimum 8 caractères dont une lettre majuscule, une lettre minuscule et un chiffre'});
     }
 
-    const user = req.body
+    const user = req.body;
     bcrypt.hash(user.password, 10).then((hash) => {
         user.password = hash
         conn.query('INSERT INTO users SET ?', user, (error,results,fields) => {

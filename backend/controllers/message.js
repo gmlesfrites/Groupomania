@@ -1,8 +1,11 @@
 //Connexion à la BDD
-const conn = require('../middleware/mysql')
+const conn = require('../middleware/mysql');
 
 //Importation du package jsonwebtoken
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+
+//Importation du package fs(gestion fichiers importés)
+const filesystem = require('fs'); 
 
 // Middleware de création d'un message
 exports.createMessage = (req, res, next) => {
@@ -17,9 +20,9 @@ exports.createMessage = (req, res, next) => {
         return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
     }
     
-    const message = req.body
-    
-    conn.query('INSERT INTO messages SET ?', message, (error, results, fields) => {
+    const message = req.body;
+    const attachment = {imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`}
+    conn.query('INSERT INTO messages SET ?', message, attachment, (error, results, fields) => {
       if (error) {
         return res.status(400).json(error)
       }
@@ -47,9 +50,10 @@ exports.updateMessage = (req, res, next) => {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
             }
         
-            const updatedMessage = req.body
+            const updatedMessage = req.body;
+            const attachment = {imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`};
             conn.query('UPDATE messages SET ? WHERE id=?',
-                [updatedMessage, req.params.id],
+                [updatedMessage, attachment, req.params.id],
                 (error, results, fields) => {
                     if (error) {
                         return res.status(400).json(error)
@@ -67,6 +71,12 @@ exports.updateMessage = (req, res, next) => {
 exports.deleteMessage = (req, res, next) => {
     const id =  req.params.id;
     
+    //Récupération du nom du fichier image à supprimer
+    const filename = sauce.imageUrl.split('/images/')[1];
+    //suppression du fichier image
+    filesystem.unlink(`images/${filename}`);
+
+
     conn.query(
             'SELECT * FROM messages WHERE id=?', id,
             (error, results, fields) => {
