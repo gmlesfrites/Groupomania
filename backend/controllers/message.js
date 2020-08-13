@@ -113,7 +113,9 @@ exports.deleteMessage = (req, res, next) => {
 exports.getAllMessages = (req, res, next) => {
     conn.query(
         // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
-        'SELECT createdAt, title, content, likes FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i:%s\"), title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+        'SELECT COUNT(like.userId), COUNT(dislike.userId) FROM development_groupomania.likes',
+        
         (error, results, fields) => {
             if (error) {
                 return res.status(404).json({ message: " Pas de message trouvé !"})
