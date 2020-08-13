@@ -86,10 +86,8 @@ exports.deleteMessage = (req, res, next) => {
 
 // Middleware de mise à jour d'un message
 exports.updateMessage = (req, res, next) => {
-    const id = req.params.id;
-
     conn.query(
-        'SELECT * FROM messages WHERE id=?', id,
+        'SELECT * FROM messages WHERE id=?', req.params.id,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
