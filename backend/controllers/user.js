@@ -64,18 +64,18 @@ exports.signup = (req, res, next) => {
 
 // Connexion à son compte
 exports.login = (req, res, next) => { 
-    const emailReq = req.body.email;
-    const passwordReq = req.body.password;
+    const email = req.body.email;
+    const password = req.body.password;
 
-    if (emailReq && passwordReq) {
+    if (email && password) {
         conn.query(
             // recherche email dans la base de données
             'SELECT * FROM development_groupomania.users WHERE email = ?',
-            emailReq,
+            email,
           
             (error, results, fields) => {
                 if (results) {
-                    bcrypt.compare(passwordReq, results[0].password).then((valid) => {
+                    bcrypt.compare(password, results[0].password).then((valid) => {
                         if (!valid) {
                             res
                             .status(401)
@@ -89,7 +89,8 @@ exports.login = (req, res, next) => {
                             }
                             res.status(200).json({
                                 userId: results[0].userId,
-                                username: results[0].username,
+                                firstname: results[0].firstname,
+                                lastname: results[0].lastname,
                                 email: results[0].email,
                                 privilege: privilege,
                                 accessToken: jwt.sign(

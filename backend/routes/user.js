@@ -21,7 +21,7 @@ router.post('/login', userControllers.limiter, userControllers.login);
 router.get('/', userControllers.getAllUsers);
 
 // Route pour supprimer un utilisateur  
-// http://localhost:3000/auth/:id
-router.delete('/:id', auth, userControllers.deleteUser)
+// http://localhost:3000/auth/delete/:id
+router.delete('/delete/:id', auth, userControllers.deleteUser)
 
 module.exports = router;

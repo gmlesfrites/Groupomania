@@ -13,7 +13,7 @@ const messageControllers = require('../controllers/message');
 
 //route pour créer un message       
 // http://localhost:3000/api/message/create
-router.post('/create',  multer, messageControllers.createMessage);
+router.post('/:id/create',  multer, messageControllers.createMessage);
 
 //route pour modifier un message      
 // http://localhost:3000/api/message/:id
@@ -26,6 +26,10 @@ router.delete('/:id', authentication, messageControllers.deleteMessage)
 //route pour afficher toutes les messages     
 // http://localhost:3000/api/message/
 router.get('/', authentication, messageControllers.getAllMessages);
+
+//route pour afficher toutes les messages     
+// http://localhost:3000/api/message/
+router.get('/:id', authentication, messageControllers.getAllMessagesPerUser);
 
 
 

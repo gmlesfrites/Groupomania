@@ -4,9 +4,6 @@ const conn = require('../middleware/mysql');
 //Importation du package jsonwebtoken
 const jwt = require('jsonwebtoken');
 
-//Importation du package fs(gestion fichiers importés)
-const filesystem = require('fs'); 
-
 // Middleware de création d'un message
 exports.createMessage = (req, res, next) => {
     const title = req.body.title;
@@ -21,8 +18,7 @@ exports.createMessage = (req, res, next) => {
     }
     
     const message = req.body;
-    const attachment = {imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`}
-    conn.query('INSERT INTO messages SET ?', message, attachment, (error, results, fields) => {
+    conn.query('INSERT INTO messages SET ?', message, (error, results, fields) => {
       if (error) {
         return res.status(400).json(error)
       }
@@ -51,9 +47,8 @@ exports.updateMessage = (req, res, next) => {
             }
         
             const updatedMessage = req.body;
-            const attachment = {imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`};
             conn.query('UPDATE messages SET ? WHERE id=?',
-                [updatedMessage, attachment, req.params.id],
+                [updatedMessage, req.params.id],
                 (error, results, fields) => {
                     if (error) {
                         return res.status(400).json(error)
@@ -71,12 +66,6 @@ exports.updateMessage = (req, res, next) => {
 exports.deleteMessage = (req, res, next) => {
     const id =  req.params.id;
     
-    //Récupération du nom du fichier image à supprimer
-    const filename = sauce.imageUrl.split('/images/')[1];
-    //suppression du fichier image
-    filesystem.unlink(`images/${filename}`);
-
-
     conn.query(
             'SELECT * FROM messages WHERE id=?', id,
             (error, results, fields) => {
@@ -114,7 +103,23 @@ exports.getAllMessages = (req, res, next) => {
     conn.query(
         // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
         'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i:%s\"), title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
-        'SELECT COUNT(like.userId), COUNT(dislike.userId) FROM development_groupomania.likes',
+        'SELECT COUNT(like.userId), FROM development_groupomania.likes',
+        
+        (error, results, fields) => {
+            if (error) {
+                return res.status(404).json({ message: " Pas de message trouvé !"})
+            }
+            return res.status(200).json({ results })
+        }
+    )
+}
+
+// Middleware pour afficher tous les messages par identifiant de message et d'utilisateur
+exports.getAllMessagesPerUser = (req, res, next) => {
+    conn.query(
+        // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
+        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i:%s\"), title, content, userId, id FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+        'SELECT COUNT(like.userId), FROM development_groupomania.likes',
         
         (error, results, fields) => {
             if (error) {
