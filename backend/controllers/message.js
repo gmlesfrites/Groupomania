@@ -36,6 +36,8 @@ exports.answerMessage = (req, res, next) => {
     const message = req.body;
     const title = req.body.title;
     const content = req.body.content;
+    const initialId = req.body.id;
+
 
     //condition titre et contenu non vide
     if (title === null || content === null) {
@@ -47,15 +49,17 @@ exports.answerMessage = (req, res, next) => {
         return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
     }
 
-    //insertion BDD
-    conn.query(
-        'INSERT INTO messages SET ?', message, 
-        (error, results, fields) => {
-            if (error) {
-                return res.status(400).json(error)
-            }
-            return res.status(201).json({ message: 'Votre réponse a bien été postée !' })
-    })
+    if (initialId) {
+        //insertion BDD
+        conn.query(
+            'INSERT INTO messages SET ?', message, 
+            (error, results, fields) => {
+                if (error) {
+                    return res.status(400).json(error)
+                }
+                return res.status(201).json({ message: 'Votre réponse a bien été postée !' })
+        })
+    }
 }
 
 // Middleware de suppresion d'un message
@@ -139,12 +143,8 @@ exports.getAllMessages = (req, res, next) => {
     const userId = decodedToken.userId
         
     conn.query(
-        // TODO affichage date de création, titre, contenu, likes, du plus récent au plus ancien
-        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
-// DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\)"AS "date"
-// COUNT (likes.id) AS "userLike", COUNT (likes.id) AS "messageLike", 
-// LEFT JOIN messageLike ON messages.id = likes.messageId AND userLike.id = likes.userId =?
-        // 'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+        // affichage date de création, titre, contenu, likes, userId du plus récent au plus ancien
+        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content, userId FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
         [userId],
         (error, results, fields) => {
             if (error) {

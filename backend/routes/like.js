@@ -12,4 +12,7 @@ const likeControllers = require('../controllers/like');
 // http://localhost:3000/like
 router.post('/', authentication, likeControllers.likePost);
 
+// route pour récupérer tous les likes
+// http://localhost:3000/like/
+router.get('/', authentication, likeControllers.getAllLikes);
 module.exports = router;

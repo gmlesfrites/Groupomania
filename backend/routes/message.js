@@ -11,22 +11,23 @@ const multer = require ('../middleware/multer-config');
 //nécessite le fichier message du dossier controllers
 const messageControllers = require('../controllers/message');
 
-//route pour créer un message       
+// Route pour créer un message       
 // http://localhost:3000/api/message/create
 router.post('/create',  multer, messageControllers.createMessage);
 
-// http://localhost:3000/api/message/:id
-router.post('/:id',  multer, messageControllers.answerMessage);
+// Route pour répondre à un message
+// http://localhost:3000/api/message/link/:id
+router.post('/link/:id',  multer, messageControllers.answerMessage);
 
-//route pour modifier un message      
+// Route pour modifier un message      
 // http://localhost:3000/api/message/:id
 router.put('/:id', authentication, multer, messageControllers.updateMessage);
 
-//Route pour supprimer un message           
+// Route pour supprimer un message           
 // http://localhost:3000/api/message/:id
 router.delete('/:id', authentication, messageControllers.deleteMessage)
 
-//route pour afficher toutes les messages     
+// Route pour afficher toutes les messages     
 // http://localhost:3000/api/message/
 router.get('/', authentication, messageControllers.getAllMessages);
 
