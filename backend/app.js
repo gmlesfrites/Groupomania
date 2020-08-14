@@ -48,7 +48,7 @@ app.use(manageCookie);
 //middleware utilisation des routes
 app.use('/api/message', messageRoutes);
 app.use('/api/auth', userRoutes);
-app.use('/api/like', likesRoutes );    //TODO /api/messages/:messageId/vote
+app.use('/api/like', likesRoutes ); 
 
 //Export de l'app Express pour utilisation server.js
 module.exports = app;
