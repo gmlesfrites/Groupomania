@@ -139,7 +139,7 @@ exports.getAllMessages = (req, res, next) => {
     const userId = decodedToken.userId
         
     conn.query(
-        // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
+        // TODO affichage date de création, titre, contenu, likes, du plus récent au plus ancien
         'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
 // DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\)"AS "date"
 // COUNT (likes.id) AS "userLike", COUNT (likes.id) AS "messageLike", 

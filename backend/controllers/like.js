@@ -16,7 +16,7 @@ exports.likePost = (req, res, next) => {
     //     return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
     // }
     
-
+// TODO
     conn.query(
         'INSERT INTO likes SET ?', req.body,
         (error, results, fields) => {
