@@ -9,10 +9,7 @@ const authentication = require('../middleware/auth');
 const likeControllers = require('../controllers/like');
 
 // route pour poster un like
-// http://localhost:3000/like/:id/
-router.post('/:id', authentication, likeControllers.likePost);
-
-//route pour voir les likes
-
+// http://localhost:3000/like
+router.post('/', authentication, likeControllers.likePost);
 
 module.exports = router;

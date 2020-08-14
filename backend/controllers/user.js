@@ -71,6 +71,7 @@ exports.login = (req, res, next) => {
         conn.query(
             // recherche email dans la base de données
             'SELECT * FROM development_groupomania.users WHERE email = ?',
+            
             email,
           
             (error, results, fields) => {
@@ -121,7 +122,9 @@ exports.login = (req, res, next) => {
 //Sélection de tous les utilisateurs
 exports.getAllUsers = (req, res, next) => {
     conn.query(
-        'SELECT * FROM development_groupomania.users',
+        // TODO si je mets LEFT JOIN ça me donne des données nulles
+        // 'SELECT * FROM development_groupomania.users ',
+        'SELECT * FROM development_groupomania.users LEFT JOIN likes ON users.id = likes.userId',
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)

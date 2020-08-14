@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 //nécessite le fichier auth du dossier middleware
-const auth = require('../middleware/auth');
+const authentication = require('../middleware/auth');
 
 //nécessite le fichier user du dossier controllers
 const userControllers = require('../controllers/user');
@@ -22,6 +22,6 @@ router.get('/', userControllers.getAllUsers);
 
 // Route pour supprimer un utilisateur  
 // http://localhost:3000/auth/:id
-router.delete('/:id', auth, userControllers.deleteUser)
+router.delete('/:id', authentication, userControllers.deleteUser)
 
 module.exports = router;

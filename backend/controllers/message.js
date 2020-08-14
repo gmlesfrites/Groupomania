@@ -10,21 +10,24 @@ exports.createMessage = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
 
+    //condition titre et contenu obligatoires
     if (title === null || content === null) {
         return res.status(400).json({message: "Pour être valide, votre publication doit contenir un titre et un contenu."})
     }
 
+    //condition longueur titre et contenu
     if (title.length < 5  || content.length < 5) {
         return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
     }
 
+    //insertion BDD
     conn.query(
-        'INSERT INTO messages SET ?', message, (error, results, fields) => {
-        if (error) {
-            return res.status(400).json(error)
-        }
-
-        return res.status(201).json({ message: 'Votre message a bien été posté !' })
+        'INSERT INTO messages SET ?', message, 
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+            return res.status(201).json({ message: 'Votre message a bien été posté !' })
     })
 }
 
@@ -34,19 +37,24 @@ exports.answerMessage = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
 
+    //condition titre et contenu non vide
     if (title === null || content === null) {
         return res.status(400).json({message: "Pour être valide, votre publication doit contenir un titre et un contenu."})
     }
 
+    //condition longueur titre et contenu
     if (title.length < 5  || content.length < 5) {
         return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
     }
+
+    //insertion BDD
     conn.query(
-        'INSERT INTO messages SET ?', message, (error, results, fields) => {
-        if (error) {
-            return res.status(400).json(error)
-        }
-        return res.status(201).json({ message: 'Votre réponse a bien été postée !' })
+        'INSERT INTO messages SET ?', message, 
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+            return res.status(201).json({ message: 'Votre réponse a bien été postée !' })
     })
 }
 
@@ -65,10 +73,12 @@ exports.deleteMessage = (req, res, next) => {
             const role = decodedToken.role;
             const messageId = results[0].userId;
             
+            //condition userId et rôle
             if (userId !== messageId && role === 'admin') {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
             }
             
+            //suppression de la BDD
             conn.query(
                 `DELETE FROM messages WHERE id= ?`, req.params.id,
                 (error, results, fields) => {
@@ -100,10 +110,12 @@ exports.updateMessage = (req, res, next) => {
             const messageId = results[0].userId;
             const role = decodedToken.role;
         
+            // condition userID et rôle admin
             if (userId !== messageId && !role === 'admin') {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
             }
         
+            // MAJ en BDD
             const updatedMessage = req.body;
             conn.query('UPDATE messages SET ? WHERE id=?',
                 [updatedMessage, req.params.id],
@@ -122,12 +134,18 @@ exports.updateMessage = (req, res, next) => {
 
 // Middleware pour afficher tous les messages
 exports.getAllMessages = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1]
+    const decodedToken = jwt.verify(token, process.env.TOKEN)
+    const userId = decodedToken.userId
+        
     conn.query(
         // affichage date de création, titre, contenu, likes, du plus récent au plus ancien
-        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\"), title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
-        'SELECT COUNT(likes.like) FROM development_groupomania.likes',
-        // 'SELECT * FROM development_groupomania.likes LEFT JOIN likes ON messages.id = likes.messageId ',
-        
+        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+// DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\)"AS "date"
+// COUNT (likes.id) AS "userLike", COUNT (likes.id) AS "messageLike", 
+// LEFT JOIN messageLike ON messages.id = likes.messageId AND userLike.id = likes.userId =?
+        // 'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+        [userId],
         (error, results, fields) => {
             if (error) {
                 return res.status(404).json({ message: " Pas de message trouvé !"})
