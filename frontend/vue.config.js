@@ -2,6 +2,5 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
-
-  publicPath: '/groupomania'
+  "publicPath": "/groupomania"
 }
