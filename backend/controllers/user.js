@@ -8,14 +8,8 @@ const bcrypt = require('bcrypt');
 // Immportation du package express-rate-limit qui va empêcher la force brute
 const expressRateLimit = require('express-rate-limit');
 
-//Importation du package jsonwebtoken
-const jwt = require('jsonwebtoken')
-
 //Connexion à la BDD
 const conn = require('../middleware/mysql')
-
-// //Importation du modèle User
-const models = require('../models/User');
 
 //Constante regex pour vérification de l'email
 const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

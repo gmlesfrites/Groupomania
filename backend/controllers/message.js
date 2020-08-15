@@ -1,9 +1,6 @@
 //Connexion à la BDD
 const conn = require('../middleware/mysql');
 
-//Importation du package jsonwebtoken
-const jwt = require('jsonwebtoken');
-
 // Middleware de création d'un message
 exports.createMessage = (req, res, next) => {
     const message = req.body;
