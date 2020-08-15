@@ -51,7 +51,8 @@ exports.signup = (req, res, next) => {
 
     bcrypt.hash(user.password, 10).then((hash) => {
         user.password = hash
-        conn.query('INSERT INTO users SET ?', user, (error,results,fields) => {
+        conn.query('INSERT INTO users SET ?', user, 
+        (error,results,fields) => {
         if (error) {
             return res.status(400).json({message: 'Avez-vous renseigné les champs requis ? Votre mot de passe est-il bien configuré ? Avez-vous déjà un compte ? ' + error})
         } 
