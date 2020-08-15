@@ -159,6 +159,32 @@ exports.deleteUser = (req, res, next) => {
     )
 }
 
+// Middleware de suppression d'un utilisateur par l'administrateur
+exports.deleteAdminUser = (req, res, next) => {    
+
+    conn.query(
+        'SELECT * FROM users ',
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+            const deleteUser = req.body.userId;
+            
+            conn.query(
+                `DELETE FROM users WHERE id= ?`, deleteUser,
+                (error, results, fields) => {
+                    if (error) {
+                        return res.status(400).json(error)
+                    }
+                    return res
+                    .status(200)
+                    .json({ message: 'Le compte a bien été supprimé !' })
+                }
+            )
+        }
+    )
+}
+
 // Middleware limitation de demandes (5 par minute)
 exports.limiter = expressRateLimit ({
     windowMs: 60 * 1000,

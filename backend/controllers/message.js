@@ -1,6 +1,10 @@
 //Connexion à la BDD
 const conn = require('../middleware/mysql');
 
+//Importation du package jsonwebtoken
+const jwt = require('jsonwebtoken');
+
+
 // Middleware de création d'un message
 exports.createMessage = (req, res, next) => {
     const message = req.body;
@@ -75,16 +79,13 @@ exports.answerMessage = (req, res, next) => {
 exports.deleteMessage = (req, res, next) => {
     const deleteMessage = req.params.id;
     conn.query(
-        // 'SELECT users.id, users.isAdmin FROM users UNION SELECT messages.id, messages.userId FROM messages',
-        'SELECT * FROM messages WHERE id=?', deleteMessage,
+        'SELECT users.isAdmin, messages.id, users.id, messages.userId FROM users JOIN messages ON users.id = messages.userId WHERE messages.id = ?', deleteMessage,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
             }
             const messageId = results[0].userId;
             const messageToDelete = req.body.userId;
-
-            const admin = results[0].isAdmin;
 
             //condition userId et rôle
             if (messageId != messageToDelete)  {
@@ -93,7 +94,7 @@ exports.deleteMessage = (req, res, next) => {
             
             //suppression de la BDD
             conn.query(
-                `DELETE FROM messages WHERE id= ?`, req.params.id,
+                `DELETE FROM messages WHERE id= ?`, deleteMessage,
                 (error, results, fields) => {
                     if (error) {
                         return res.status(400).json(error)
@@ -106,6 +107,33 @@ exports.deleteMessage = (req, res, next) => {
         }
     )
 }
+
+// Middleware de suppresion d'un message par l'administrateur
+exports.deleteAdminMessage = (req, res, next) => {
+    const deleteMessage = req.params.id;
+    conn.query(
+        'SELECT users.isAdmin, messages.id, users.id, messages.userId FROM users JOIN messages ON users.id = messages.userId WHERE messages.id = ?', deleteMessage,
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+            
+            //suppression de la BDD
+            conn.query(
+                `DELETE FROM messages WHERE id= ?`, deleteMessage,
+                (error, results, fields) => {
+                    if (error) {
+                        return res.status(400).json(error)
+                    }
+                    return res
+                    .status(200)
+                    .json({ message: 'Le message a bien été supprimé !' })
+                }
+            )
+        }
+    )
+}
+
 
 // Middleware de mise à jour d'un message
 exports.updateMessage = (req, res, next) => {

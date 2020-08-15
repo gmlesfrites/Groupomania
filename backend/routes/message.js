@@ -27,6 +27,10 @@ router.put('/:id', authentication, multer, messageControllers.updateMessage);
 // http://localhost:3000/api/message/:id
 router.delete('/:id', authentication, messageControllers.deleteMessage)
 
+// Route pour supprimer un message           
+// http://localhost:3000/api/message/admin/:id
+router.delete('/admin/:id', authentication, messageControllers.deleteAdminMessage)
+
 // Route pour afficher toutes les messages     
 // http://localhost:3000/api/message/
 router.get('/', authentication, messageControllers.getAllMessages);
