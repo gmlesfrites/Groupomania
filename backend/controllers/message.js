@@ -38,7 +38,6 @@ exports.answerMessage = (req, res, next) => {
     const content = req.body.content;
     const initialId = req.body.id;
 
-
     //condition titre et contenu non vide
     if (title === null || content === null) {
         return res.status(400).json({message: "Pour être valide, votre publication doit contenir un titre et un contenu."})
@@ -65,24 +64,21 @@ exports.answerMessage = (req, res, next) => {
 // Middleware de suppresion d'un message
 exports.deleteMessage = (req, res, next) => {
     const deleteMessage = req.params.id;
-    
-    
     conn.query(
+        // 'SELECT users.id, users.isAdmin FROM users UNION SELECT messages.id, messages.userId FROM messages',
         'SELECT * FROM messages WHERE id=?', deleteMessage,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
             }
-        
-            const token = req.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, process.env.TOKEN);
-            const userId = decodedToken.userId;
-            const role = decodedToken.admin;
+            const messageId = results[0].userId;
+            const messageToDelete = req.body.userId;
 
-            
+            const admin = results[0].isAdmin;
+
             //condition userId et rôle
-            if (userId !== deleteMessage && !role === 1) {
-                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
+            if (messageId != messageToDelete)  {
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action ' +  messageId + messageToDelete})
             }
             
             //suppression de la BDD
