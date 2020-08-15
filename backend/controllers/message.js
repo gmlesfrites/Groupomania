@@ -136,14 +136,9 @@ exports.updateMessage = (req, res, next) => {
 
 // Middleware pour afficher tous les messages
 exports.getAllMessages = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1]
-    const decodedToken = jwt.verify(token, process.env.TOKEN)
-    const userId = decodedToken.userId
-        
     conn.query(
         // affichage date de création, titre, contenu, likes, userId du plus récent au plus ancien
         'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content, userId FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
-        [userId],
         (error, results, fields) => {
             if (error) {
                 return res.status(404).json({ message: " Pas de message trouvé !"})
