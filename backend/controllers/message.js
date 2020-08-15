@@ -104,7 +104,7 @@ exports.updateMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const messageId = results[0].userId;
+            const messageId = results[0].id;
             const messageToSend = req.body.userId;
    
             //condition userId identique à celui du message initial userI à remettre

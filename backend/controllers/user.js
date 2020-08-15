@@ -8,6 +8,9 @@ const bcrypt = require('bcrypt');
 // Immportation du package express-rate-limit qui va empêcher la force brute
 const expressRateLimit = require('express-rate-limit');
 
+//Importation du package jsonwebtoken
+const jwt = require('jsonwebtoken')
+
 //Connexion à la BDD
 const conn = require('../middleware/mysql')
 
@@ -127,25 +130,22 @@ exports.getAllUsers = (req, res, next) => {
 
 // Middleware de suppression d'un utilisateur
 exports.deleteUser = (req, res, next) => {    
+
     conn.query(
-        'SELECT * FROM users WHERE id=?', req.params.id,
+        'SELECT * FROM users ',
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
             }
-        
-            const token = req.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, process.env.TOKEN);
-            const userId = decodedToken.userId;
-            const role = decodedToken.role;
-            const messageId = results[0].userId;
+            const deleteUser = req.body.userId;
+            const userToDelete = req.params.id;
             
-            if (userId !== messageId && role !== 'admin') {
-                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
+            if (deleteUser !== userToDelete) {
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action'})
             }
             
             conn.query(
-                `DELETE FROM users WHERE id= ?`, req.params.id,
+                `DELETE FROM users WHERE id= ?`, deleteUser,
                 (error, results, fields) => {
                     if (error) {
                         return res.status(400).json(error)
