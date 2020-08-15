@@ -64,8 +64,11 @@ exports.answerMessage = (req, res, next) => {
 
 // Middleware de suppresion d'un message
 exports.deleteMessage = (req, res, next) => {
+    const deleteMessage = req.params.id;
+    
+    
     conn.query(
-        'SELECT * FROM messages WHERE id=?', req.params.id,
+        'SELECT * FROM messages WHERE id=?', deleteMessage,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
@@ -74,11 +77,11 @@ exports.deleteMessage = (req, res, next) => {
             const token = req.headers.authorization.split(' ')[1];
             const decodedToken = jwt.verify(token, process.env.TOKEN);
             const userId = decodedToken.userId;
-            const role = decodedToken.role;
-            const messageId = results[0].userId;
+            const role = decodedToken.admin;
+
             
             //condition userId et rôle
-            if (userId !== messageId && role === 'admin') {
+            if (userId !== deleteMessage && !role === 1) {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
             }
             
@@ -100,38 +103,37 @@ exports.deleteMessage = (req, res, next) => {
 
 // Middleware de mise à jour d'un message
 exports.updateMessage = (req, res, next) => {
-    const id = req.params.id;
+    const update = req.params.id;
 
     conn.query(
-        'SELECT * FROM messages WHERE id=?', id,
+        'SELECT * FROM messages WHERE id=?', update,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const token = req.headers.authorization.split(' ')[1];
-            const decodedToken = jwt.verify(token, process.env.TOKEN);
-            const userId = decodedToken.userId;
             const messageId = results[0].userId;
-            const role = decodedToken.role;
-        
-            // condition userID et rôle admin
-            if (userId !== messageId && !role === 'admin') {
-                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
-            }
-        
-            // MAJ en BDD
-            const updatedMessage = req.body;
-            conn.query('UPDATE messages SET ? WHERE id=?',
-                [updatedMessage, req.params.id],
-                (error, results, fields) => {
-                    if (error) {
-                        return res.status(400).json(error)
+            const messageToSend = req.body.userId;
+   
+            //condition userId identique à celui du message initial userI à remettre
+            if (messageId == messageToSend ) {
+                
+                // MAJ en BDD
+                const updatedMessage = req.body;
+                conn.query(
+                    'UPDATE messages SET ? WHERE id=?',
+                    [updatedMessage, req.params.id],
+                    (error, results, fields) => {
+                        if (error) {
+                            return res.status(400).json(error)
+                        }
+                        return res
+                        .status(200)
+                        .json({ message: 'Le message a bien été modifié !' })
                     }
-                    return res
-                    .status(200)
-                    .json({ message: 'Le message a bien été modifié !' })
-                }
-            )
+                )
+            } else {
+                return res.status(401).json({ message: "Seul l'auteur de la publication peut modifier son message ! "})
+            }
         }
     )
 }

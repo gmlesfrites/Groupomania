@@ -51,6 +51,7 @@ exports.signup = (req, res, next) => {
     }
 
     const user = req.body;
+
     bcrypt.hash(user.password, 10).then((hash) => {
         user.password = hash
         conn.query('INSERT INTO users SET ?', user, (error,results,fields) => {
@@ -119,8 +120,8 @@ exports.login = (req, res, next) => {
 //Sélection de tous les utilisateurs
 exports.getAllUsers = (req, res, next) => {
     conn.query(
-        // 'SELECT * FROM development_groupomania.users ',
-        'SELECT * FROM development_groupomania.users LEFT JOIN likes ON users.id = likes.userId',
+        'SELECT * FROM development_groupomania.users ',
+        // 'SELECT * FROM development_groupomania.users LEFT JOIN likes ON users.id = likes.userId',
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
@@ -145,7 +146,7 @@ exports.deleteUser = (req, res, next) => {
             const role = decodedToken.role;
             const messageId = results[0].userId;
             
-            if (userId !== messageId && role === 'admin') {
+            if (userId !== messageId && role !== 'admin') {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' })
             }
             
