@@ -104,11 +104,11 @@ exports.updateMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const messageId = results[0].id;
+            const messageId = results[0].userId;
             const messageToSend = req.body.userId;
    
             //condition userId identique à celui du message initial userI à remettre
-            if (messageId == update && messageToSend ) {
+            if (messageId == messageToSend ) {
                 
                 // MAJ en BDD
                 const updatedMessage = req.body;
@@ -125,7 +125,7 @@ exports.updateMessage = (req, res, next) => {
                     }
                 )
             } else {
-                return res.status(401).json({ message: "Seul l'auteur de la publication peut modifier son message ! " })
+                return res.status(401).json({ message: "Seul l'auteur de la publication peut modifier son message ! "})
             }
         }
     )
