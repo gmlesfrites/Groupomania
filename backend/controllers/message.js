@@ -33,9 +33,9 @@ exports.answerMessage = (req, res, next) => {
     const message = req.body;
     const title = req.body.title;
     const content = req.body.content;
-    const initialId = req.body.id;
+    const messageId = req.body.id;
 
-    //condition titre et contenu non vide
+    //condition titre et contenu obligatoires
     if (title === null || content === null) {
         return res.status(400).json({message: "Pour être valide, votre publication doit contenir un titre et un contenu."})
     }
@@ -45,7 +45,7 @@ exports.answerMessage = (req, res, next) => {
         return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
     }
 
-    if (initialId) {
+    if (messageId) {
         //insertion BDD
         conn.query(
             'INSERT INTO messages SET ?', message, 
@@ -53,8 +53,8 @@ exports.answerMessage = (req, res, next) => {
                 if (error) {
                     return res.status(400).json(error)
                 }
-                return res.status(201).json({ message: 'Votre réponse a bien été postée !' })
-        })
+                return res.status(201).json({ message: 'Votre message a bien été posté !' })
+    })
     }
 }
 
