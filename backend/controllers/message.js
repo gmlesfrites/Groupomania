@@ -75,7 +75,7 @@ exports.deleteMessage = (req, res, next) => {
 
             //condition userId et rôle
             if (messageId != messageToDelete)  {
-                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action ' +  messageId + messageToDelete})
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action '})
             }
             
             //suppression de la BDD
@@ -108,7 +108,7 @@ exports.updateMessage = (req, res, next) => {
             const messageToSend = req.body.userId;
    
             //condition userId identique à celui du message initial userI à remettre
-            if (messageId == messageToSend ) {
+            if (messageId == update && messageToSend ) {
                 
                 // MAJ en BDD
                 const updatedMessage = req.body;
@@ -125,7 +125,7 @@ exports.updateMessage = (req, res, next) => {
                     }
                 )
             } else {
-                return res.status(401).json({ message: "Seul l'auteur de la publication peut modifier son message ! "})
+                return res.status(401).json({ message: "Seul l'auteur de la publication peut modifier son message ! " })
             }
         }
     )
