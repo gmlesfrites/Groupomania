@@ -134,7 +134,6 @@ exports.deleteAdminMessage = (req, res, next) => {
     )
 }
 
-
 // Middleware de mise à jour d'un message
 exports.updateMessage = (req, res, next) => {
     const update = req.params.id;
@@ -147,15 +146,17 @@ exports.updateMessage = (req, res, next) => {
             }
             const messageId = results[0].userId;
             const messageToSend = req.body.userId;
+            const title = req.body.title;
+            const content = req.body.content;
    
             //condition userId identique à celui du message initial userI à remettre
             if (messageId == messageToSend ) {
-                
+
                 // MAJ en BDD
-                const updatedMessage = req.body;
                 conn.query(
-                    'UPDATE messages SET ? WHERE id=?',
-                    [updatedMessage, req.params.id],
+
+                    'UPDATE messages SET messages.title =?, messages.content =? WHERE messageId = ?', [title, content, update],
+
                     (error, results, fields) => {
                         if (error) {
                             return res.status(400).json(error)
@@ -166,7 +167,7 @@ exports.updateMessage = (req, res, next) => {
                     }
                 )
             } else {
-                return res.status(401).json({ message: "Seul l'auteur de la publication peut modifier son message ! "})
+                return res.status(401).json({ message: "Seul l'auteur de la publication peut modifier son message ! " })
             }
         }
     )
