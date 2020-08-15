@@ -30,32 +30,45 @@ exports.createMessage = (req, res, next) => {
 
 // Middleware de réponse à un message
 exports.answerMessage = (req, res, next) => {
-    const message = req.body;
-    const title = req.body.title;
-    const content = req.body.content;
-    const messageId = req.body.id;
+    const answerMessage = req.params.id;
+   
+    conn.query(
+        // 'SELECT users.id, users.isAdmin FROM users UNION SELECT messages.id, messages.userId FROM messages',
+        'SELECT * FROM messages WHERE id=?', answerMessage,
+        (error, results, fields) => {
+            if (error) {
+                return res.status(400).json(error)
+            }
+                         
+            const title = req.body.title;
+            const content = req.body.content;
 
-    //condition titre et contenu obligatoires
-    if (title === null || content === null) {
-        return res.status(400).json({message: "Pour être valide, votre publication doit contenir un titre et un contenu."})
-    }
+            //condition titre et contenu obligatoires
+            if (title === null || content === null) {
+                return res.status(400).json({message: "Pour être valide, votre publication doit contenir un titre et un contenu."})
+            }
 
-    //condition longueur titre et contenu
-    if (title.length < 5  || content.length < 5) {
-        return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
-    }
+            //condition longueur titre et contenu
+            if (title.length < 5  || content.length < 5) {
+                return res.status(400).json({message: "Ce que vous postez doit contenir minimum 5 caractères !"})
+            }
 
-    if (messageId) {
-        //insertion BDD
-        conn.query(
-            'INSERT INTO messages SET ?', message, 
-            (error, results, fields) => {
-                if (error) {
-                    return res.status(400).json(error)
-                }
-                return res.status(201).json({ message: 'Votre message a bien été posté !' })
-    })
-    }
+            const message = req.body;
+            //condition userId 
+            if (!answerMessage)  {
+                return res.status(401).json({ message: "Il n'y a pas de message initial"})
+            } else{
+                conn.query(
+                    'INSERT INTO messages SET ?', message, 
+                    (error, results, fields) => {
+                        if (error) {
+                            return res.status(400).json(error)
+                        }
+                        return res.status(201).json({ message: 'Votre réponse a bien été postée !' })
+                })
+            }
+        }
+    )
 }
 
 // Middleware de suppresion d'un message
