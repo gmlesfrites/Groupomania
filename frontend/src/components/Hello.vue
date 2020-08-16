@@ -1,7 +1,14 @@
 <template>
-  <div class="hello">
-    <h1 class="display-1">{{ msg }}</h1>
-  </div>
+   <v-app class="home" v-bind:title="message">
+
+    <router-link :to="{ name: 'Login' }">
+      <v-btn>Connexion</v-btn>
+    </router-link>
+
+    <router-link :to="{ name: 'Signup' }">
+      <v-btn>Inscription</v-btn>
+    </router-link>
+  </v-app>
 </template>
 
 <script>

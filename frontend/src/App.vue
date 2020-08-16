@@ -1,50 +1,32 @@
 <template>
-  <div id="app">
-    <div id="toolbar">
-      <v-toolbar dark src="../src/assets/background1.jpg">
-          <img class="mr-3" :src="require('../src/assets/monochrome-white.png')" height="40"/>
-          <v-spacer></v-spacer>
-          <v-toolbar-title> &nbsp; GROUPOMANIA</v-toolbar-title>
-          <v-spacer></v-spacer>
-      </v-toolbar>
-    </div>
-
-    <v-nav id="nav" display="4">
-      <router-link to="/">Home</router-link> | 
-      <router-link to="/TermsOfUse">Conditions d'utilisation</router-link> |
-      <router-link to="/Signup">Inscription</router-link> |
-      <router-link to="/Login">Connexion</router-link>
-    </v-nav>
-
-    <router-view />
-  
-      <v-footer class="row" app> 
-        <v-spacer></v-spacer>
-        <p class="white--text">Groupomania - &copy; {{ new Date().getFullYear() }}</p>
-        <v-spacer></v-spacer>
-      </v-footer>
-    </div>
+  <v-app id="app">
+    <Navigation/>
+    <Hello/>
+    <Footer/>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+  import Navigation from './components/Navigation'
+  import Hello from './components/Hello'
+  import Footer from './components/Footer'
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #ffd7d7;
+  export default {
+    name: 'app',
+    components: {
+      'Navigation': Navigation, 
+      'Hello': Hello,
+      'Footer' : Footer
     }
   }
-}
+</script>
+
+<style>
+  #app {
+    font-family: 'Avenir', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
 </style>

@@ -1,38 +1,43 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 import Home from '../views/Home.vue'
+
 import TermsOfUse from '../views/TermsOfUse.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
+import Chat from '../views/Chat.vue'
 
 
-Vue.use(VueRouter)
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/TermsOfUse',
-    name: 'TermsOfUse',
-    component: TermsOfUse
-  },
-  {
-    path: '/Login',
-    name: 'Login',
-    component: Login
-  },
-  {
-    path: '/Signup',
-    name: 'Signup',
-    component: Signup
-  }
-]
+Vue.use(Router)
 
-const router = new VueRouter({
-  routes
+export default new Router({
+  routes: [
+    {
+      path: '/home',
+      name: 'Home',
+      component : Home,
+    },
+    {
+      path: '/chat',
+      name: 'Chat',
+      component: Chat
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: Signup
+    },
+    {
+      path: '/terms',
+      name: 'TermsOfUse',
+      component: TermsOfUse
+    }
+  ]
+
 })
-
-export default router

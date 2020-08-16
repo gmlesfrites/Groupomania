@@ -1,18 +1,27 @@
+  
 <template>
-  <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <Hello msg="Bienvenue sur l'application Groupomania"/>
-  </div>
+  <v-app class="home" v-bind:title="message">
+
+    <router-link :to="{ name: 'Login' }">
+      <v-btn>Connexion</v-btn>
+    </router-link>
+
+    <router-link :to="{ name: 'Signup' }">
+      <v-btn>Inscription</v-btn>
+    </router-link>
+
+
+  </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-import Hello from '@/components/Hello.vue'
 
 export default {
-  name: 'Home',
-  components: {
-    Hello
+  name: "Home",
+
+  data: function() {
+    return { message: "Page d'accueil" };
   }
-}
+};
 </script>
+
