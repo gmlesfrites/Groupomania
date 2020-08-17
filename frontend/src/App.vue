@@ -1,22 +1,14 @@
 <template>
   <v-app id="app">
-    <Navigation/>
-    <Hello/>
-    <Footer/>
+    <router-view />
   </v-app>
 </template>
 
 <script>
-  import Navigation from './components/Navigation'
-  import Hello from './components/Hello'
-  import Footer from './components/Footer'
 
   export default {
     name: 'app',
     components: {
-      'Navigation': Navigation, 
-      'Hello': Hello,
-      'Footer' : Footer
     }
   }
 </script>

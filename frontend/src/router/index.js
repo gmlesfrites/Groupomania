@@ -1,38 +1,64 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '../views/Home.vue'
+import VueRouter from 'vue-router'
 
+import Home from '../views/Home.vue'
 import TermsOfUse from '../views/TermsOfUse.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Chat from '../views/Chat.vue'
 
+// import store from '../store'
+
+Vue.use(VueRouter)
+
+// const ifAuthenticated = (to, from, next) => {
+//   if (store.state.auth.status.loggedIn) {
+//     next()
+//     return
+//   }
+//   next('/')
+// }
+
+// const ifNotAuthenticated = (to, from, next) => {
+//   if (!store.state.auth.status.loggedIn) {
+//     next()
+//     return
+//   }
+//   next('/wall')
+// }
 
 
-Vue.use(Router)
-
-export default new Router({
-  routes: [
+  const routes = [
     {
-      path: '/home',
+      path: '/',
       name: 'Home',
       component : Home,
+      // beforeEnter: ifNotAuthenticated
     },
     {
       path: '/chat',
       name: 'Chat',
-      component: Chat
+      component: Chat,
+      // beforeEnter: ifAuthenticated
     },
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      // beforeEnter: ifNotAuthenticated
     },
     {
       path: '/signup',
       name: 'Signup',
       component: Signup
+
     },
+    // {
+    //   path: '/account',
+    //   name: 'Account',
+    //   component: Account,
+    //   beforeEnter: ifAuthenticated
+    // },
     {
       path: '/terms',
       name: 'TermsOfUse',
@@ -40,4 +66,10 @@ export default new Router({
     }
   ]
 
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
+
+export default router

@@ -1,19 +1,21 @@
 <template>
-  <v-container fluid class="terms">
+  <v-app id="terms">
+    <v-container fluid class="terms" >
 
     <h1>Conditions d'utilisation</h1>
-
-
-
-        <p class="text-justify">
+    <v-divider></v-divider>
+    <v-container class="d-flex-col">
+      <p class="text-justify">
       Le groupe Groupomania propose à l'ensemble de son personnel cette nouvelle
       application de réseau social interne.
     </p>
+    <v-spacer></v-spacer>
     <p class="text-justify">
       L'accès aux informations contenues dans l'application est strictement
       réservé au personnel de l'entreprise, par le biais d'une connexion avec
       l'adresse email de l'entreprise.
     </p>
+    <v-spacer></v-spacer>
 
    <ul class="text-justify">
       Il est formellement interdit aux utilisateurs :
@@ -65,5 +67,24 @@
       charte éthique signée par chacun à l'occasion de son recrutement dans
       l'entreprise.
     </p>
-  </v-container>
+    </v-container>
+    </v-container>
+  </v-app>
 </template>
+
+<script>
+// @ is an alias to /src
+//import Header from "@/components/Header.vue";
+export default {
+  name: "TermsOfUse",
+  
+};
+</script>
+
+<style>
+  #terms {
+    margin: 0 5%;
+  }
+</style>
+
+
