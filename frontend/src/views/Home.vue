@@ -1,25 +1,27 @@
 <template>
-  <div class="home" v-bind:title="message">
-    <router-link :to="{ name: 'Login' }">
-      <v-btn>Connexion</v-btn>
-    </router-link>
-    <router-link :to="{ name: 'Signup' }">
-      <v-btn>Inscription</v-btn>
-    </router-link>
-  </div>
+<v-app>
+  <Navigation/>
+  <Hello/>
+  <Footer/>
+</v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-//import Header from "@/components/Header.vue";
+
+import Navigation from "../components/Navigation";
+import Hello from "../components/Hello";
+import Footer from "../components/Footer";
+
 export default {
   name: "Home",
-  /* components: {
-    Header
-  } */
-  data: function() {
-    return { message: "Page d'accueil" };
-  }
+  components: {
+    Navigation,
+    Hello,
+    Footer
+  } ,
+  // data: function() {
+  //   return { message: "Page d'accueil" };
+  // }
 };
 </script>
 
