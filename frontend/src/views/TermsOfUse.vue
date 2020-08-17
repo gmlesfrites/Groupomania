@@ -5,6 +5,8 @@
       <h1>Conditions d'utilisation</h1>
       
       <v-spacer></v-spacer>
+      <v-divider></v-divider>
+      <v-spacer></v-spacer>
 
       <v-container>
           
@@ -44,6 +46,7 @@
             <li class="text-justify">De promulguer des informations à caractère confidentiel, sensible,
               politique, etc. pouvant donner lieu à des polémiques « bad buzz ».</li>
           </ul>
+          <v-spacer></v-spacer>
         </v-container>
 
         <v-spacer></v-spacer> 
