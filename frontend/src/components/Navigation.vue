@@ -1,17 +1,22 @@
 <template>
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }" prepend>
 
-          <v-btn color="#ffd7d7" v-bind="attrs" v-on="on" class="text-uppercase">          
+  <v-menu offset-y >
+    <template v-slot:activator="{ on: menu, attrs }" prepend>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on: tooltip }">
+          <v-btn color="#ffd7d7" v-bind="attrs"
+                v-on="{ ...tooltip, ...menu }" class="text-uppercase">          
             <img width="24" height="24" src="../assets/monochrome-black.png" class="mr-2">
             Groupomania 
           </v-btn>
         </template>
+      </v-tooltip>
+    </template>
       
-      <nav id="nav">
-        <router-link class="d-flex liens" v-for="routes in links" :key="routes.id" :to="`${routes.page}`" >{{routes.text}}</router-link>
-      </nav>
-    </v-menu>
+    <nav id="nav">
+      <router-link class="d-flex liens" v-for="routes in links" :key="routes.id" :to="`${routes.page}`" >{{routes.text}}</router-link>
+    </nav>
+  </v-menu>
 
 </template>
 
