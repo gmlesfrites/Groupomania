@@ -14,14 +14,25 @@
                 <v-form>
                   <v-text-field label="Prénom" name="lastname" prepend-icon="mdi-account-cog" type="text" id="name" ></v-text-field>
                   <v-text-field label="Nom" name="firstname" prepend-icon="mdi-account-cog" type="text" id="firstname" ></v-text-field>
+                  <v-text-field label="Biographie" name="bio" prepend-icon="mdi-account-cog" type="text" id="bio" ></v-text-field>
                   <v-text-field label="Email" name="email" prepend-icon="mdi-email" type="text" id="email" ></v-text-field>
                   <v-text-field label="Mot de passe" name="password" prepend-icon="mdi-lock" type="password" id="password" ></v-text-field>
+                
+                  <v-row class="ml-2">
+                  * Si vous avez déjà un compte,  
+                    <router-link :to="{ name: 'Login' }" class="ml-1">
+                   c'est par ici !
+                  </router-link>
+                  </v-row>
+                
+                
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="success"> CONNEXION </v-btn>
               </v-card-actions>
+              
             </v-card>
           </v-col>
         </v-row>

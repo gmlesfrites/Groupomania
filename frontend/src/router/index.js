@@ -36,6 +36,12 @@ Vue.use(VueRouter)
       // beforeEnter: ifNotAuthenticated
     },
     {
+      path: '/home',
+      name: 'Home',
+      component : Home,
+      // beforeEnter: ifNotAuthenticated
+    },
+    {
       path: '/chat',
       name: 'Chat',
       component: Chat,

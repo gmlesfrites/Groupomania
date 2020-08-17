@@ -14,7 +14,16 @@
                   
                   <v-text-field label="Email" name="email" prepend-icon="mdi-email" type="text" id="email" ></v-text-field>
                   <v-text-field label="Mot de passe" name="password" prepend-icon="mdi-lock" type="password" id="password" ></v-text-field>
+
                 </v-form>
+  
+                <v-row class="ml-2">
+                  * Si vous n'avez pas encore créé votre compte,  
+                    <router-link :to="{ name: 'Signup' }" class="ml-1">
+                   c'est par ici !
+                  </router-link>
+                </v-row>
+
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>

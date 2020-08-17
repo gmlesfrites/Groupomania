@@ -9,6 +9,6 @@
       name: 'app',
       components: {
         ChatComponent
-      }
-    }
+      },
+  }
 </script>
