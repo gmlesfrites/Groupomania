@@ -2,7 +2,7 @@
       <v-menu offset-y>
         
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="#FCE4EC" v-bind="attrs" v-on="on" class="text-uppercase"> Groupomania </v-btn>
+          <v-btn color="#ffd7d7" v-bind="attrs" v-on="on" class="text-uppercase"> Groupomania </v-btn>
         </template>
       
       <nav id="nav">

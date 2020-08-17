@@ -1,14 +1,20 @@
 <template>
   <v-app id="app">
+    <Navigation/>
     <router-view/>
+    <Footer/>
   </v-app>
 </template>
 
 <script>
+  import Footer from "./components/Footer";
+  import Navigation from './components/Navigation'  
 
   export default {
     name: 'app',
     components: {
+      Navigation,
+      Footer
     }
   }
 </script>
