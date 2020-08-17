@@ -1,8 +1,8 @@
 <template>
 
-  <v-menu offset-y >
+  <v-menu offset-y absolute>
     <template v-slot:activator="{ on: menu, attrs }" prepend>
-      <v-tooltip bottom>
+      <v-tooltip right>
         <template v-slot:activator="{ on: tooltip }">
           <v-btn color="#ffd7d7" v-bind="attrs"
                 v-on="{ ...tooltip, ...menu }" class="text-uppercase">          

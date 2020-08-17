@@ -1,19 +1,11 @@
 <template>
-
- 
-<v-container></v-container>
-
+  <div>
+    
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: 
-    'ChatComponent',
-  data() {
-    return {
-      
-    };
-  }
+  name: "ChatComponent"
 }
 </script>

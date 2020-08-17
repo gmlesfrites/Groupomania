@@ -43,7 +43,8 @@
           <li class="text-justify">De promulguer des informations à caractère confidentiel, sensible,
             politique, syndical, etc. pouvant donner lieu à des polémiques « bad buzz ».</li>
 
-          <li class="text-justify">De publier en dehors du groupe des informations confidentielles partagées sur ce réseau (sécurité industrielle)  </li>
+          <li class="text-justify">De publier en dehors du groupe des informations confidentielles partagées 
+            sur ce réseau (sécurité industrielle).  </li>
         </ul>
       </v-row>
     </v-container>
@@ -67,9 +68,7 @@
     </v-row>
 
 
-      <v-row class="d-flex-col mt-12">
-        <v-spacer><img src="../assets/icon-above-font.png" alt="logo de l'entreprise" width="50%"></v-spacer>
-      </v-row>
+      
   </v-container>
 
 

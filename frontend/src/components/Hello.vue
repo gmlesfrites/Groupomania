@@ -14,7 +14,9 @@
 
           <v-row>
             <p class="text-justify h4">Prenez garde à la facilité d'écrire, quand on est "caché derrière son clavier" !
-              Retrouvez toutes les conditions d'utilisation de cette application ici : <router-link :to="{ name: 'TermsOfUse' }"> Conditions d'utilisation </router-link> </p>
+              Retrouvez toutes les conditions d'utilisation de cette application ici : 
+              <br/>
+              <router-link :to="{ name: 'TermsOfUse' }"> Conditions d'utilisation </router-link> </p>
           </v-row>
         </v-container>
 
