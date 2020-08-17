@@ -1,17 +1,22 @@
 <template>
   <v-app>
       <Navigation/>
+      <ChatComponent/>
+      <Footer/>
   </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-import Navigation from "../components/Navigation.vue";
+  import Navigation from "../components/Navigation";
+  import ChatComponent from "../components/ChatComponent";
+  import Footer from "../components/Footer";
+
 export default {
-  name: 'app',
-  components: {
-  Navigation
-  
+    name: 'app',
+    components: {
+      Navigation,
+      ChatComponent,
+      Footer
+    }
   }
-};
 </script>

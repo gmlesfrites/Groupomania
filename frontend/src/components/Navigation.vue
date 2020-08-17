@@ -1,5 +1,4 @@
 <template>
-  <v-app>
       <v-menu offset-y>
         
         <template v-slot:activator="{ on, attrs }">
@@ -10,8 +9,7 @@
         <router-link class="d-flex liens" v-for="routes in links" :key="routes.id" :to="`${routes.page}`">{{routes.text}}</router-link>
       </nav>
     </v-menu>
-    
-  </v-app>
+
 </template>
 
 <script>

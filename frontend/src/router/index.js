@@ -30,7 +30,7 @@ Vue.use(VueRouter)
 
   const routes = [
     {
-      path: '/',
+      path: '/home',
       name: 'Home',
       component : Home,
       // beforeEnter: ifNotAuthenticated

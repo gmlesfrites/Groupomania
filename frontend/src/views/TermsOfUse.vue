@@ -1,7 +1,7 @@
 <template>
 <v-app>
     <Navigation/>
-    <v-container class="d-flex-col">
+    <v-container class="d-flex-col mt-12">
       <h1>Conditions d'utilisation</h1>
       
       <v-spacer></v-spacer>
