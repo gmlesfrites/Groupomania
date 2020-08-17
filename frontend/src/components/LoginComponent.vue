@@ -5,9 +5,10 @@
           <v-col cols="12" sm="8" md="4">
             <v-card class="elevation-12">
               <v-toolbar color="#ffd7d7">
-                <v-toolbar-title>Connexion</v-toolbar-title>
-                <v-spacer></v-spacer>
-                
+                <v-toolbar-title>
+                  <img width="24" height="24" src="../assets/monochrome-black.png" class="mr-2">
+                  Connexion
+                </v-toolbar-title>                
               </v-toolbar>
               <v-card-text>
                 <v-form>
