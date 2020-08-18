@@ -2,19 +2,21 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:8080/api/test/';
+// Importation du package dotenv
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env'});
 
 class UserService {
   getPublicContent() {
-    return axios.get(API_URL + 'all');
+    return axios.get(process.env.VUE_APP_SERVICE_URL + 'all');
   }
 
   getUserBoard() {
-    return axios.get(API_URL + 'user', { headers: authHeader() });
+    return axios.get(process.env.VUE_APP_SERVICE_URL+ 'user', { headers: authHeader() });
   }
 
   getModeratorBoard() {
-    return axios.get(API_URL + 'mod', { headers: authHeader() });
+    return axios.get(process.env.VUE_APP_SERVICE_URL + 'mod', { headers: authHeader() });
   }
 }
 

@@ -1,20 +1,11 @@
 import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App.vue'
-import {router} from './router'
+import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import VeeValidate from 'vee-validate'
-import { extend } from 'vee-validate';
-import * as rules from 'vee-validate/dist/rules';
-import { messages } from 'vee-validate/dist/locale/en.json';
+// import VeeValidate from 'vee-validate'
 
-Object.keys(rules).forEach(rule => {
-  extend(rule, {
-    ...rules[rule], // copies rule configuration
-    message: messages[rule] // assign message
-  });
-});
 
 import Vuex from 'vuex';
 
@@ -31,15 +22,14 @@ import {
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 // Vue.directive('linkified', linkify)
 
-Vue.use(VeeValidate)
+// Vue.use(VeeValidate)
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Vuex)
 
-Vue.config.productionTip = false
-
 new Vue({
   router,
+  // VeeValidate,
   store,
   vuetify,
   render: h => h(App)

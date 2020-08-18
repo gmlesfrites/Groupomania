@@ -1,12 +1,14 @@
 //Authentication service
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/auth/';
+// Importation du package dotenv
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env'});
 
 class AuthService {
   login(user) {
     return axios
-      .post(API_URL + 'signin', {
+      .post(process.env.AUTH + 'login', {
         username: user.username,
         password: user.password
       })
@@ -24,7 +26,7 @@ class AuthService {
   }
 
   signup(user) {
-    return axios.post(API_URL + 'signup', {
+    return axios.post(process.env.AUTH + 'signup', {
       firstname: user.firstname,
       lastname: user.lastname,
       bio: user.bio,

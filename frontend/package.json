@@ -14,6 +14,7 @@
     "axios": "^0.19.2",
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.6.5",
+    "dotenv": "^8.2.0",
     "vee-validate": "^3.3.9",
     "vue": "^2.6.11",
     "vue-fontawesome": "0.0.2",

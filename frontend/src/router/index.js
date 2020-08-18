@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
 import TermsOfUse from '../views/TermsOfUse.vue'
@@ -8,11 +8,9 @@ import Login from '../views/Login.vue'
 
 // import store from '../store'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export const router = new Router({
-  mode: 'history',
-  routes: [
+const routes = [
     {
       path: '/',
       name: 'home',
@@ -54,7 +52,15 @@ export const router = new Router({
       component: TermsOfUse
     }
   ]
-});
+
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router
 
 
 // router.beforeEach((to, from, next) => {
