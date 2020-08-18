@@ -11,10 +11,10 @@
                 </v-toolbar-title>                
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form action="#" @submit.prevent="login">
                   
-                  <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" ></v-text-field>
-                  <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" ></v-text-field>
+                  <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="email"/>
+                  <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="password"/>
 
                 </v-form>
   
@@ -45,6 +45,20 @@ export default {
   name: 'LoginComponent',
   props: {
     msg: String
-  }
+  },
+  data() {
+    return {
+      email:'',
+      password:'',
+    }
+  },
+  methods: {
+    login() {
+      this.$store.dispatch('retrieveToken', {
+        email: this.email,
+        password: this.password
+      })
+    }
+  },
 }
 </script>

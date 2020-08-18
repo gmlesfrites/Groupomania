@@ -22,9 +22,11 @@
               <p class="text-justify h3">Biographie</p>
             </v-row>
             <v-row class="ml-2">
-              <p class="text-justify h3">email</p>
+              <p class="text-justify h3">Email</p>
             </v-row>
-
+            <v-row class="ml-2">
+              <p class="text-justify h3">Rôle</p>
+            </v-row>
               
           </v-card-text>
           <v-card-actions>

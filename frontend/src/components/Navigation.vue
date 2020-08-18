@@ -48,7 +48,7 @@
           },
           {
             id: 4,
-            text: 'Profil',
+            text: 'Mon compte',
             page:'/profile'
           },
           {
