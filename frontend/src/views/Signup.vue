@@ -36,7 +36,7 @@
 
               <v-row class="ml-2" h6>
               Si vous avez déjà un compte,  
-                <router-link :to="{ name: 'Login' }" class="ml-1">
+                <router-link to="/login" class="ml-1">
                 c'est par ici !
               </router-link>
               </v-row>

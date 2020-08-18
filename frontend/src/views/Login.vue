@@ -28,7 +28,7 @@
 
             <v-row class="ml-2">
               Si vous n'avez pas encore créé votre compte,  
-                <router-link :to="{ name: 'Signup' }" class="ml-1">
+                <router-link to="/signup" class="ml-1">
                 c'est par ici !
               </router-link>
               </v-row>
@@ -52,61 +52,60 @@
 </template>
 
 <script>
+  import User from '../models/user'
+  import { ValidationProvider } from 'vee-validate';
 
-import User from '../models/user'
-import { ValidationProvider } from 'vee-validate';
+  export default {
+    components: {
+      ValidationProvider
+    },
+    name: 'Login',
+    props: {
+      msg: String
+    },
+    data() {
+      return {
+        user: new User('', ''),
+        loading: false,
+        message: ''
+      };
+    },
+    computed: {
+      loggedIn() {
+        return this.$store.state.auth.status.loggedIn;
+      }
+    },
+    created() {
+      if (this.loggedIn) {
+        this.$router.push('/profile');
+      }
+    },
+    methods: {
+      handleLogin() {
+        this.loading = true;
+        this.$validator.validateAll().then(isValid => {
+          if (!isValid) {
+            this.loading = false;
+            return;
+          }
 
-export default {
-  components: {
-    ValidationProvider
-  },
-  name: 'Login',
-  props: {
-    msg: String
-  },
-  data() {
-    return {
-      user: new User('', ''),
-      loading: false,
-      message: ''
-    };
-  },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
+          if (this.user.email && this.user.password) {
+            this.$store.dispatch('auth/login', this.user).then(
+              () => {
+                // TODO voir si je garde ce chemin ou si je vais directement vers les discussions
+                this.$router.push('/profile');
+              },
+              error => {
+                this.loading = false;
+                this.message =
+                  (error.response && error.response.data) ||
+                  error.message ||
+                  error.toString();
+              }
+            );
+          }
+        });
+      }
     }
-  },
-  created() {
-    if (this.loggedIn) {
-      this.$router.push('/profile');
-    }
-  },
-  methods: {
-    handleLogin() {
-      this.loading = true;
-      this.$validator.validateAll().then(isValid => {
-        if (!isValid) {
-          this.loading = false;
-          return;
-        }
-
-        if (this.user.email && this.user.password) {
-          this.$store.dispatch('auth/login', this.user).then(
-            () => {
-              // TODO voir si je garde ce chemin ou si je vais directement vers les discussions
-              this.$router.push('/profile');
-            },
-            error => {
-              this.loading = false;
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-            }
-          );
-        }
-      });
-    }
-  }
-};
+  };
 </script>
