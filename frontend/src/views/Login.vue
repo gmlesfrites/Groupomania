@@ -1,6 +1,6 @@
 <template>
 
-  <v-container class="fill-height" fluid>
+  <v-container  fluid>
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4">
         <v-card class="elevation-12">
@@ -14,12 +14,14 @@
             <v-form name="form" @submit.prevent="handleLogin">
               
               <ValidationProvider v-slot="email">
-              <v-text-field :value="email" @change="onInputChanged" label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.email"/>
+              <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.email"/>
+              <span>{{ email.errors[0] }}</span>
               </ValidationProvider>
               
 
               <ValidationProvider v-slot="password">
-              <v-text-field :value="password" @change="onInputChanged" label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password"/>
+              <v-text-field :value="password" label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password"/>
+              <span>{{ password.errors[0] }}</span>
               </ValidationProvider>
 
             </v-form>

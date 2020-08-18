@@ -1,22 +1,23 @@
 <template>
 
-  <v-menu offset-y absolute>
-    <template v-slot:activator="{ on: menu, attrs }" prepend>
-      <v-tooltip right>
-        <template v-slot:activator="{ on: tooltip }">
-          <v-btn color="#ffd7d7" v-bind="attrs"
-                v-on="{ ...tooltip, ...menu }" class="text-uppercase">          
-            <img width="24" height="24" src="../assets/monochrome-black.png" class="mr-2">
-            Groupomania 
-          </v-btn>
-        </template>
-      </v-tooltip>
-    </template>
+  <v-app-bar>
+    <router-link to="/home" class="text-decoration-none"><font-awesome-icon icon="home" class="navbar mr-2" /> Page d'accueil </router-link>
+    <router-link  v-if="showModeratorBoard" to="/mod" class="text-decoration-none"> Vue Modérateur </router-link>
+    <router-link v-if="currentUser" to="/user" class="text-decoration-none"> Vue Membre  </router-link>
       
-    <nav id="nav">
-      <router-link class="d-flex liens" v-for="routes in links" :key="routes.id" :to="`${routes.page}`" >{{routes.text}}</router-link>
-    </nav>
-  </v-menu>
+      <v-container v-if="!currentUser" class="ml-auto">
+        <router-link to="/signup" class="text-decoration-none" ><font-awesome-icon icon="user-plus" class="mr-2"/> Inscription </router-link> |
+        <router-link to="/login" class="text-decoration-none"><font-awesome-icon icon="sign-in-alt" class="mr-2"/> Connexion </router-link>
+      </v-container>
+
+      <v-container v-if="currentUser" class="ml-auto">
+        <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/>{{ currentUser.username }}</router-link> 
+        <router-link  href @click.prevent="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" /> Déconnexion </router-link>
+      </v-container>
+  </v-app-bar>
+      
+
+
 
 </template>
 

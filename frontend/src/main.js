@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+// import VeeValidate from "vee-validate";
 
 import Vuex from 'vuex';
 
@@ -20,6 +21,7 @@ import {
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+// Vue.use(VeeValidate);
 
 Vue.use(Vuex)
 
