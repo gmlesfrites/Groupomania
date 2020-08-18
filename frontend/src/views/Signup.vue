@@ -60,8 +60,12 @@
 
 <script>
 import User from '../models/user'
+import { ValidationProvider } from 'vee-validate';
 
 export default {
+  components: {
+    ValidationProvider
+  },
   name: 'Signup',
   data() {
     return {

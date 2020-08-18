@@ -2,19 +2,15 @@
   <v-app>
     <v-container>
       <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <v-navbar>
-          <li class="nav-item">
-            <router-link to="/home" class="nav-link"><font-awesome-icon icon="home" />Home</router-link>
-          </li>
-
-          <li v-if="showModeratorBoard" class="nav-item">
-            <router-link to="/mod" class="nav-link">Moderator Board</router-link>
-          </li>
-
-          <li class="nav-item">
-            <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
-          </li>
-        </v-navbar>
+        <v-app-bar>
+          
+            <router-link to="/home" class="nav-link"><font-awesome-icon icon="home" class="mr-2" />Page d'accueil</router-link>
+         
+            <router-link  v-if="showModeratorBoard" to="/mod" class="nav-link">Vue Modérateur</router-link>
+ 
+            <router-link v-if="currentUser" to="/user" class="nav-link">Vue Membre</router-link>
+    
+        </v-app-bar>
 
         <v-container v-if="!currentUser" class="navbar-nav ml-auto">
           <li class="nav-item">

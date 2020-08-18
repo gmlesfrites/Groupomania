@@ -16,12 +16,12 @@
               <ValidationProvider v-slot="email">
               <v-text-field :value="email" @change="onInputChanged" label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.email"/>
               </ValidationProvider>
-              <v-row v-if="errors.has('email')" class="alert alert-danger" role="alert">Votre email est requis.</v-row>
+              
 
               <ValidationProvider v-slot="password">
               <v-text-field :value="password" @change="onInputChanged" label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password"/>
               </ValidationProvider>
-              <v-row v-if="errors.has('password')" class="alert alert-danger" role="alert">Votre mot de passe est requis.</v-row>
+
             </v-form>
 
             <v-row class="ml-2">

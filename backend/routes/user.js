@@ -9,23 +9,23 @@ const authentication = require('../middleware/auth');
 const userControllers = require('../controllers/user');
 
 //Route pour la première authentification     
-// http://localhost:3000/auth/signup
+// http://localhost:3000/api/auth/signup
 router.post('/signup',  userControllers.limiter, userControllers.signup);
 
 //Route pour l'identification (avec limite de connexion pour éviter force brute)    
-// http://localhost:3000/auth/login
+// http://localhost:3000/api/auth/login
 router.post('/login', userControllers.limiter, userControllers.login);
 
 //Route pour récupérer tous les utilisateurs     
-// http://localhost:3000/auth
+// http://localhost:3000/api/auth
 router.get('/', userControllers.getAllUsers);
 
 // Route pour supprimer un utilisateur  
-// http://localhost:3000/auth/:id
+// http://localhost:3000/api/auth/:id
 router.delete('/:id', authentication, userControllers.deleteUser);
 
 // Route pour supprimer un utilisateur  
-// http://localhost:3000/auth/admin/:id
+// http://localhost:3000/api/auth/admin/:id
 router.delete('/admin/:id', authentication, userControllers.deleteAdminUser)
 
 module.exports = router;
