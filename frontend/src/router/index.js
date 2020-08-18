@@ -6,6 +6,7 @@ import TermsOfUse from '../views/TermsOfUse.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Chat from '../views/Chat.vue'
+import Profile from '../views/Profile.vue'
 
 // import store from '../store'
 
@@ -59,12 +60,12 @@ Vue.use(VueRouter)
       component: Signup
 
     },
-    // {
-    //   path: '/account',
-    //   name: 'Account',
-    //   component: Account,
-    //   beforeEnter: ifAuthenticated
-    // },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+      // beforeEnter: ifAuthenticated
+    },
     {
       path: '/terms',
       name: 'TermsOfUse',

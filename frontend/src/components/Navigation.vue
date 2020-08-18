@@ -48,6 +48,11 @@
           },
           {
             id: 4,
+            text: 'Profil',
+            page:'/profile'
+          },
+          {
+            id: 5,
             text: "Conditions d'utilisation",
             page:'/terms'
           }
