@@ -2,11 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { auth } from './auth.module';
+// import { user } from './user.module'
+// import { message } from './message.module'
+// import { like } from './like.module'
 
-//Authentication service
-const axios = require('axios').default;
-
-Vue.use (axios)
 Vue.use (Vuex)
 
 export default new Vuex.Store({
@@ -15,18 +14,12 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    retrieveToken(context, credentials) {
-      axios.post('/login', {
-        email: credentials.email,
-        password: credentials.password
-      })
-      .catch(error => error )
-      .then(response => response.json())
-      .then()
-
-    },
+    
   },
   modules: {
-    auth
+    auth,
+    // user,
+    // message,
+    // like
   }
 })
