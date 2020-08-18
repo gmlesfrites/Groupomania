@@ -1,16 +1,19 @@
 <template>
   <v-container>
-    <header>
-      <h3>{{content}}</h3>
-    </header>
+    <Modal/>
+    <ChatComponent/>
   </v-container>
 </template>
 
 <script>
   import UserService from '../services/user.service';
+  import Modal from "../components/ModalMessage";
+  import ChatComponent from "../components/ChatComponent";
+
 
   export default {
     name: 'Moderator',
+    components : { Modal, ChatComponent },
     data() {
       return {
         content: ''

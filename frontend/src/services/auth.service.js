@@ -1,5 +1,10 @@
 //Authentication service
-import axios from 'axios';
+import axios from 'axios'
+import authHeader from './auth-header'
+
+axios.defaults.baseURL = process.env.VUE_APP_BASE;
+axios.defaults.headers.common['Authorization'] = process.env.VUE_APP_TOKEN;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // Importation du package dotenv
 const dotenv = require('dotenv');
@@ -9,7 +14,7 @@ class AuthService {
   login(user) {
     return axios
       .post(process.env.AUTH + 'login', {
-        username: user.username,
+        email: user.email,
         password: user.password
       })
       .then(response => {
@@ -33,6 +38,13 @@ class AuthService {
       email: user.email,
       password: user.password, 
     });
+  }
+
+  delete(payload) {
+    const id = payload
+    return axios
+      .delete(process.env.AUTH + id, { headers: authHeader() })
+      .then(() => localStorage.removeItem('user'))
   }
 }
 

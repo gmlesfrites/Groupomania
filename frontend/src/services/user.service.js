@@ -1,22 +1,21 @@
 // Accès aux données d'utilisateur
-import axios from 'axios';
+//Authentication service
+const axios = require('axios').default;
 import authHeader from './auth-header';
 
-// Importation du package dotenv
-const dotenv = require('dotenv');
-dotenv.config({ path: './.env'});
+const API_URL = 'http://localhost:3000/api/auth/'
 
 class UserService {
   getPublicContent() {
-    return axios.get(process.env.VUE_APP_SERVICE_URL + 'all');
+    return axios.get(API_URL)
   }
 
   getUserBoard() {
-    return axios.get(process.env.VUE_APP_SERVICE_URL+ 'user', { headers: authHeader() });
+    return axios.get(API_URL + 'user', { headers: authHeader() });
   }
 
   getModeratorBoard() {
-    return axios.get(process.env.VUE_APP_SERVICE_URL + 'mod', { headers: authHeader() });
+    return axios.get(API_URL + 'mod', { headers: authHeader() });
   }
 }
 

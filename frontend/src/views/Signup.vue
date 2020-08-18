@@ -34,7 +34,7 @@
               <span>{{ errors[0] }}</span>
               </ValidationProvider>
 
-              <v-row class="ml-2" h6>
+              <v-row class="ml-2">
               Si vous avez déjà un compte,  
                 <router-link to="/login" class="ml-1">
                 c'est par ici !

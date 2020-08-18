@@ -2,6 +2,7 @@
   <v-app>
     <v-main>
       <Navigation/>
+        
       <router-view/>
       <Footer/>
     </v-main>  
@@ -10,6 +11,7 @@
 
 <script>
   import Footer from "./components/Footer";
+
   import Navigation from './components/Navigation'  
 
 export default {
@@ -19,23 +21,7 @@ export default {
       Footer
     },
 
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-    showModeratorBoard() {
-      if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_MODERATOR');
-      }
-      return false;
-    }
-  },
-  methods: {
-    logOut() {
-      this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
-    }
-  }
+  
 };
 </script>
 

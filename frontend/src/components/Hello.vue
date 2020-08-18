@@ -1,7 +1,7 @@
 <template>
   <v-container class="d-flex-col mt-12">
-    <h1>Bienvenue sur l'application Groupomania, votre réseau social d'entreprise</h1>
-
+  
+  <h1>Bienvenue sur l'application Groupomania, votre réseau social d'entreprise</h1>
     
 
     <v-container class="d-flex-col mt-12">

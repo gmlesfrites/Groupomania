@@ -3,10 +3,8 @@ import Vuex from 'vuex'
 
 import { auth } from './auth.module';
 
-import axios from 'axios'
-// TODO import { auth } from './auth.module';
-
-// const axios = require('axios');
+//Authentication service
+const axios = require('axios').default;
 
 Vue.use (axios)
 Vue.use (Vuex)
