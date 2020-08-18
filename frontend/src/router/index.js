@@ -1,70 +1,52 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
 
 import Home from '../views/Home.vue'
 import TermsOfUse from '../views/TermsOfUse.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
-import Chat from '../views/Chat.vue'
-import Profile from '../views/Profile.vue'
 
 // import store from '../store'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-// const ifAuthenticated = (to, from, next) => {
-//   if (store.state.auth.status.loggedIn) {
-//     next()
-//     return
-//   }
-//   next('/')
-// }
-
-// const ifNotAuthenticated = (to, from, next) => {
-//   if (!store.state.auth.status.loggedIn) {
-//     next()
-//     return
-//   }
-//   next('/wall')
-// }
-
-
-  const routes = [
+export const router = new Router({
+  mode: 'history',
+  routes: [
     {
       path: '/',
-      name: 'Home',
-      component : Home,
-      // beforeEnter: ifNotAuthenticated
+      name: 'home',
+      component: Home
     },
     {
       path: '/home',
-      name: 'Home',
-      component : Home,
-      // beforeEnter: ifNotAuthenticated
-    },
-    {
-      path: '/chat',
-      name: 'Chat',
-      component: Chat,
-      // beforeEnter: ifAuthenticated
+      component: Home
     },
     {
       path: '/login',
-      name: 'Login',
-      component: Login,
-      // beforeEnter: ifNotAuthenticated
+      component: Login
     },
     {
       path: '/signup',
-      name: 'Signup',
       component: Signup
-
     },
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile,
-      // beforeEnter: ifAuthenticated
+      // lazy-loaded
+      component: () => import('../views/Profile.vue')
+    },
+    {
+      path: '/mod',
+      name: 'Moderator',
+      // lazy-loaded
+      component: () => import('../views/BoardModerator.vue')
+    },
+    {
+      path: '/user',
+      name: 'user',
+      // lazy-loaded
+      component: () => import('../views/BoardUser.vue')
     },
     {
       path: '/terms',
@@ -72,11 +54,21 @@ Vue.use(VueRouter)
       component: TermsOfUse
     }
   ]
+});
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
 
-export default router
+// router.beforeEach((to, from, next) => {
+//   const publicPages = ['/login', '/signup', '/home'];
+//   const authRequired = !publicPages.includes(to.path);
+//   const loggedIn = localStorage.getItem('user');
+
+//   // trying to access a restricted page + not logged in
+//   // redirect to login page
+//   if (authRequired && !loggedIn) {
+//     next('/login');
+//   } else {
+//     next();
+//   }
+// });
+
+// export default router

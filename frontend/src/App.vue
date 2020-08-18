@@ -1,9 +1,57 @@
 <template>
-  <v-app id="app">
-    <Navigation/>
+  <v-app>
+    <v-container>
+      <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <v-navbar>
+          <li class="nav-item">
+            <router-link to="/home" class="nav-link"><font-awesome-icon icon="home" />Home</router-link>
+          </li>
 
-    <router-view/>
-    <Footer/>
+          <li v-if="showModeratorBoard" class="nav-item">
+            <router-link to="/mod" class="nav-link">Moderator Board</router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
+          </li>
+        </v-navbar>
+
+        <v-container v-if="!currentUser" class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <router-link to="/signup" class="nav-link">
+              <font-awesome-icon icon="user-plus" />Sign Up
+            </router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link to="/login" class="nav-link">
+              <font-awesome-icon icon="sign-in-alt" />Login
+            </router-link>
+          </li>
+        </v-container>
+
+        <v-container v-if="currentUser" class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <router-link to="/profile" class="nav-link">
+              <font-awesome-icon icon="user" />
+              {{ currentUser.username }}
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href @click.prevent="logOut">
+              <font-awesome-icon icon="sign-out-alt" />LogOut
+            </a>
+          </li>
+        </v-container>
+  
+        <v-main>
+          <Navigation/> 
+          <router-view/>
+          <Footer/>
+        </v-main>
+      </nav>
+    </v-container>
+
   </v-app>
 </template>
 
@@ -11,14 +59,33 @@
   import Footer from "./components/Footer";
   import Navigation from './components/Navigation'  
 
-  export default {
-    name: 'app',
+export default {
+  name: 'app',
     components: {
       Navigation,
       Footer
+    },
+
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser.roles) {
+        return this.currentUser.roles.includes('ROLE_MODERATOR');
+      }
+      return false;
+    }
+  },
+  methods: {
+    logOut() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
     }
   }
+};
 </script>
+
 
 <style>
   #app {

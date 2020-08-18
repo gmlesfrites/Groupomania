@@ -1,9 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Axios from 'axios'
 
-const axios = require('axios');
-Vue.use (Axios)
+import { auth } from './auth.module';
+
+import axios from 'axios'
+// TODO import { auth } from './auth.module';
+
+// const axios = require('axios');
+
+Vue.use (axios)
 Vue.use (Vuex)
 
 export default new Vuex.Store({
@@ -24,5 +29,6 @@ export default new Vuex.Store({
     },
   },
   modules: {
+    auth
   }
 })
