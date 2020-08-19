@@ -1,8 +1,8 @@
 // modèle de données
 export default class User {
-    constructor(firstName, lastName, bio, email, password) {
-      this.firstName = firstName;
-      this.lastName = lastName;
+    constructor(firstname, lastname, bio, email, password) {
+      this.firstname = firstname;
+      this.lastname = lastname;
       this.bio = bio;
       this.email = email;
       this.password = password;

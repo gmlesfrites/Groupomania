@@ -11,9 +11,9 @@
       </v-container>
 
       <v-container v-if="currentUser" class="ml-auto">
-        <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstName}}</strong> </router-link> 
+        <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
         ||
-        <router-link  to="/" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </router-link>
+        <router-link  to="/logOut" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </router-link>
       </v-container>
   </v-app-bar>
       
@@ -74,9 +74,10 @@
   },
   methods: {
     logOut() {
+      window.alert("Merci d'avoir utilisé l'application Groupomania")
       this.$store.dispatch('auth/logout');
-      this.$router.push('/login');
-    }
+      this.$router.push('/home');
+     }
   }
   }
 </script>

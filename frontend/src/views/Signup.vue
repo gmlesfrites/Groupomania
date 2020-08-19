@@ -14,10 +14,10 @@
 
               <v-container class="mb-4" v-if="!successful">
                 
-                <v-text-field label="Nom *" name="lastName" prepend-icon="mdi-account-cog" type="text" id="lastName" v-model="user.lastName" :rules="lastnameRules"/>
+                <v-text-field label="Nom *" name="lastname" prepend-icon="mdi-account-cog" type="text" id="lastname" v-model="user.lastname" :rules="lastnameRules"/>
                 <v-row class="caption ml-2">* Entre 2 et 15 lettres </v-row>
               
-                <v-text-field label="Prénom *" name="firstName" prepend-icon="mdi-account-cog" type="text" id="firstName" v-model="user.firstName" :rules="firstnameRules"/>
+                <v-text-field label="Prénom *" name="firstname" prepend-icon="mdi-account-cog" type="text" id="firstname" v-model="user.firstname" :rules="firstnameRules"/>
                 <v-row class="caption ml-2">* Entre 2 et 15 lettres </v-row>
 
                 <v-text-field label="Biographie" name="bio" prepend-icon="mdi-pencil" type="text" id="bio" />

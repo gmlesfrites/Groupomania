@@ -15,9 +15,9 @@
             
             <v-card-text>
 
-            <p><strong>Prénom : </strong><span  style="text-transform: uppercase"> {{currentUser.firstName}} </span></p>
-            <p><strong>Nom : </strong><span  style="text-transform: uppercase"> {{currentUser.lastName}} </span> </p>
-            <p><strong>Identifiant : </strong>{{currentUser.id}}</p>
+            <p><strong>Prénom : </strong><span  style="text-transform: uppercase"> {{currentUser.firstname}} </span></p>
+            <p><strong>Nom : </strong><span  style="text-transform: uppercase"> {{currentUser.lastname}} </span> </p>
+            <p><strong>Privilège : </strong>{{currentUser.privilege}}</p>
             <p><strong>Email : </strong>{{currentUser.email}}</p>
             <p><strong>Biographie :</strong> {{currentUser.bio}} </p>
             

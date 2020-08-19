@@ -22,21 +22,21 @@ const passwordRegex  = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,15})$/;
 
 //Inscription au site
 exports.signup = (req, res, next) => { 
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
     const email = req.body.email;
     const password = req.body.password;
     const bio = req.body.bio;
 
-    if (firstName === null || lastName === null || email === null || password === null) {
+    if (firstname === null || lastname === null || email === null || password === null) {
         return res.status(400).json({ message: 'Veuillez remplir tous les champs requis.'});
     }
 
-    if (firstName.length <= 2  || firstName.length >= 15) {
+    if (firstname.length <= 2  || firstname.length >= 15) {
         return res.status(400).json({ message: 'Votre prénom doit comprendre entre 2 et 15 lettres'});
     }
     
-    if (lastName.length <= 2 || lastName.length >= 15) {
+    if (lastname.length <= 2 || lastname.length >= 15) {
         return res.status(400).json({ message: 'Votre nom doit comprendre entre 2 et 15 lettres'});
     }
     
@@ -81,14 +81,14 @@ exports.login = (req, res, next) => {
                         } else {
                             let privilege = ''
                             if (results[0].isAdmin === 1) {
-                                privilege = 'admin'
+                                privilege = 'Modérateur'
                             } else {
-                                privilege = 'member'
+                                privilege = 'Membre'
                             }
                             res.status(200).json({
                                 userId: results[0].userId,
-                                firstName: results[0].firstName,
-                                lastName: results[0].lastName,
+                                firstname: results[0].firstname,
+                                lastname: results[0].lastname,
                                 bio: results[0].bio,
                                 email: results[0].email,
                                 privilege: privilege,
@@ -191,5 +191,5 @@ exports.deleteAdminUser = (req, res, next) => {
 // Middleware limitation de demandes (5 par minute)
 exports.limiter = expressRateLimit ({
     windowMs: 60 * 1000,
-    max: 5
+    max: 25
 })

@@ -10,10 +10,6 @@ class UserService {
     return axios.get(API_URL + '', { headers: authHeader() })
   }
 
-  getPublicContent() {
-    return axios.get(API_URL + 'all')
-  }
-
   getMemberBoard() {
     return axios.get(API_URL + 'member', { headers: authHeader() })
   }

@@ -25,13 +25,19 @@ const ifAuthenticated = (to, from, next) => {
       next()
       return
     }
-    next('/chat')
+    next('/home')
   }
   
     const routes = [
     {
       path: '/',
       name: 'Home',
+      component: Home,
+      beforeEnter: ifNotAuthenticated
+    },
+    {
+      path: '/home',
+      name: 'app',
       component: Home,
       beforeEnter: ifNotAuthenticated
     },
