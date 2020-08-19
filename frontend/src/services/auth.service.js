@@ -32,8 +32,8 @@ class AuthService {
 
   signup(user) {
     return axios.post(API_URL + 'signup', {
-      firstname: user.firstname,
-      lastname: user.lastname,
+      firstName: user.firstName,
+      lastName: user.lastName,
       bio: user.bio,
       email: user.email,
       password: user.password, 
@@ -44,7 +44,8 @@ class AuthService {
     const id = payload
     return axios
       .delete(process.env.AUTH + id, { headers: authHeader() })
-      .then(() => localStorage.removeItem('user'))
+      .then(() => localStorage.removeItem('user'),
+                  delete axios.defaults.headers.common['Authorization'])
   }
 }
 

@@ -9,27 +9,25 @@
               Mon compte
             </v-toolbar-title>                
           </v-toolbar>
-          <v-card-text>
-            <h3><strong>{{currentUser.firstname}}</strong> <strong>{{currentUser.lastname}}</strong></h3>
-            <p><strong>Token : </strong>{{currentUser.accessToken.substring(0, 20)}} ... {{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}}</p>
+          <v-card-text class="text-justify">
+            <h3><strong>Identité : </strong> </h3>
+            <v-divider></v-divider>
+            
+            <v-card-text>
+
+            <p><strong>Prénom : </strong><span  style="text-transform: uppercase"> {{currentUser.firstName}} </span></p>
+            <p><strong>Nom : </strong><span  style="text-transform: uppercase"> {{currentUser.lastName}} </span> </p>
             <p><strong>Identifiant : </strong>{{currentUser.id}}</p>
             <p><strong>Email : </strong>{{currentUser.email}}</p>
+            <p><strong>Biographie :</strong> {{currentUser.bio}} </p>
             
-            <strong>Authorities:</strong>
-            <ul>
-              <li v-for="(role,index) in currentUser.roles" :key="index">{{role}}</li>
-            </ul>
-           
+
+          </v-card-text>
               
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="warning"> Supprimer mon compte </v-btn>
-
-            <v-spacer></v-spacer>
-            <v-btn color="info"> Mettre à jour </v-btn>
-            <v-spacer></v-spacer>
-
+            <v-btn color="warning" class="mr-2 mb-2"> Supprimer mon compte </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

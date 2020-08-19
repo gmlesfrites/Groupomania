@@ -23,8 +23,8 @@
               <span>{{password.errors[0] }}</span>
               </ValidationProvider>
 
-              <v-row color="warning" v-if="feedbacks.length">
-                <v-alert close-delay="2000" type="error" dismissible v-for="feedback in feedbacks"     :key="feedback.message">{{ feedback.message }}</v-alert>
+              <v-row color="warning" v-if="feedbacks.length" class="ml-1">
+                <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
               </v-row>
 
 
@@ -78,6 +78,7 @@
     },
     created() {
       if (this.loggedIn) {
+        
         this.$router.push('/chat');
       }
     },
@@ -85,7 +86,7 @@
       loginMe() {
       this.$store.dispatch("auth/login", this.user).then(
         () => {
-          this.$router.push("/wall");
+          this.$router.push("/chat");
         },
         error => {
           this.feedbacks.push(error.response && error.response.data) ||

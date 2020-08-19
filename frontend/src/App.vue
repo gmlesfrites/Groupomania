@@ -11,7 +11,6 @@
 
 <script>
   import Footer from "./components/Footer";
-
   import Navigation from './components/Navigation'  
 
 export default {
@@ -19,12 +18,9 @@ export default {
     components: {
       Navigation,
       Footer
-    },
-
-  
+    },  
 };
 </script>
-
 
 <style>
   #app {

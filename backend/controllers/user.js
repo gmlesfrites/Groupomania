@@ -22,8 +22,8 @@ const passwordRegex  = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,15})$/;
 
 //Inscription au site
 exports.signup = (req, res, next) => { 
-    const firstName = req.body.firstname;
-    const lastName = req.body.lastname;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
 
@@ -86,8 +86,9 @@ exports.login = (req, res, next) => {
                             }
                             res.status(200).json({
                                 userId: results[0].userId,
-                                firstname: results[0].firstname,
-                                lastname: results[0].lastname,
+                                firstName: results[0].firstName,
+                                lastName: results[0].lastName,
+                                bio: results[0].bio,
                                 email: results[0].email,
                                 privilege: privilege,
                                 accessToken: jwt.sign(
@@ -111,7 +112,7 @@ exports.login = (req, res, next) => {
     } else {
         res
         .status(500)
-        .json({ message: "l'adresse mail et/ou le mot de passe sont absents. Merci de renseigner les champs requis" })
+        .json({ message: "l'adresse mail est déjà utilisée" })
     }
 };
 

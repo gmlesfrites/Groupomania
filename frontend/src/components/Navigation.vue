@@ -2,9 +2,7 @@
 
   <v-app-bar color="#Ffd7d7" >
 
-    <router-link to="/home" class="text-decoration-none"><font-awesome-icon icon="home" class="navbar mr-2" /> Page d'accueil </router-link>
-    <router-link  v-if="showModeratorBoard" to="/mod" class="text-decoration-none"> Vue Modérateur </router-link>
-    <router-link v-if="currentUser" to="/user" class="text-decoration-none"> Vue Membre  </router-link>
+    <router-link to="/home" class="text-decoration-none"><font-awesome-icon icon="home" class="navbar mr-2" /> Groupomania </router-link>
       
       <v-container v-if="!currentUser" class="ml-auto" justify-end>
         <router-link to="/signup" class="text-decoration-none ml-5" >Inscription </router-link> 
@@ -13,9 +11,9 @@
       </v-container>
 
       <v-container v-if="currentUser" class="ml-auto">
-        <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong>{{currentUser.firstname}}</strong> <strong>{{currentUser.lastname}}</strong></router-link> 
-
-        <router-link  href @click.prevent="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="mr-2"/> Déconnexion </router-link>
+        <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstName}}</strong> </router-link> 
+        ||
+        <router-link  to="/" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </router-link>
       </v-container>
   </v-app-bar>
       
@@ -28,7 +26,6 @@
   export default {
     name: 'Navigation',
     data() {
-
       return {
         links: [
           {

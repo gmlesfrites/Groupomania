@@ -9,30 +9,30 @@
               Inscription
             </v-toolbar-title>           
           </v-toolbar>
-          <v-card-text>
-            <v-form name="form" @submit.prevent="handleRegister">
+          <v-container >
+            <v-form name="form" v-model="valid">
 
-              <ValidationProvider v-slot="{ errors }" >
-              <v-text-field label="Prénom *" name="lastname" prepend-icon="mdi-account-cog" type="text" id="lastname" v-model="user.firstname"/>
-              <span>{{ errors[0] }}</span>
-              </ValidationProvider>
+              <v-container class="mb-4" v-if="!successful">
+                
+                <v-text-field label="Nom *" name="lastName" prepend-icon="mdi-account-cog" type="text" id="lastName" v-model="user.lastName" :rules="lastnameRules"/>
+                <v-row class="caption ml-2">* Entre 2 et 15 lettres </v-row>
+              
+                <v-text-field label="Prénom *" name="firstName" prepend-icon="mdi-account-cog" type="text" id="firstName" v-model="user.firstName" :rules="firstnameRules"/>
+                <v-row class="caption ml-2">* Entre 2 et 15 lettres </v-row>
 
-              <ValidationProvider v-slot="{ errors }">
-              <v-text-field label="Nom *" name="firstname" prepend-icon="mdi-account-cog" type="text" id="firstname" v-model="user.lastname"/>
-              <span>{{ errors[0] }}</span>
-              </ValidationProvider>
+                <v-text-field label="Biographie" name="bio" prepend-icon="mdi-pencil" type="text" id="bio" />
 
-              <v-text-field label="Biographie" name="bio" prepend-icon="mdi-pencil" type="text" id="bio" />
+                <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.email" :rules="emailRules" />
+                <v-row class="caption ml-2">* Exemple : prenom.nom@groupomania.fr </v-row>
 
-              <ValidationProvider v-slot="{ errors }">
-              <v-text-field  label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.mail"/>
-              <span>{{ errors[0] }}</span>
-              </ValidationProvider>
+                <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password" :rules="passwordRules"/>
+                <v-row class="caption ml-2">* Entre 8 et 15 caractères (minimum 1 majuscule, 1 minuscule et 1 chiffre) </v-row>
 
-              <ValidationProvider  v-slot="{ errors }">
-              <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" id="password" v-model="user.password" type="password" />
-              <span>{{ errors[0] }}</span>
-              </ValidationProvider>
+              <v-row color="warning" v-if="feedbacks.length" class="ml-1">
+                <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
+              </v-row>
+
+              </v-container>
 
               <v-row class="ml-2">
               Si vous avez déjà un compte,  
@@ -41,15 +41,16 @@
               </router-link>
               </v-row>
               <v-row class="ml-2" h6>
-              <small>* Ces indications sont requises.</small>
+              <small>* Ces indications sont requises. </small>
               </v-row>
             
             
             </v-form>
-          </v-card-text>
+          </v-container>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="info"> INSCRIPTION </v-btn>
+             <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="signupMe">Enregistrer</v-btn>
+            
           </v-card-actions>          
         </v-card>
       </v-col>
@@ -62,48 +63,40 @@
 import User from '../models/user'
 
 export default {
+  name : 'Signup',
+  data () {
+    {
+      return {
+        title: "Créer mon compte",
+        user: new User("", ""),
+        feedbacks: [],
+        valid: false,
+        show : true,
 
-  name: 'Signup',
-  data() {
-    return {
-      user: new User('', '', ''),
-      submitted: false,
-      successful: false,
-      message: ''
-    };
-  },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    }
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push('/profile');
+        successful: false,
+        lastnameRules: [ v => !!v || "Indiquez votre nom" ],
+        firstnameRules: [ v => !!v || "Indiquez votre prénom" ],
+        emailRules: [ v => !!v || "Un e-mail est obligatoire", v => /.+@+groupomania.fr/.test(v) || "Indiquez un e-mail valide"],
+        passwordRules: [v => (v && v.length >= 8 && v.length <= 15) || "entre 8 et 15 caractères", v =>
+          /(?=.*[A-Z])/.test(v) || "au moins une lettre majuscule", v => /(?=.*\d)/.test(v) || "au moins un chiffre"]
+      }
     }
   },
   methods: {
-    handleRegister() {
-      this.message = '';
-      this.submitted = true;
-      this.$validator.validate().then(isValid => {
-        if (isValid) {
-          this.$store.dispatch('auth/signup', this.user).then(
-            data => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            error => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
-          );
-        }
-      });
+    signupMe() {
+      this.$store.dispatch("auth/signup", this.user).then(
+        () => {
+          this.successful = true;
+          window.alert("La création de votre compte a réussi. Veuillez maintenant vous connecter.")
+          this.$router.push("/login");
+        },
+        error => {
+          this.feedbacks.push(error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+          }
+      );
     }
   }
-};
+}
 </script>
