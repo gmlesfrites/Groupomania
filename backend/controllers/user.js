@@ -26,6 +26,7 @@ exports.signup = (req, res, next) => {
     const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
+    const bio = req.body.bio;
 
     if (firstName === null || lastName === null || email === null || password === null) {
         return res.status(400).json({ message: 'Veuillez remplir tous les champs requis.'});
