@@ -14,7 +14,8 @@
 
       <v-container v-if="currentUser" class="ml-auto">
         <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong>{{currentUser.firstname}}</strong> <strong>{{currentUser.lastname}}</strong></router-link> 
-        <router-link  href @click.prevent="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" /> Déconnexion </router-link>
+
+        <router-link  href @click.prevent="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="mr-2"/> Déconnexion </router-link>
       </v-container>
   </v-app-bar>
       

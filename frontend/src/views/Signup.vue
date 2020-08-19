@@ -12,25 +12,25 @@
           <v-card-text>
             <v-form name="form" @submit.prevent="handleRegister">
 
-              <ValidationProvider rules="minmax:2,15" v-slot="{ errors }">
-              <v-text-field label="Prénom *" name="lastname" prepend-icon="mdi-account-cog" type="text" id="name" v-model="user.firstname"/>
+              <ValidationProvider v-slot="{ errors }" >
+              <v-text-field label="Prénom *" name="lastname" prepend-icon="mdi-account-cog" type="text" id="lastname" v-model="user.firstname"/>
               <span>{{ errors[0] }}</span>
               </ValidationProvider>
 
-              <ValidationProvider rules="minmax:2,15" v-slot="{ errors }">
+              <ValidationProvider v-slot="{ errors }">
               <v-text-field label="Nom *" name="firstname" prepend-icon="mdi-account-cog" type="text" id="firstname" v-model="user.lastname"/>
               <span>{{ errors[0] }}</span>
               </ValidationProvider>
 
               <v-text-field label="Biographie" name="bio" prepend-icon="mdi-pencil" type="text" id="bio" />
 
-              <ValidationProvider rules="minmax:2,15" v-slot="{ errors }">
-              <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.mail"/>
+              <ValidationProvider v-slot="{ errors }">
+              <v-text-field  label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.mail"/>
               <span>{{ errors[0] }}</span>
               </ValidationProvider>
 
-              <ValidationProvider rules="minmax:8,15" v-slot="{ errors }">
-              <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password"/>
+              <ValidationProvider  v-slot="{ errors }">
+              <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" id="password" v-model="user.password" type="password" />
               <span>{{ errors[0] }}</span>
               </ValidationProvider>
 
@@ -49,7 +49,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="success"> CONNEXION </v-btn>
+            <v-btn color="info"> INSCRIPTION </v-btn>
           </v-card-actions>          
         </v-card>
       </v-col>
@@ -60,12 +60,9 @@
 
 <script>
 import User from '../models/user'
-import { ValidationProvider } from 'vee-validate';
 
 export default {
-  components: {
-    ValidationProvider
-  },
+
   name: 'Signup',
   data() {
     return {
@@ -107,7 +104,6 @@ export default {
         }
       });
     }
-    
   }
 };
 </script>

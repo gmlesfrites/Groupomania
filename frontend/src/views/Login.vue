@@ -11,18 +11,22 @@
             </v-toolbar-title>                
           </v-toolbar>
           <v-card-text>
-            <v-form name="form" @submit.prevent="handleLogin">
+            <v-form name="form" v-model="valid">
               
               <ValidationProvider v-slot="email">
-              <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.email"/>
+              <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.email" required :rules="emailRules"/>
               <span>{{ email.errors[0] }}</span>
               </ValidationProvider>
               
-
               <ValidationProvider v-slot="password">
-              <v-text-field :value="password" label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password"/>
-              <span>{{ password.errors[0] }}</span>
+              <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password" required :rules="passwordRules"/>
+              <span>{{password.errors[0] }}</span>
               </ValidationProvider>
+
+              <v-row color="warning" v-if="feedbacks.length">
+                <v-alert close-delay="2000" type="error" dismissible v-for="feedback in feedbacks"     :key="feedback.message">{{ feedback.message }}</v-alert>
+              </v-row>
+
 
             </v-form>
 
@@ -39,11 +43,9 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="success"> CONNEXION </v-btn>
+            <v-btn class="mr-2 mb-2" :disabled="!valid" color="success" @click="loginMe">Connexion</v-btn>
           </v-card-actions>
-          <v-card-text>
-            <v-row v-if="message" class="alert alert-danger" role="alert">{{message}}</v-row>
-          </v-card-text>
+
         </v-card>
       </v-col>
     </v-row>
@@ -53,21 +55,20 @@
 
 <script>
   import User from '../models/user'
-  import { ValidationProvider } from 'vee-validate';
 
   export default {
-    components: {
-      ValidationProvider
-    },
+    
     name: 'Login',
-    props: {
-      msg: String
-    },
+
     data() {
       return {
-        user: new User('', ''),
-        loading: false,
-        message: ''
+        title: "Se connecter à mon compte",
+        user: new User("", ""),
+        feedbacks: [], // informations de connexion
+        show: true,
+        valid: false,
+        emailRules: [v => !!v || "Indiquez votre email"],
+        passwordRules: [v => !!v || "Indiquez votre mot de passe"]
       };
     },
     computed: {
@@ -77,35 +78,22 @@
     },
     created() {
       if (this.loggedIn) {
-        this.$router.push('/profile');
+        this.$router.push('/chat');
       }
     },
     methods: {
-      handleLogin() {
-        this.loading = true;
-        this.$validator.validateAll().then(isValid => {
-          if (!isValid) {
-            this.loading = false;
-            return;
-          }
-
-          if (this.user.email && this.user.password) {
-            this.$store.dispatch('auth/login', this.user).then(
-              () => {
-                // TODO voir si je garde ce chemin ou si je vais directement vers les discussions
-                this.$router.push('/profile');
-              },
-              error => {
-                this.loading = false;
-                this.message =
-                  (error.response && error.response.data) ||
-                  error.message ||
-                  error.toString();
-              }
-            );
-          }
-        });
-      }
+      loginMe() {
+      this.$store.dispatch("auth/login", this.user).then(
+        () => {
+          this.$router.push("/wall");
+        },
+        error => {
+          this.feedbacks.push(error.response && error.response.data) ||
+            error.message ||
+            error.toString();
+        }
+      );
     }
-  };
+  }
+};
 </script>

@@ -2,7 +2,7 @@
 import axios from 'axios'
 import authHeader from './auth-header'
 
-axios.defaults.baseURL = process.env.VUE_APP_BASE;
+const API_URL = 'http://localhost:3000/api/auth/'
 axios.defaults.headers.common['Authorization'] = process.env.VUE_APP_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -13,7 +13,7 @@ dotenv.config({ path: './.env'});
 class AuthService {
   login(user) {
     return axios
-      .post(process.env.AUTH + 'login', {
+      .post(API_URL + 'login', {
         email: user.email,
         password: user.password
       })
@@ -31,7 +31,7 @@ class AuthService {
   }
 
   signup(user) {
-    return axios.post(process.env.AUTH + 'signup', {
+    return axios.post(API_URL + 'signup', {
       firstname: user.firstname,
       lastname: user.lastname,
       bio: user.bio,
