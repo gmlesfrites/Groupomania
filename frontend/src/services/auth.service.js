@@ -34,6 +34,7 @@ class AuthService {
 
   delete(payload) {
     const id = payload
+    console.log(id)
     return axios
       .delete(API_URL + id, { headers: authHeader() })
       .then(() => localStorage.removeItem('groupomaniaUser'))

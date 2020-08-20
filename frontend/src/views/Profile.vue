@@ -40,21 +40,22 @@
 
 export default {
   name: 'Profile',
-   computed: {
+  computed: {
     currentUser() {
       return this.$store.state.auth.user;
     }
   },
   methods: {
     confirmDelete() {
-      if (window.confirm("Cette action n'est pas modifiable après confirmation !")) {
-        this.deleteMyProfile()
-      }
+      // if (window.confirm("Cette action n'est pas modifiable après confirmation !")) {
+      //   this.deleteMyProfile()
+      // }
     },
     deleteMyProfile() {
-      let payload = this.$store.state.auth.user.id
+      let payload = this.$store.state.auth.user.id;
 
       this.$store.dispatch("auth/deleteProfile", payload)
+
       .then(
         data => {
           console.log(data);
@@ -62,7 +63,6 @@ export default {
         },
         error => {
           console.log(error);
-          console.log('harakiri')
         }
       );
     },

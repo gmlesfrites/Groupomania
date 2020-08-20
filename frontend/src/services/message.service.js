@@ -12,7 +12,7 @@ class MessageService {
       {
         title: message.title,
         content: message.content,
-        userId: store.state.auth.user.userId,
+        id: store.state.auth.user.id,
         firstname: store.state.auth.user.firstname,
         lastname: store.state.auth.user.lastname
       },

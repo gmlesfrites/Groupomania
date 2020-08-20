@@ -47,7 +47,7 @@
 <script>
   import Message from '../models/message'
 
-  export default {
+export default {
     name: 'Modal',
     data () {
       return {
@@ -67,14 +67,18 @@
         id: Number,
         userId: Number,
         createdAt: String,
-        likes: Number,
         lastname: String,
         firstname: String,
         messageId: Number
     },
     methods : {
       sendMe() {
-      this.$store.dispatch("message/createMessage", this.message).then(
+        let payload = this.$store.state.auth.user;
+
+        this.$store.dispatch("message/createMessage", this.message, payload)
+
+      console.log(this.message)
+      .then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);

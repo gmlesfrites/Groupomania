@@ -37,21 +37,20 @@ export const auth = {
           return Promise.reject(error);
         }
       );
-    }
+    },
+    deleteProfile({commit}, payload) {
+      return AuthService.delete(payload).then(
+        (response) => {
+          commit ('deleteSuccess')
+          return Promise.resolve(response.data)
+        },
+        (error) => {
+          commit ('deleteFailure')
+          return Promise.reject(error)
+        }
+      )
+    },
   },
-  deleteProfile({commit}, payload) {
-    return AuthService.delete(payload).then(
-      (response) => {
-        commit ('deleteSuccess')
-        return Promise.resolve(response.data)
-      },
-      (error) => {
-        commit ('deleteFailure')
-        return Promise.reject(error)
-      }
-    )
-  },
-  
   mutations: {
     deleteSuccess(state) {
       state.status.loggedIn= false

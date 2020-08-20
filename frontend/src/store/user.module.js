@@ -1,6 +1,8 @@
 import UserService from '../services/user.service'
 
 export const user = {
+  name : 'user',
+  
   namespaced: true,
   state: {
     allUsers: ''

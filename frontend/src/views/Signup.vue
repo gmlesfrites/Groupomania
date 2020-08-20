@@ -102,8 +102,7 @@ export default {
           this.feedbacks.push(error.response && error.response.data) ||
             error.message ||
             error.toString();
-            console.log(error.message)
-          }
+        }
       );
     }
   }
