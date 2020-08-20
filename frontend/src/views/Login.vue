@@ -30,14 +30,15 @@
 
             </v-form>
 
-            <v-row class="ml-2">
-              Si vous n'avez pas encore créé votre compte,  
+            <v-row class="ml-2 mr-2 text-justify">
+              <strong>Si vous n'avez pas encore créé votre compte,  
                 <router-link to="/signup" class="ml-1">
                 c'est par ici !
               </router-link>
+              </strong>
               </v-row>
-              <v-row class="ml-2" h6>
-              <small>* Ces indications sont requises.</small>
+              <v-row class="ml-2 " h6>
+              <small class="" >* Ces indications sont requises.</small>
             </v-row>
               
           </v-card-text>
@@ -57,9 +58,7 @@
   import User from '../models/user'
 
   export default {
-    
     name: 'Login',
-
     data() {
       return {
         title: "Se connecter à mon compte",
@@ -78,13 +77,12 @@
     },
     created() {
       if (this.loggedIn) {
-        
         this.$router.push('/chat');
       }
     },
     methods: {
       loginMe() {
-      this.$store.dispatch("auth/login", this.user).then(
+        this.$store.dispatch("auth/login", this.user).then(
         () => {
           this.$router.push("/chat");
         },

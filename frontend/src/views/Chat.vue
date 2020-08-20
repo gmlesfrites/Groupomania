@@ -2,7 +2,7 @@
   
   <v-container>
     <Modal/>
-    <ChatComponent/>
+    <ChatMain/>
   </v-container>
 
     
@@ -11,12 +11,12 @@
 
 <script>
   import Modal from "../components/ModalMessage";
-  import ChatComponent from "../components/ChatComponent";
+  import ChatMain from "../components/ChatMain";
 
   export default {
     name: 'app',
     components: {
-      Modal, ChatComponent
+      Modal, ChatMain
     }
   }
 </script>

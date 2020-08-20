@@ -26,7 +26,6 @@ exports.signup = (req, res, next) => {
     const lastname = req.body.lastname;
     const email = req.body.email;
     const password = req.body.password;
-    const bio = req.body.bio;
 
     if (firstname === null || lastname === null || email === null || password === null) {
         return res.status(400).json({ message: 'Veuillez remplir tous les champs requis.'});
@@ -188,8 +187,8 @@ exports.deleteAdminUser = (req, res, next) => {
     )
 }
 
-// Middleware limitation de demandes (5 par minute)
+// Middleware limitation de demandes (50 par minute)
 exports.limiter = expressRateLimit ({
     windowMs: 60 * 1000,
-    max: 25
+    max: 50
 })

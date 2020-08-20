@@ -1,9 +1,7 @@
 <template>
-    <v-main>
-        
+    
+      <Hello/>
 
-    <Hello/>
-    </v-main>
 </template>
 
 <script>

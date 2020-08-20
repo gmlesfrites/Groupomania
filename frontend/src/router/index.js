@@ -36,12 +36,6 @@ const ifAuthenticated = (to, from, next) => {
       beforeEnter: ifNotAuthenticated
     },
     {
-      path: '/home',
-      name: 'app',
-      component: Home,
-      beforeEnter: ifNotAuthenticated
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login,
@@ -69,10 +63,6 @@ const ifAuthenticated = (to, from, next) => {
       path: '/terms',
       name: 'Terms',
       component: TermsOfUse
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
     }
   ]
   

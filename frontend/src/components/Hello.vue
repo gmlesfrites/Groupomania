@@ -13,7 +13,7 @@
       <v-row>
         <p class="text-justify h4">Prenez garde à la facilité d'écrire ! </p>
           
-        <p class="text-justify h4">Quand on est "caché derrière son clavier", c'est plus facile de se 'lâcher' !</p>
+        <p class="text-justify h4"> Quand on est "caché derrière son clavier", c'est plus facile de se 'lâcher' !</p>
           
         <p class="text-justify h4">Retrouvez toutes les conditions d'utilisation de cette application ici : 
           <br/>

@@ -20,7 +20,9 @@
                 <v-text-field label="Prénom *" name="firstname" prepend-icon="mdi-account-cog" type="text" id="firstname" v-model="user.firstname" :rules="firstnameRules"/>
                 <v-row class="caption ml-2">* Entre 2 et 15 lettres </v-row>
 
-                <v-text-field label="Biographie" name="bio" prepend-icon="mdi-pencil" type="text" id="bio" />
+                <v-text-field label="Biographie" name="bio" prepend-icon="mdi-pencil" type="text" id="bio" v-model="user.bio" />
+                <v-row class="caption ml-2">Exemple : J'adore les vacances et j'ai un faible pour le chocolat </v-row>
+
 
                 <v-text-field label="Email *" name="email" prepend-icon="mdi-email" type="text" id="email" v-model="user.email" :rules="emailRules" />
                 <v-row class="caption ml-2">* Exemple : prenom.nom@groupomania.fr </v-row>
@@ -34,14 +36,15 @@
 
               </v-container>
 
-              <v-row class="ml-2">
-              Si vous avez déjà un compte,  
+              <v-row class="ml-2 mr-2 text-justify">
+              <strong>Si vous avez déjà un compte,  
                 <router-link to="/login" class="ml-1">
                 c'est par ici !
               </router-link>
+              </strong>
               </v-row>
               <v-row class="ml-2" h6>
-              <small>* Ces indications sont requises. </small>
+              <small class="ml-2 mr-2 text-justify">* Ces indications sont requises. </small>
               </v-row>
             
             
@@ -55,6 +58,8 @@
         </v-card>
       </v-col>
     </v-row>
+
+
   </v-container>
 </template>
 
@@ -72,7 +77,6 @@ export default {
         feedbacks: [],
         valid: false,
         show : true,
-
         successful: false,
         lastnameRules: [ v => !!v || "Indiquez votre nom" ],
         firstnameRules: [ v => !!v || "Indiquez votre prénom" ],

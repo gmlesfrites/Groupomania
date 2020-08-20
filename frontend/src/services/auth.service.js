@@ -1,15 +1,8 @@
-//Authentication service
 import axios from 'axios'
 import authHeader from './auth-header'
 
 const API_URL = 'http://localhost:3000/api/auth/'
-axios.defaults.headers.common['Authorization'] = process.env.VUE_APP_TOKEN;
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
-// Importation du package dotenv
-const dotenv = require('dotenv');
-dotenv.config({ path: './.env'});
-
+const API_URL_ADMIN = 'http://localhost:3000/api/auth/admin'
 class AuthService {
   login(user) {
     return axios
@@ -17,37 +10,40 @@ class AuthService {
         email: user.email,
         password: user.password
       })
-      .then(response => {
+      .then((response) => {
         if (response.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('groupomaniaUser', JSON.stringify(response.data))
         }
-
-        return response.data;
-      });
+        return response.data
+      })
   }
 
   logout() {
-    localStorage.removeItem('user');
-   
+    localStorage.removeItem('groupomaniaUser')
   }
 
   signup(user) {
     return axios.post(API_URL + 'signup', {
+      lastname : user.lastname,
       firstname: user.firstname,
-      lastname: user.lastname,
       bio: user.bio,
       email: user.email,
-      password: user.password, 
-    });
+      password: user.password
+    })
   }
 
   delete(payload) {
     const id = payload
     return axios
-      .delete(process.env.AUTH + id, { headers: authHeader() })
-      .then(() => localStorage.removeItem('user'),
-                  delete axios.defaults.headers.common['Authorization'])
+      .delete(API_URL + id, { headers: authHeader() })
+      .then(() => localStorage.removeItem('groupomaniaUser'))
+  }
+
+  deleteAdminUser(payload) {
+    const id = payload
+    return axios
+      .delete(API_URL_ADMIN + id, { headers: authHeader() })
   }
 }
 
-export default new AuthService();
+export default new AuthService()

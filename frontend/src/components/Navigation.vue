@@ -13,7 +13,7 @@
       <v-container v-if="currentUser" class="ml-auto">
         <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
         ||
-        <router-link  to="/logOut" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </router-link>
+        <a  to="/logout" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </a>
       </v-container>
   </v-app-bar>
       
@@ -64,20 +64,14 @@
     computed: {
     currentUser() {
       return this.$store.state.auth.user;
-    },
-    showModeratorBoard() {
-      if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_MODERATOR');
-      }
-      return false;
     }
   },
   methods: {
     logOut() {
-      window.alert("Merci d'avoir utilisé l'application Groupomania")
       this.$store.dispatch('auth/logout');
-      this.$router.push('/home');
-     }
+      window.alert('Vous êtes maintenant déconnecté(e)')
+      this.$router.push('/login');
+    }
   }
   }
 </script>

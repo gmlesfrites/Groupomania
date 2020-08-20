@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-dialog v-model="dialog" width="auto" >
+    <v-dialog width="auto" >
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="#ffd7d7" v-bind="attrs" v-on="on" class="ma-3 ">
           Nouveau Message
@@ -13,16 +13,30 @@
         </v-card-title>
 
         <v-card-text>
-          <v-form>
-            <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" ></v-text-field>
-            <v-text-field label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" ></v-text-field>
+          <v-form name="form" v-model="valid">
+            <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
+            <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
+
+            <v-text-field label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" v-model="message.content" :rules="contentRules" ></v-text-field>
+            <v-row class="caption ml-2">Exemple : J'adore les vacances et j'ai un faible pour le chocolat !</v-row>
+
+
           </v-form>
-          <small>* Ces indications sont requises.</small>
+        
         </v-card-text>
+        <v-row class="ml-2 " h6>
+              <small class="ml-2 mr-2 text-justify" >* Ces indications sont requises.</small>
+            </v-row>
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="blue darken-1" text @click="dialog = false">Publier</v-btn>
+
+          <v-row color="warning" v-if="feedbacks.length" class="ml-1">
+                <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
+              </v-row>
+
+          <!-- TODO @click="dialog = false" -->
+          <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="sendMe">Publier</v-btn>
         </v-card-actions>
 
       </v-card>
@@ -31,14 +45,50 @@
 </template>
 
 <script>
+  import Message from '../models/message'
+
   export default {
     name: 'Modal',
     data () {
       return {
-        dialog: false,
+        message: new Message("", ""),
+        feedbacks: [], // informations sur la création du message
+        show: true,
+        valid: false,
+        titleRules: [v => !!v || "Indiquez un titre", v =>
+          /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
+        contentRules: [v => !!v || "Indiquez le contenu de votre message", v =>
+          /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"]
       }
     },
+      props: {
+        title: String,
+        content: String,
+        id: Number,
+        userId: Number,
+        createdAt: String,
+        likes: Number,
+        lastname: String,
+        firstname: String,
+        messageId: Number
+    },
+    methods : {
+      sendMe() {
+      this.$store.dispatch("message/createMessage", this.message).then(
+        data => {
+          this.$store.dispatch("message/getAllMessages");
+          this.$emit(data.message);
+          this.$refs.form.reset();
+          window.alert('Votre message a bien été enregistré !')
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    },
   }
+}
+
 </script>
 
 
