@@ -27,6 +27,7 @@ exports.signup = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
+
     if (firstname === null || lastname === null || email === null || password === null) {
         return res.status(400).json({ message: 'Veuillez remplir tous les champs requis.'});
     }
@@ -85,7 +86,7 @@ exports.login = (req, res, next) => {
                                 privilege = 'Membre'
                             }
                             res.status(200).json({
-                                userId: results[0].userId,
+                                id: results[0].id,
                                 firstname: results[0].firstname,
                                 lastname: results[0].lastname,
                                 bio: results[0].bio,
@@ -93,7 +94,7 @@ exports.login = (req, res, next) => {
                                 privilege: privilege,
                                 accessToken: jwt.sign(
                                     {
-                                    userId: results[0].userId, 
+                                    id: results[0].id, 
                                     privilege : privilege, 
                                     },
                                     process.env.TOKEN,

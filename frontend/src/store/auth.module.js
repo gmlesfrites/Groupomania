@@ -39,7 +39,7 @@ export const auth = {
       );
     }
   },
-  deleteAccount({commit}, payload) {
+  deleteProfile({commit}, payload) {
     return AuthService.delete(payload).then(
       (response) => {
         commit ('deleteSuccess')
@@ -51,13 +51,15 @@ export const auth = {
       }
     )
   },
+  
   mutations: {
     deleteSuccess(state) {
       state.status.loggedIn= false
       state.user = null
     },
-    deleteFailure() {
-
+    deleteFailure(state, user) {
+      state.status.loggedIn = true;
+      state.user = user;
     },
     loginSuccess(state, user) {
       state.status.loggedIn = true;

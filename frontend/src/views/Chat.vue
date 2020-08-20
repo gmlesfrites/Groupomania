@@ -2,7 +2,7 @@
   
   <v-container>
     <Modal/>
-    <ChatMain/>
+    <!-- <ChatMain/> -->
       <v-col align="center" justify="center">
         <v-card class="elevation-12 pb-7">
           <v-toolbar color="#ffd7d7">

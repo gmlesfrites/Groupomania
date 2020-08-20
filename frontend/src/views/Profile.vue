@@ -20,6 +20,7 @@
             <p><strong>Privilège : </strong>{{currentUser.privilege}}</p>
             <p><strong>Email : </strong>{{currentUser.email}}</p>
             <p><strong>Biographie :</strong> {{currentUser.bio}} </p>
+            <p><strong>Identifiant :</strong> {{currentUser.id}} </p>
             
 
           </v-card-text>
@@ -27,7 +28,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="warning" class="mr-2 mb-2"> Supprimer mon compte </v-btn>
+            <v-btn color="warning" class="mr-2 mb-2"  @click="confirmDelete"> Supprimer mon compte </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -39,14 +40,41 @@
 
 export default {
   name: 'Profile',
-  computed: {
+   computed: {
     currentUser() {
       return this.$store.state.auth.user;
     }
   },
+  methods: {
+    confirmDelete() {
+      if (window.confirm("Cette action n'est pas modifiable après confirmation !")) {
+        this.deleteMyProfile()
+      }
+    },
+    deleteMyProfile() {
+      let payload = this.$store.state.auth.user.id
+
+      this.$store.dispatch("auth/deleteProfile", payload)
+      .then(
+        data => {
+          console.log(data);
+          window.alert(data.message)
+        },
+        error => {
+          console.log(error);
+          console.log('harakiri')
+        }
+      );
+    },
+  },
   mounted() {
     if (!this.currentUser) {
-      this.$router.push('/login');
+      this.$router.push("/");
+    }
+  },
+    updated() {
+    if (!this.currentUser) {
+      this.$router.push("/");
     }
   }
 };

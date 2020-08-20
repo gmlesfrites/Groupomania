@@ -2,7 +2,7 @@ import axios from 'axios'
 import authHeader from './auth-header'
 
 const API_URL = 'http://localhost:3000/api/auth/'
-const API_URL_ADMIN = 'http://localhost:3000/api/auth/admin'
+// const API_URL_ADMIN = 'http://localhost:3000/api/auth/admin'
 class AuthService {
   login(user) {
     return axios
@@ -37,12 +37,6 @@ class AuthService {
     return axios
       .delete(API_URL + id, { headers: authHeader() })
       .then(() => localStorage.removeItem('groupomaniaUser'))
-  }
-
-  deleteAdminUser(payload) {
-    const id = payload
-    return axios
-      .delete(API_URL_ADMIN + id, { headers: authHeader() })
   }
 }
 

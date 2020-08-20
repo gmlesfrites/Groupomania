@@ -30,9 +30,12 @@
                 <v-text-field label="Mot de passe *" name="password" prepend-icon="mdi-lock" type="password" id="password" v-model="user.password" :rules="passwordRules"/>
                 <v-row class="caption ml-2">* Entre 8 et 15 caractères (minimum 1 majuscule, 1 minuscule et 1 chiffre) </v-row>
 
-              <v-row color="warning" v-if="feedbacks.length" class="ml-1">
-                <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
-              </v-row>
+
+
+                <v-row v-if="feedbacks.length" class="ml-1 mr-1">
+                  <v-alert color="warning" v-for ="feedback in feedbacks" :key="feedback">{{ feedback.message }}</v-alert>
+                </v-row>
+                
 
               </v-container>
 
@@ -61,6 +64,7 @@
 
 
   </v-container>
+
 </template>
 
 
@@ -98,6 +102,7 @@ export default {
           this.feedbacks.push(error.response && error.response.data) ||
             error.message ||
             error.toString();
+            console.log(error.message)
           }
       );
     }

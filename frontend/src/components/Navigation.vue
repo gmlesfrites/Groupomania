@@ -2,7 +2,7 @@
 
   <v-app-bar color="#Ffd7d7" >
 
-    <router-link to="/home" class="text-decoration-none"><font-awesome-icon icon="home" class="navbar mr-2" /> Groupomania </router-link>
+    <router-link to="/" class="text-decoration-none"><font-awesome-icon icon="home" class="navbar mr-2" /> Groupomania </router-link>
       
       <v-container v-if="!currentUser" class="ml-auto" justify-end>
         <router-link to="/signup" class="text-decoration-none ml-5" >Inscription </router-link> 
@@ -72,8 +72,8 @@
   methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
-      window.alert('Vous êtes maintenant')
-      this.$router.push('/login');
+      window.alert('Vous êtes maintenant déconnecté(e)')
+      this.$router.push('/');
     }
   }
   }
