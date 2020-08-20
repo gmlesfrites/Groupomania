@@ -11,6 +11,9 @@
       </v-container>
 
       <v-container v-if="currentUser" class="ml-auto">
+        <router-link to="/chat" class="text-decoration-none">
+        Discussion </router-link> 
+        ||
         <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
         ||
         <a  to="/logout" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </a>
@@ -69,7 +72,7 @@
   methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
-      window.alert('Vous êtes maintenant déconnecté(e)')
+      window.alert('Vous êtes maintenant')
       this.$router.push('/login');
     }
   }

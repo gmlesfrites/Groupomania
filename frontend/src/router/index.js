@@ -17,7 +17,7 @@ const ifAuthenticated = (to, from, next) => {
       next()
       return
     }
-    next('/')
+    next('/chat')
   }
   
   const ifNotAuthenticated = (to, from, next) => {
@@ -25,7 +25,7 @@ const ifAuthenticated = (to, from, next) => {
       next()
       return
     }
-    next('/home')
+    next('/')
   }
   
     const routes = [
@@ -49,7 +49,7 @@ const ifAuthenticated = (to, from, next) => {
     {
       path: '/chat',
       name: 'Chat',
-      component:Chat,
+      component: Chat,
       beforeEnter: ifAuthenticated
     },
     {
@@ -63,6 +63,10 @@ const ifAuthenticated = (to, from, next) => {
       path: '/terms',
       name: 'Terms',
       component: TermsOfUse
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      //component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
     }
   ]
   
