@@ -141,9 +141,7 @@ exports.deleteUser = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const deleteUser = req.body.userId;
             const userToDelete = req.params.id;
-            console.log(deleteUser)
             
             if (userToDelete) {
                 conn.query(
