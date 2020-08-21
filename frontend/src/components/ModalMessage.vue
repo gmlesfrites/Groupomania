@@ -35,7 +35,6 @@
                 <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
               </v-row>
 
-          <!-- TODO @click="dialog = false" -->
           <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="sendMe">Publier</v-btn>
         </v-card-actions>
 
@@ -71,13 +70,13 @@ export default {
         firstname: String,
         messageId: Number
     },
+
     methods : {
       sendMe() {   
-        const user = this.$store.state.auth.user;
-        console.log(user)  
-        this.$store.dispatch("message/createMessage", this.message, user)
+      this.$store.dispatch("message/createMessage", this.message)
 
       console.log(this.message)
+
       .then(
         data => {
           this.$store.dispatch("message/getAllMessages");

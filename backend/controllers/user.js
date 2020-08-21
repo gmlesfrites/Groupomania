@@ -55,7 +55,7 @@ exports.signup = (req, res, next) => {
         conn.query('INSERT INTO users SET ?', user, 
         (error,results,fields) => {
         if (error) {
-            return res.status(400).json({message: 'Avez-vous renseigné les champs requis ? Votre mot de passe est-il bien configuré ? Avez-vous déjà un compte ? ' + error})
+            return res.status(400).json({message: 'Avez-vous déjà un compte ? ' + error})
         } 
         return res.status(201).json({ message: 'Votre compte a bien été créé !'})
         })
@@ -87,6 +87,7 @@ exports.login = (req, res, next) => {
                             }
                             res.status(200).json({
                                 id: results[0].id,
+                                userId : results[0].userId,
                                 firstname: results[0].firstname,
                                 lastname: results[0].lastname,
                                 bio: results[0].bio,
@@ -95,6 +96,7 @@ exports.login = (req, res, next) => {
                                 accessToken: jwt.sign(
                                     {
                                     id: results[0].id, 
+                                    userId : results[0].userId,
                                     privilege : privilege, 
                                     },
                                     process.env.TOKEN,
@@ -143,23 +145,23 @@ exports.deleteUser = (req, res, next) => {
             const userToDelete = req.params.id;
             console.log(deleteUser)
             
-            if (deleteUser != userToDelete) {
-                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action'})
-            }
-            
-            conn.query(
-                `DELETE FROM users WHERE id= ?`, deleteUser,
-                (error, results, fields) => {
-                    if (error) {
-                        return res.status(400).json(error)
+            if (userToDelete) {
+                conn.query(
+                    `DELETE FROM users WHERE id= ?`, userToDelete,
+                    (error, results, fields) => {
+                        if (error) {
+                            return res.status(400).json(error)
+                        }
+                        return res
+                        .status(200)
+                        .json({ message: 'Le compte a bien été supprimé !' })
                     }
-                    return res
-                    .status(200)
-                    .json({ message: 'Le compte a bien été supprimé !' })
-                }
-            )
-        }
-    )
+                )
+                
+                // return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action' + deleteUser + userToDelete})     
+             }
+        
+            })
 }
 
 // Middleware de suppression d'un utilisateur par l'administrateur

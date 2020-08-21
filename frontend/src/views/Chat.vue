@@ -11,13 +11,18 @@
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-container >
+          <v-container>
             <!-- Message initial -->
             <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5">
-              
+              <h3></h3>
+              <h4></h4>
+              <p></p>
               <!-- si réponse -->
               <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5">
                 message réponse
+              <h3></h3>
+              <h4></h4>
+              <p></p>
               </v-card>
             </v-card>
           </v-container>
@@ -39,6 +44,7 @@
     components: {
       ModalMessage,
     },
+
     // data() {
     //     return {
     //       showForm: false,

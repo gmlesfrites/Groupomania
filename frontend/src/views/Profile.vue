@@ -15,12 +15,12 @@
             
             <v-card-text>
 
-            <p><strong>Prénom : </strong><span  style="text-transform: uppercase"> {{currentUser.firstname}} </span></p>
-            <p><strong>Nom : </strong><span  style="text-transform: uppercase"> {{currentUser.lastname}} </span> </p>
-            <p><strong>Privilège : </strong>{{currentUser.privilege}}</p>
-            <p><strong>Email : </strong>{{currentUser.email}}</p>
-            <p><strong>Biographie :</strong> {{currentUser.bio}} </p>
-            <p><strong>Identifiant :</strong> {{currentUser.id}} </p>
+            <p v-if="currentUser"><strong>Prénom : </strong><span  style="text-transform: uppercase"> {{currentUser.firstname}} </span></p>
+            <p v-if="currentUser"><strong>Nom : </strong><span  style="text-transform: uppercase"> {{currentUser.lastname}} </span> </p>
+            <p v-if="currentUser"><strong>Privilège : </strong>{{currentUser.privilege}}</p>
+            <p v-if="currentUser"><strong>Email : </strong>{{currentUser.email}}</p>
+            <p v-if="currentUser"><strong>Biographie :</strong> {{currentUser.bio}} </p>
+            <p v-if="currentUser"><strong>Identifiant :</strong> {{currentUser.id}} </p>
             
 
           </v-card-text>
@@ -47,13 +47,13 @@ export default {
   },
   methods: {
     confirmDelete() {
-      if (window.confirm("Cette action n'est pas modifiable après confirmation !")) {
+      if (window.confirm("Cette action n'est pas modifiable après confirmation ! A la suite de cette opération vous serez déconnecté(e).")) {
         this.deleteMyProfile()
       }
     },
     deleteMyProfile() {
       let payload = this.$store.state.auth.user.id;
-      console.log(payload);
+
       this.$store.dispatch("auth/deleteProfile", payload)
 
       .then(

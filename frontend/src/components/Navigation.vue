@@ -14,7 +14,7 @@
         <router-link to="/chat" class="text-decoration-none">
         Discussion </router-link> 
         ||
-        <router-link to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
+        <router-link v-if="currentUser" to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
         ||
         <a  to="/logout" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </a>
       </v-container>
