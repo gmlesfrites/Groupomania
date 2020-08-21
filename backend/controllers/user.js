@@ -121,7 +121,6 @@ exports.login = (req, res, next) => {
 exports.getAllUsers = (req, res, next) => {
     conn.query(
         'SELECT * FROM development_groupomania.users ',
-        // 'SELECT * FROM development_groupomania.users LEFT JOIN likes ON users.id = likes.userId',
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
@@ -142,8 +141,9 @@ exports.deleteUser = (req, res, next) => {
             }
             const deleteUser = req.body.userId;
             const userToDelete = req.params.id;
+            console.log(deleteUser)
             
-            if (deleteUser !== userToDelete) {
+            if (deleteUser != userToDelete) {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action'})
             }
             
@@ -171,7 +171,7 @@ exports.deleteAdminUser = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const deleteUser = req.body.userId;
+            const deleteUser = req.body.id;
             
             conn.query(
                 `DELETE FROM users WHERE id= ?`, deleteUser,

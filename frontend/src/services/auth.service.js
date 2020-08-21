@@ -3,6 +3,7 @@ import authHeader from './auth-header'
 
 const API_URL = 'http://localhost:3000/api/auth/'
 // const API_URL_ADMIN = 'http://localhost:3000/api/auth/admin'
+
 class AuthService {
   login(user) {
     return axios
@@ -13,6 +14,7 @@ class AuthService {
       .then((response) => {
         if (response.data.accessToken) {
           localStorage.setItem('groupomaniaUser', JSON.stringify(response.data))
+
         }
         return response.data
       })

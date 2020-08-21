@@ -72,10 +72,10 @@ export default {
         messageId: Number
     },
     methods : {
-      sendMe() {
-        let payload = this.$store.state.auth.user;
-
-        this.$store.dispatch("message/createMessage", this.message, payload)
+      sendMe() {   
+        const user = this.$store.state.auth.user;
+        console.log(user)  
+        this.$store.dispatch("message/createMessage", this.message, user)
 
       console.log(this.message)
       .then(

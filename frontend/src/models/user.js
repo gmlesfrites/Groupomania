@@ -6,6 +6,6 @@ export default class User {
       this.bio = bio; // petite bio sur le profil
       this.email = email;  // email
       this.password = password;   // mot de passe
-      this.is = id;
+      this.id = id;
     }
   }

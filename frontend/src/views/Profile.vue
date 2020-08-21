@@ -47,13 +47,13 @@ export default {
   },
   methods: {
     confirmDelete() {
-      // if (window.confirm("Cette action n'est pas modifiable après confirmation !")) {
-      //   this.deleteMyProfile()
-      // }
+      if (window.confirm("Cette action n'est pas modifiable après confirmation !")) {
+        this.deleteMyProfile()
+      }
     },
     deleteMyProfile() {
       let payload = this.$store.state.auth.user.id;
-
+      console.log(payload);
       this.$store.dispatch("auth/deleteProfile", payload)
 
       .then(
