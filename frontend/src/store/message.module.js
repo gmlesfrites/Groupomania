@@ -9,19 +9,6 @@ export const message = {
     messages: '',
   },
   actions: {
-    addLike({ commit }, payload) {
-      return MessageService.addLike(payload).then(
-        (response) => {
-          commit('addLikeSuccess', response)
-          return Promise.resolve(response)
-        },
-        (error) => {
-          commit('addLikeFailure')
-          return Promise.reject(error)
-        }
-      )
-    },
-
     getAllMessages({ commit }) {
       return MessageService.getAllMessages().then(
         (response) => {

@@ -5,7 +5,7 @@
     <!-- <ChatMain/> -->
       <v-col align="center" justify="center">
         <v-card class="elevation-12 pb-7">
-          <v-toolbar color="#ffd7d7">
+          <v-toolbar color="rgb(209,81,90)">
             <v-toolbar-title>
               Les dernières publications
             </v-toolbar-title>

@@ -4,7 +4,7 @@
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4">
         <v-card class="elevation-12">
-          <v-toolbar color="#ffd7d7">
+          <v-toolbar color="rgb(209,81,90)">
             <v-toolbar-title>
               <img width="24" height="24" src="../assets/monochrome-black.png" class="mr-2">
               Connexion

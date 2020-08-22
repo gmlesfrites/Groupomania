@@ -2,7 +2,7 @@
   <v-container>
     <v-dialog width="auto" >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="#ffd7d7" v-bind="attrs" v-on="on" class="ma-3 ">
+        <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3 ">
           Nouveau Message
         </v-btn>
       </template>

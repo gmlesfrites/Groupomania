@@ -1,22 +1,22 @@
 <template>
 
-  <v-app-bar color="#Ffd7d7" >
+  <v-app-bar dark color="rgb(19,37,66)" >
 
-    <router-link to="/" class="text-decoration-none"><font-awesome-icon icon="home" class="navbar mr-2" /> Groupomania </router-link>
+    <router-link to="/" class="text-decoration-none white--text"><font-awesome-icon icon="home" class="navbar mr-2" /> Groupomania </router-link>
       
-      <v-container v-if="!currentUser" class="ml-auto" justify-end>
-        <router-link to="/signup" class="text-decoration-none ml-5" >Inscription </router-link> 
+      <v-container  v-if="!currentUser" class="ml-auto" justify-end>
+        <router-link  to="/signup" class="text-decoration-none ml-5 white--text" >Inscription </router-link> 
         ||
-        <router-link to="/login" class="text-decoration-none mr-5">Connexion </router-link>
+        <router-link to="/login" class="text-decoration-none mr-5 white--text">Connexion </router-link>
       </v-container>
 
       <v-container v-if="currentUser" class="ml-auto">
         <router-link to="/chat" class="text-decoration-none">
         Discussion </router-link> 
         ||
-        <router-link v-if="currentUser" to="/profile" class="text-decoration-none"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
+        <router-link v-if="currentUser" to="/profile" class="text-decoration-none white--text"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
         ||
-        <a  to="/logout" @click="logOut" class="text-decoration-none"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </a>
+        <a  to="/logout" @click="logOut" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </a>
       </v-container>
   </v-app-bar>
       
