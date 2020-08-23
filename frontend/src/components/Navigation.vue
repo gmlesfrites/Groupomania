@@ -11,7 +11,7 @@
       </v-container>
 
       <v-container v-if="currentUser" class="ml-auto">
-        <router-link to="/chat" class="text-decoration-none">
+        <router-link to="/chat" class="text-decoration-none mr-5 white--text">
         Discussion </router-link> 
         ||
         <router-link v-if="currentUser" to="/profile" class="text-decoration-none white--text"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
