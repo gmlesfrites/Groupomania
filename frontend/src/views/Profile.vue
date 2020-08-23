@@ -28,7 +28,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="warning" class="mr-2 mb-2"  @click="confirmDelete"> Supprimer mon compte </v-btn>
+            <v-btn color="rgb(209,81,90)" class="mr-2 mb-2"  @click="confirmDelete"> Supprimer mon compte </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
