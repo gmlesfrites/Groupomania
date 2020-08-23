@@ -8,6 +8,15 @@ export const message = {
     deletedMessage: { status: '' },
     messages: '',
   },
+  getters : {
+    getAllMessages: state => {
+      return state.messages;
+      
+    }, 
+    getMessageById: (state) => (id) => {
+      return state.messages.find(messages => messages.id === id);
+    }
+  },
   actions: {
     getAllMessages({ commit }) {
       return MessageService.getAllMessages().then(
@@ -83,8 +92,6 @@ export const message = {
       }
   },
   mutations: {
-    addLikeSuccess() {},
-    addLikeFailure() {},
     getAllMessagesSuccess(state, response) {
       state.messages = response.data.results
     },
@@ -121,3 +128,4 @@ export const message = {
     }
   }
 }
+
