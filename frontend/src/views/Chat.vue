@@ -40,7 +40,7 @@
   import ModalMessage from "../components/ModalMessage"
 
   export default {
-    name:  'app',
+    name:  'Chat',
     components: {
       ModalMessage,
     },

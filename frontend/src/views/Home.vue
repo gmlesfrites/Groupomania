@@ -8,7 +8,7 @@
 import Hello from '../components/Hello'
 
 export default {
-    name: 'app',
+    name: 'Home',
     components: {
       Hello
        
