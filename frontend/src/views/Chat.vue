@@ -13,9 +13,11 @@
         <v-container>
            
            
-          <ChatComponent v-for="(paginedPost, index) in paginedPosts" :key="index" :title="paginedPost.title" :content="paginedPost.content" :id="paginedPost.id" :userId="paginedPost.userId" :createdAt="paginedPost.createAt" :currentUser="currentUser.id"  :messageId="paginedPost.messageId" />
-            <v-card v-for="(answer, index) in answers" :key="index">
-              <chatComponent v-if="answer.messageId === paginedPost.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :createdAt="answer.createdAt" :currentUser="currentUser.id" :messageId="answer.messageId" />    
+          <ChatComponent v-for="(content, mess) in contents" :key="mess" :title="content.title" :content="content.content" :id="content.id" :userId="content.userId" :createdAt="content.createAt" :currentUser="content.id"  :messageId="content.messageId" />
+
+            <v-card v-for="(answer, reply) in answers" :key="reply">
+              
+              <chatComponent v-if="answer.messageId === content.id" :title="content.title" :content="content.content" :id="content.id" :userId="content.userId" :createdAt="content.createdAt" :currentUser="currentUser.id" :messageId="answer.messageId" />    
           </v-card>
         </v-container>
 
@@ -60,7 +62,7 @@
         for (let i = 0; i < allMessages.length; i++) {
           const content = allMessages[i];
           if (content.messageId == null) {
-            content.push(content);
+            contents.push(content);
           }
         }
         return contents;

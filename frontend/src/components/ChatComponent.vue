@@ -1,59 +1,150 @@
 <template>
   <v-container> 
-    <!-- Message initial -->
-    <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5">
-      <v-card-text v-for="message in messages" :key="message">
-        <!-- {{message.title}} -->
-        <h3 class="text-justify"> </h3> 
+    <!-- :outlined="outlinedPost" :class="classPost"  -->
+    <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5" :id="messageId" v-show="view === 'onDisplay' || view === 'onAnswer'">
+      <v-card-title>
+        <h3 class="text-justify"> {{title}} </h3>
+        <span class="text-justify" v-if="isAnswer()"> {{ date }} </span>
+      </v-card-title>
 
-        <!-- {{message.userId}}  -->
-        <p class="text-justify">  </p>
+      <v-menu >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="(menuItem, menu) in menuItems" :key="menu" @click="menuItem.click" :data-id="id" v-show="menuItem.show">
+            <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
 
-        <v-divider></v-divider>
+      <v-divider></v-divider>
 
-        <v-row class="ml-1 mt-4">
+      <v-card-text>
+        <p class="text-justify">{{ content }}</p>
+        <p class="text-justify"> {{firstname}} {{lastname}} </p>
+      </v-card-text>
 
-          <!-- {{message.createdAt}} -->
-          <p class="text-justify">  </p>
 
-          <!-- {{message.content}} -->
-          <p class="text-justify">   </p>
-        </v-row>
-      </v-card-text>  
-      <!-- si réponse -->
-      <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5">
-        <v-card-text >
-          <!-- {{message.title}} -->
-          <h3 class="text-justify">  </h3> 
 
-          <!-- {{message.userId}}  -->
-          <p class="text-justify">   </p>
-
-          <v-divider></v-divider>
-
-          <v-row class="ml-1 mt-4">
-
-            <!-- {{message.createdAt}} -->
-            <p class="text-justify">   </p>
-
-            <!-- {{message.content}} -->
-            <p class="text-justify">   </p>
-          </v-row>
-        </v-card-text> 
-      </v-card>
+      <OtherMessage v-if="view ==='onAnswer'" :title="title" :content="content" 
+        :id="id" :userId="userId" :onSubmit="formMethod.answer"
+        :messageId="messageId" :currentId="currentId" @changeView="changeView" />
     </v-card>
+
+      <OtherMessage v-if="view ==='onUpdate'" :title="title" :content="content"       :id="id" :userId="userId" :onSubmit="formMethod.update" 
+        :messageId="messageId" :currentId="currentId" @changeView="changeView" />
+
+
+
   </v-container>
 </template>
 
 <script>
-// import OtherMessage from '../components/OtherMessage'
+import OtherMessage from '../components/OtherMessage'
 
 export default {
   name: 'ChatComponent',
 
   components: {
-    // OtherMessage,
+    OtherMessage,
   }, 
-
+  props: {
+    title: String,
+    content: String,
+    id: Number,
+    userId: Number,
+    createdAt: String,
+    currentUser: Number,
+    firstname: String,
+    lastname : String,
+    messageId: Number,
+    onUpdateTitle: String,
+    onUpdateContent: String
+  },
+  data() {
+    return {
+      view: "onDisplay",
+      currentId: null,
+      message: {
+        title: this.title,
+        content: this.content
+      },
+      formMethod: { update: "updateMessage", answer: "answerMessage" }
+    };
+  },
+  computed: {
+    menuItems() {
+      return [
+        {
+          title: "Modifier",
+          click: this.updateMessage,
+          show:
+            this.userId === this.currentUser 
+        },
+        {
+          title: "Répondre",
+          click: this.answerMessage,
+          show: this.isAnswer() === false
+        },
+        {
+          title: "Supprimer",
+          click: this.deleteMessage,
+          show:
+            this.userId === this.currentUser ||
+            this.$store.state.auth.user.privilege === "admin"
+        }
+      ];
+    },
+  },
+  // outlinedPost() {
+  //   if (this.isAnswer()) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // },
+  // classPost() {
+  //   if (this.isAnswer()) {
+  //     return "post post__answer";
+  //   } else {
+  //     return "post post__origin";
+  //   }
+  // },
+  methods: {
+    isAnswer() {
+      if (this.messageId === null || this.id === undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    changeView(View) {
+      this.view = View;
+    },
+    answerMessage() {
+      this.view = "onAnswer";
+      this.currentId = this.id;
+    },
+    updtaeMessage() {
+      this.view = "onUpdate";
+      this.currentId = this.id;
+    },
+    deleteMessage() {
+      let payload = this.id;
+      this.$store.dispatch("message/deleteMessage", payload).then(
+        data => {
+          this.$store.dispatch("message/getAllMessages");
+          this.$emit("deleteFeedback", data.message);
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  },
 }
 </script>
