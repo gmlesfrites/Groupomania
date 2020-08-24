@@ -1,119 +1,91 @@
 <template>
-  
   <v-container>
     <ModalMessage/>
     <!-- <ChatMain/> -->
-      <v-col align="center" justify="center">
-        <v-card class="elevation-12 pb-7">
-          <v-toolbar color="rgb(209,81,90)">
-            <v-toolbar-title>
-              Les dernières publications
-            </v-toolbar-title>
-          </v-toolbar>
+    <v-col align="center" justify="center">
+      <v-card class="elevation-12 pb-7">
+        <v-toolbar color="rgb(209,81,90)">
+          <v-toolbar-title>
+            Les dernières publications
+          </v-toolbar-title>
+        </v-toolbar>
 
-          <v-container>
-            <!-- Message initial -->
-            <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5">
-              <h3></h3>
-              <h4></h4>
-              <p></p>
-              <!-- si réponse -->
-              <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5">
-                message réponse
-              <h3></h3>
-              <h4></h4>
-              <p></p>
-              </v-card>
-            </v-card>
-          </v-container>
-        
-        </v-card>
-      </v-col>
+        <v-container>
+           
+           
+          <ChatComponent v-for="(paginedPost, index) in paginedPosts" :key="index" :title="paginedPost.title" :content="paginedPost.content" :id="paginedPost.id" :userId="paginedPost.userId" :createdAt="paginedPost.createAt" :currentUser="currentUser.id"  :messageId="paginedPost.messageId" />
+            <v-card v-for="(answer, index) in answers" :key="index">
+              <chatComponent v-if="answer.messageId === paginedPost.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :createdAt="answer.createdAt" :currentUser="currentUser.id" :messageId="answer.messageId" />    
+          </v-card>
+        </v-container>
 
+        <OtherMessage/>
+      </v-card>
+    </v-col>
   </v-container>
-
-    
-
 </template>
 
 <script>
   import ModalMessage from "../components/ModalMessage"
-
+  import ChatComponent from '../components/ChatComponent'
+  import OtherMessage from '../components/OtherMessage'
+  
   export default {
     name:  'Chat',
     components: {
       ModalMessage,
+      OtherMessage,
+      ChatComponent,
     },
+    data() {
+      return {
+        showForm: false,
+        // formMethod: "postMyMessage",
+      };
+    },
+    computed: {
+      currentUser() {
+        return this.$store.state.auth.user;
+      },
+      isAdmin() {
+        if (this.$store.state.auth.user.privilege === 'admin') {
+          return true
+        } else {
+          return false
+        }
+      },
+      contents() {
+        const allMessages = this.$store.state.message.messages;
+        const contents = [];
+        for (let i = 0; i < allMessages.length; i++) {
+          const content = allMessages[i];
+          if (content.messageId == null) {
+            content.push(content);
+          }
+        }
+        return contents;
+      },
+      answers() {
+        const allMessages = this.$store.state.message.messages;
+        const answers = [];
+        for (let i = 0; i < allMessages.length; i++) {
+          const answer = allMessages[i];
+          if (answer.messageId != null) {
+            answers.push(answer);
+          }
+        }
+        answers.reverse();
+        return answers;
+      }
+    },
+    methods: {
 
-    // data() {
-    //     return {
-    //       showForm: false,
-    //       feedbacks: null,
-    //       wallSize: 10,
-    //       overlay: false
-    //     },
-    // },
-    // computed: {
-    //   currentUser() {
-    //     return this.$store.state.auth.user;
-    //   },
-    //   isAdmin() {
-    //     if (this.$store.state.auth.user.privilege === 'admin') {
-    //       return true
-    //     } else {
-    //       return false
-    //     }
-    //   },
-    //   posts() {
-    //     const allMessages = this.$store.state.message.messages;
-    //     const posts = [];
-    //     for (let i = 0; i < allMessages.length; i++) {
-    //       const post = allMessages[i];
-    //       if (post.messageId == null) {
-    //         posts.push(post);
-    //       }
-    //     }
-    //     return posts;
-    //   },
-    //   paginedPosts() {
-    //     return this.posts.slice(0, this.wallSize);
-    //   },
-    //   hasNextPosts() {
-    //     return this.wallSize < this.posts.length;
-    //   },
-    //   // replies() {
-    //   //   const allMessages = this.$store.state.message.messages;
-    //   //   const replies = [];
-    //   //   for (let i = 0; i <script allMessages.length; i++) {
-    //   //     const post = allMessages[i];
-    //   //     if (post.messageId != null) {
-    //   //       replies.push(post);
-    //   //     }
-    //   //   }
-    //   //   replies.reverse();
-    //   //   return replies;
-    //   // }
-    // },
-    // methods: {
-    //   scrollUp() {
-    //     window.scrollTo(0, 0);
-    //   },
-    //   setFeedback(postFeedback) {
-    //     this.feedbacks = postFeedback;
-    //     this.showForm = false;
-    //     this.overlay = true;
-    //   },
-    //   nextPosts() {
-    //     setTimeout(() => {
-    //       this.wallSize += 5;
-    //     }, 1000);
-    //   }
-    // },
-    // mounted() {
-    //   if (!this.currentUser) {
-    //     this.$router.push("/login");
-    //   }
-    //   this.$store.dispatch("message/getAllMessages");
+    },
+    mounted() {
+      if (!this.currentUser) {
+        this.$router.push("/login");
+      }
+      this.$store.dispatch("message/getAllMessages");
     }
-    
-  </script>
+  }
+</script>

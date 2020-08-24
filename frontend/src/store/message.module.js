@@ -10,8 +10,7 @@ export const message = {
   },
   getters : {
     getAllMessages: state => {
-      return state.messages;
-      
+      return state.messages;      
     }, 
     getMessageById: (state) => (id) => {
       return state.messages.find(messages => messages.id === id);

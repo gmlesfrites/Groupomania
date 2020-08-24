@@ -5,7 +5,8 @@ export const user = {
   
   namespaced: true,
   state: {
-    allUsers: ''
+    allUsers: '',
+    oneUser:''
   },
   actions: {
     getAllUsers({ commit }) {
@@ -26,5 +27,13 @@ export const user = {
       state.allUsers = response.data.results
     },
     getAllUsersFailure() {}
-  }
+  },
+  // getters :{
+  //   getUserById : (state) => {
+  //     return state.auth.user
+  //   },
+  //   getAllUsers : (state) => {
+  //     return state.allUsers
+  //   }
+  // }
 }

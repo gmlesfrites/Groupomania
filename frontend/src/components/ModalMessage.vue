@@ -13,6 +13,7 @@
         </v-card-title>
 
         <v-card-text>
+          
           <v-form name="form" v-model="valid">
             <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
             <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
@@ -24,6 +25,7 @@
           </v-form>
         
         </v-card-text>
+
         <v-row class="ml-2 " h6>
               <small class="ml-2 mr-2 text-justify" >* Ces indications sont requises.</small>
             </v-row>
@@ -33,9 +35,10 @@
 
           <v-row color="warning" v-if="feedbacks.length" class="ml-1">
                 <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
-              </v-row>
+              </v-row> 
 
           <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="sendMe">Publier</v-btn>
+
         </v-card-actions>
 
       </v-card>
@@ -47,36 +50,31 @@
   import Message from '../models/message'
 
 export default {
-    name: 'Modal',
-    data () {
-      return {
-        message: new Message("", ""),
-        feedbacks: [], // informations sur la création du message
-        show: true,
-        valid: false,
-        titleRules: [v => !!v || "Indiquez un titre", v =>
-          /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
-        contentRules: [v => !!v || "Indiquez le contenu de votre message", v =>
-          /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"]
-      }
-    },
-      props: {
-        title: String,
-        content: String,
-        id: Number,
-        userId: Number,
-        createdAt: String,
-        lastname: String,
-        firstname: String,
-        messageId: Number
-    },
-
-    methods : {
-      sendMe() {   
+  name: 'ModalMessage',
+  data () {
+    return {
+      message: new Message("", ""),
+      feedbacks: [], // informations sur la création du message
+      show: true,
+      valid: false,
+      titleRules: [v => !!v || "Indiquez un titre", v =>
+        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
+      contentRules: [v => !!v || "Indiquez le contenu de votre message", v =>
+        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"]
+    }
+  },
+    props: {
+      title: String,
+      content: String,
+      id: Number,
+      createdAt: String,
+      lastname: String,
+      firstname: String,
+      messageId: Number
+  },
+  methods : {
+    sendMe() {   
       this.$store.dispatch("message/createMessage", this.message)
-
-      console.log(this.message)
-
       .then(
         data => {
           this.$store.dispatch("message/getAllMessages");
@@ -86,13 +84,23 @@ export default {
         },
         error => {
           console.log(error);
-        }
-      )
+        })
     },
+    typeOfMessage() {
+      if (this.onSubmit === "SendMe") {
+      this.message = new Message();
+      }
+    },
+    onSubmitMethod(event) {
+      if (this.onSubmit === "SendMe") {
+      this.SendMe(event);
+      }
+    },
+    onCancelMethod () {
+      if (this.onSubmit === "sendMe") {
+      this.$refs.form.reset()
+      }
+    }
   }
 }
-
 </script>
-
-
-
