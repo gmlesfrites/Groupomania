@@ -3,14 +3,14 @@ import authHeader from './auth-header'
 import store from '../store'
 
 const API_URL = 'http://localhost:3000/api/message/'
+const API_URL_CREATE = 'http://localhost:3000/api/message/create/'
+const API_URL_LINK = 'http://localhost:3000/api/message/link/'
 const API_URL_ADMIN = 'http://localhost:3000/api/message/admin/'
 
 class MessageService {
-  createMessage(message, payload) {
-    const id = payload.id
-
+  createMessage(message) {
     return axios.post(
-      API_URL + id,
+      API_URL_CREATE ,
       {
         title: message.title,
         content: message.content,
@@ -22,7 +22,7 @@ class MessageService {
   answerMessage(payload) {
     const id = payload.id
     return axios.post(
-      API_URL + id,
+      API_URL_LINK + id,
       {
         title: payload.message.title,
         content: payload.message.content,
