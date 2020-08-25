@@ -6,7 +6,6 @@ export const user = {
   namespaced: true,
   state: {
     allUsers: '',
-    oneUser:''
   },
   actions: {
     getAllUsers({ commit }) {
@@ -28,12 +27,4 @@ export const user = {
     },
     getAllUsersFailure() {}
   },
-  // getters :{
-  //   getUserById : (state) => {
-  //     return state.auth.user
-  //   },
-  //   getAllUsers : (state) => {
-  //     return state.allUsers
-  //   }
-  // }
 }

@@ -9,14 +9,6 @@ class UserService {
   getAllUsers() {
     return axios.get(API_URL + '', { headers: authHeader() })
   }
-
-  getMemberBoard() {
-    return axios.get(API_URL + 'member', { headers: authHeader() })
-  }
-
-  getAdminBoard() {
-    return axios.get(API_URL + 'admin', { headers: authHeader() })
-  }
 }
 
 export default new UserService();
