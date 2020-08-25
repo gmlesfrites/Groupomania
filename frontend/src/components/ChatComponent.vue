@@ -128,7 +128,7 @@ export default {
       this.view = "onAnswer";
       this.currentId = this.id;
     },
-    updtaeMessage() {
+    updateMessage() {
       this.view = "onUpdate";
       this.currentId = this.id;
     },

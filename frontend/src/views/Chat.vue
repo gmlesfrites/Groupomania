@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <Moderator/>
     <ModalMessage/>
     <!-- <ChatMain/> -->
     <v-col align="center" justify="center">
@@ -28,6 +29,7 @@
 </template>
 
 <script>
+  import Moderator from '../components/Moderator'
   import ModalMessage from "../components/ModalMessage"
   import ChatComponent from '../components/ChatComponent'
   import OtherMessage from '../components/OtherMessage'
@@ -35,6 +37,7 @@
   export default {
     name:  'Chat',
     components: {
+      Moderator,
       ModalMessage,
       OtherMessage,
       ChatComponent,

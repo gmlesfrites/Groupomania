@@ -2,7 +2,7 @@
 
   <v-app-bar dark color="rgb(19,37,66)" >
 
-    <router-link to="/" class="text-decoration-none white--text"><font-awesome-icon icon="home" class="navbar mr-2" /> Groupomania </router-link>
+    <a to="/" class="text-decoration-none white--text"  @click.prevent><img src="../assets/monochrome-white.png" width="18" height="18" alt="logo Groupomania"> Groupomania </a>
       
       <v-container  v-if="!currentUser" class="ml-auto" justify-end>
         <router-link  to="/signup" class="text-decoration-none ml-5 white--text" >Inscription </router-link> 
