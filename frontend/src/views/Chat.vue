@@ -11,18 +11,13 @@
           </v-toolbar-title>
         </v-toolbar>
 
-        <v-container>
-           
-           
+        <v-card>
           <ChatComponent v-for="(content, mess) in contents" :key="mess" :title="content.title" :content="content.content" :id="content.id" :userId="content.userId" :createdAt="content.createAt" :currentUser="content.id"  :messageId="content.messageId" />
+            <v-card v-for="(answer, reply) in answers" :key="reply">  
+              <ChatComponent v-if="answer.messageId === content.id" :title="content.title" :content="content.content" :id="content.id" :userId="content.userId" :createdAt="content.createdAt" :currentUser="currentUser.id" :messageId="answer.messageId" />    
+            </v-card>
+        </v-card>
 
-            <v-card v-for="(answer, reply) in answers" :key="reply">
-              
-              <chatComponent v-if="answer.messageId === content.id" :title="content.title" :content="content.content" :id="content.id" :userId="content.userId" :createdAt="content.createdAt" :currentUser="currentUser.id" :messageId="answer.messageId" />    
-          </v-card>
-        </v-container>
-
-        <OtherMessage/>
       </v-card>
     </v-col>
   </v-container>
@@ -32,14 +27,14 @@
   import Moderator from '../components/Moderator'
   import ModalMessage from "../components/ModalMessage"
   import ChatComponent from '../components/ChatComponent'
-  import OtherMessage from '../components/OtherMessage'
+  // import FormMessage from '../components/FormMessage'
   
   export default {
     name:  'Chat',
     components: {
       Moderator,
       ModalMessage,
-      OtherMessage,
+      // FormMessage,
       ChatComponent,
     },
     data() {

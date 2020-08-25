@@ -7,12 +7,6 @@
         <span class="text-justify" v-if="isAnswer()"> {{ date }} </span>
       </v-card-title>
 
-      <v-menu >
-          <v-btn v-for="(menuItem, menu) in menuItems" :key="menu">
-            <v-btn-title>{{ menuItem.title }}</v-btn-title>
-          </v-btn>
-      </v-menu>
-
       <v-divider></v-divider>
 
       <v-card-text>
@@ -21,28 +15,29 @@
       </v-card-text>
 
 
+      <v-card-actions justify="space-between">
+        
+        <AnswerMessage/>
+        <UpdateMessage/>
+        <DeleteMessage/>
 
-      <OtherMessage v-if="view ==='onAnswer'" :title="title" :content="content" 
-        :id="id" :userId="userId" :onSubmit="formMethod.answer"
-        :messageId="messageId" :currentId="currentId" @changeView="changeView" />
+      </v-card-actions>
     </v-card>
-
-      <OtherMessage v-if="view ==='onUpdate'" :title="title" :content="content"       :id="id" :userId="userId" :onSubmit="formMethod.update" 
-        :messageId="messageId" :currentId="currentId" @changeView="changeView" />
-
-
-
   </v-container>
 </template>
 
 <script>
-import OtherMessage from '../components/OtherMessage'
+import AnswerMessage from '../components/AnswerMessage'
+import UpdateMessage from '../components/UpdateMessage'
+import DeleteMessage from '../components/DeleteMessage'
 
 export default {
   name: 'ChatComponent',
 
   components: {
-    OtherMessage,
+    AnswerMessage,
+    UpdateMessage,
+    DeleteMessage
   }, 
   props: {
     title: String,
@@ -69,48 +64,8 @@ export default {
     };
   },
   computed: {
-    menuItems() {
-      return [
-        {
-          title: "Modifier",
-          click: this.updateMessage,
-          show:
-            this.userId === this.currentUser 
-        },
-        {
-          title: "Répondre",
-          click: this.answerMessage,
-          show: this.isAnswer() === false
-        },
-        {
-          title: "Supprimer",
-          click: this.deleteMessage,
-          show:
-            this.userId === this.currentUser
-        },
-        {
-          title: "Supprimer (Mod)",
-          click: this.deleteAdminMessage,
-          show:
-            this.$store.state.auth.user.privilege === "admin"
-        }
-      ];
-    },
+
   },
-  // outlinedPost() {
-  //   if (this.isAnswer()) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // },
-  // classPost() {
-  //   if (this.isAnswer()) {
-  //     return "post post__answer";
-  //   } else {
-  //     return "post post__origin";
-  //   }
-  // },
   methods: {
     isAnswer() {
       if (this.messageId === null || this.id === undefined) {
@@ -130,32 +85,6 @@ export default {
       this.view = "onUpdate";
       this.currentId = this.id;
     },
-    deleteMessage() {
-      let payload = this.id;
-      this.$store.dispatch("message/deleteMessage", payload).then(
-        data => {
-          this.$store.dispatch("message/getAllMessages");
-          this.$emit("deleteFeedback", data.message);
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    },
-    deleteAdminMessage() {
-      let payload = this.id;
-      this.$store.dispatch("message/deleteAdminMessage", payload).then(
-        data => {
-          this.$store.dispatch("message/getAllMessages");
-          this.$emit("deleteFeedback", data.message);
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-  },
+  }
 }
 </script>
