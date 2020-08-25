@@ -7,14 +7,6 @@ export const user = {
     allUsers: '',
     user:'',
   },
-  getters : {
-    allUsers : state => {
-      return state.allUsers;
-    },
-    user : state => {
-      return state.auth.user
-    }
-  },
   actions: {
     getAllUsers({ commit }) {
       return UserService.getAllUsers().then(

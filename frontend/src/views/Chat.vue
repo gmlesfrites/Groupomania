@@ -66,6 +66,10 @@
         }
         return contents;
       },
+      user() {
+        const user = this.$store.state.auth.user;
+        return user
+      },
       answers() {
         const allMessages = this.$store.state.message.messages;
         const answers = [];

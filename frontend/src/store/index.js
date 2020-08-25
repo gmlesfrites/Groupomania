@@ -8,12 +8,7 @@ import { message } from './message.module'
 Vue.use (Vuex)
 
 export default new Vuex.Store({
-  state: {
-  },
-  getters : {
-    getUser (state) {
-      return state.user
-    }
+  state: () => {
   },
   mutations: {
   },
