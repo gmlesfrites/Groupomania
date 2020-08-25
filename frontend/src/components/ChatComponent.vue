@@ -8,16 +8,9 @@
       </v-card-title>
 
       <v-menu >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
+          <v-btn v-for="(menuItem, menu) in menuItems" :key="menu">
+            <v-btn-title>{{ menuItem.title }}</v-btn-title>
           </v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="(menuItem, menu) in menuItems" :key="menu" @click="menuItem.click" :data-id="id" v-show="menuItem.show">
-            <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
       </v-menu>
 
       <v-divider></v-divider>
@@ -93,7 +86,12 @@ export default {
           title: "Supprimer",
           click: this.deleteMessage,
           show:
-            this.userId === this.currentUser ||
+            this.userId === this.currentUser
+        },
+        {
+          title: "Supprimer (Mod)",
+          click: this.deleteAdminMessage,
+          show:
             this.$store.state.auth.user.privilege === "admin"
         }
       ];
