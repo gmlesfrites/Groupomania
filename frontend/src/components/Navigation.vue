@@ -1,28 +1,20 @@
 <template>
-
   <v-app-bar dark color="rgb(19,37,66)" >
-
     <a to="/" class="text-decoration-none white--text"  @click.prevent><img src="../assets/monochrome-white.png" width="18" height="18" alt="logo Groupomania"> Groupomania </a>
-      
-      <v-container  v-if="!currentUser" class="ml-auto" justify-end>
-        <router-link  to="/signup" class="text-decoration-none ml-5 white--text" >Inscription </router-link> 
-        ||
-        <router-link to="/login" class="text-decoration-none mr-5 white--text">Connexion </router-link>
-      </v-container>
 
-      <v-container v-if="currentUser" class="ml-auto">
-        <router-link to="/chat" class="text-decoration-none mr-5 white--text">
+      <v-col  v-if="!currentUser" class="ml-auto" justify-end>
+        <router-link  to="/signup" class="text-decoration-none ml-5 mr-5 white--text" >Inscription </router-link> 
+
+        <router-link to="/login" class="text-decoration-none mr-5 ml-5 white--text">Connexion </router-link>
+      </v-col>
+
+      <v-col v-if="currentUser" class="ml-auto">
+        <router-link to="/chat" class="text-decoration-none mr-5 ml-5 white--text">
         Discussion </router-link> 
-        ||
-        <router-link v-if="currentUser" to="/profile" class="text-decoration-none white--text"><font-awesome-icon icon="user" class="mr-2"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
-        ||
-        <a  to="/logout" @click="logOut" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-2"/> Déconnexion </a>
-      </v-container>
-  </v-app-bar>
-      
-
-
-
+        <router-link v-if="currentUser" to="/profile" class="text-decoration-none mr-5 white--text"><font-awesome-icon icon="user" class="mr-2 ml-5"/><strong style="text-transform: uppercase"> {{currentUser.firstname}}</strong> </router-link> 
+        <a  to="/logout" @click="logOut" class="text-decoration-none white--text"><font-awesome-icon icon="sign-out-alt" class="ml-5 mr-2"/> Déconnexion </a>
+      </v-col>
+  </v-app-bar>     
 </template>
 
 <script>

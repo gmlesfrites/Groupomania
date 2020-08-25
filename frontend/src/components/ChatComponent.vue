@@ -1,7 +1,7 @@
 <template>
   <v-container> 
     <!-- :outlined="outlinedPost" :class="classPost"  -->
-    <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5" :id="messageId" v-show="view === 'onDisplay' || view === 'onAnswer'">
+    <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'">
       <v-card-title>
         <h3 class="text-justify"> {{title}} </h3>
         <span class="text-justify" v-if="isAnswer()"> {{ date }} </span>
@@ -15,12 +15,12 @@
       </v-card-text>
 
 
-      <v-card-actions justify="space-between">
-        
-        <AnswerMessage/>
-        <UpdateMessage/>
-        <DeleteMessage/>
-
+      <v-card-actions>
+        <v-col>
+          <AnswerMessage/>
+          <UpdateMessage/>
+          <DeleteMessage/>
+        </v-col>
       </v-card-actions>
     </v-card>
   </v-container>
