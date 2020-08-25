@@ -99,7 +99,7 @@ exports.login = (req, res, next) => {
                                     userId : results[0].userId,
                                     privilege : privilege, 
                                     },
-                                    process.env.VUE_APP_TOKEN,
+                                    process.env.TOKEN,
                                     { expiresIn: '12h' }
                                 )   
                             })

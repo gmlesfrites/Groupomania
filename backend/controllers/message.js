@@ -143,7 +143,8 @@ exports.updateMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const messageId = results[0].userId;
+            const id = results[0].userId;
+            
             const messageToSend = req.body.userId;
             const title = req.body.title;
             const content = req.body.content;
