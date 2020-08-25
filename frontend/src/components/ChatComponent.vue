@@ -142,6 +142,19 @@ export default {
           console.log(error);
         }
       );
+    },
+    deleteAdminMessage() {
+      let payload = this.id;
+      this.$store.dispatch("message/deleteAdminMessage", payload).then(
+        data => {
+          this.$store.dispatch("message/getAllMessages");
+          this.$emit("deleteFeedback", data.message);
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   },
 }
