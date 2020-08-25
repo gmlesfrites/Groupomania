@@ -64,7 +64,7 @@ export default {
     };
   },
   computed: {
-
+   
   },
   methods: {
     isAnswer() {

@@ -70,6 +70,9 @@
         passwordRules: [v => !!v || "Indiquez votre mot de passe"]
       };
     },
+    getters: {
+      
+    },
     computed: {
       loggedIn() {
         return this.$store.state.auth.status.loggedIn;

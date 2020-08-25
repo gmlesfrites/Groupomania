@@ -10,7 +10,7 @@ export const message = {
   },
   getters : {
     getAllMessages: state => {
-      return state.messages;      
+      return state.messages;            
     }, 
     getMessageById: (state) => (id) => {
       return state.messages.find(messages => messages.id === id);
@@ -99,7 +99,7 @@ export const message = {
       state.createdMessage.status = 'Posted'
     },
     createMessageFailure(state) {
-      state.createdMessage.status = 'Not posted'
+      state.createdMessage.status = 'Not created'
     },
     answerMessageSuccess(state) {
       state.createdMessage.status = 'Answered'
