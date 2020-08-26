@@ -10,7 +10,7 @@ export const auth = {
   namespaced: true,
   state: initialState,
   getters : {
-    user: (state) => {
+    userState: (state) => {
       return state.user
     }
   },

@@ -12,9 +12,9 @@
         </v-toolbar>
 
         <v-card>
-          <ChatComponent v-for="(content, mess) in contents" :key="mess" :title="content.title" :content="content.content" :id="content.id" :userId="content.userId" :createdAt="content.date" :currentUser="content.id"  :messageId="content.messageId" />
+          <ChatComponent v-for="(content, mess) in contents" :key="mess" :title="content.title" :content="content.content" :id="content.id" :userId="currentUser.id" :createdAt="content.date" :currentUser="content.id"  :messageId="content.messageId" />
             <v-card v-for="(answer, reply) in answers" :key="reply">  
-              <ChatComponent v-if="answer.MessageId === content.id" :title="content.title" :content="content.content" :id="content.id" :userId="content.userId" :createdAt="content.date" :currentUser="currentUser.id" :messageId="answer.id" />    
+              <ChatComponent v-if="answer.MessageId === content.id" :title="content.title" :content="content.content" :id="content.id" :userId="currentUser.id" :createdAt="content.date" :messageId="answer.id" />    
             </v-card>
         </v-card>
 
@@ -45,7 +45,7 @@
     },
     computed: {
       currentUser() {
-        return this.$store.state.auth.user;
+        return this.$store.getters["auth/userState"];
       },
 
       isAdmin() {
@@ -91,6 +91,7 @@
         this.$router.push("/login");
       }
       this.$store.dispatch("message/getAllMessages");
-    }
+    },
+    
   }
 </script>

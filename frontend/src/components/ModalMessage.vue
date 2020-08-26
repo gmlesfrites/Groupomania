@@ -75,7 +75,9 @@ export default {
   },
   methods : {
     sendMe() {   
+
       this.$store.dispatch("message/createMessage", this.message)
+      
       .then(
         data => {
           this.$store.dispatch("message/getAllMessages");
@@ -86,6 +88,8 @@ export default {
         error => {
           console.log(error);
         })
+        console.log(this.message);
+
     },
     typeOfMessage() {
       if (this.onSubmit === "SendMe") {

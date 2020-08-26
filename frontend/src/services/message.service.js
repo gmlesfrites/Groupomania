@@ -7,13 +7,16 @@ const API_URL_CREATE = 'http://localhost:3000/api/message/create/'
 const API_URL_LINK = 'http://localhost:3000/api/message/link/'
 const API_URL_ADMIN = 'http://localhost:3000/api/message/admin/'
 
-class MessageService {
+class MessageService {  
+  
   createMessage(message) {
+
     return axios.post(
       API_URL_CREATE ,
       {
         title: message.title,
         content: message.content,
+        // id: id
       },
       { headers: authHeader() }
     )
