@@ -4,18 +4,19 @@
     <ModalMessage/>
     <!-- <ChatMain/> -->
     <v-col align="center" justify="center">
-      <v-card class="elevation-12 pb-7">
+      <v-card class="elevation-12 pb-7" >
         <v-toolbar color="rgb(209,81,90)">
           <v-toolbar-title>
             Les dernières publications
           </v-toolbar-title>
         </v-toolbar>
-
-          <ChatComponent v-for="(content, index) in contents" :key="index" :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId" :currentUser="currentUser.userId" :id="content.id" :messageId="content.messageId"/>
-            <v-card v-for="(answer, content, index) in answers" :key="index">  
-              <ChatComponent v-if="answer.messageId === content.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId"/>    
+        
+        <v-card   class="mb-5 mt-5" width="95%" v-for="(content, index) in contents" :key="index">
+          <ChatComponent style="border: 1px grey dotted" :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId" :currentUser="currentUser.userId" :id="content.id" :messageId="content.messageId"/>
+            <v-card  width="90%" v-for="(answer, index) in answers" :key="index">  
+              <ChatComponent style="border: 1px grey dotted" v-if="answer.messageId === content.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId"/>    
             </v-card>
-
+        </v-card>
       </v-card>
     </v-col>
   </v-container>

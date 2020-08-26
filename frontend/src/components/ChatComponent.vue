@@ -1,7 +1,7 @@
 <template>
  
     <!-- :outlined="outlinedPost" :class="classPost"  -->
-    <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'">
+    <v-card class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'">
       <v-card-title>
         <h3 class="text-justify"> {{title}} </h3>
       </v-card-title>
@@ -12,10 +12,7 @@
       <v-divider></v-divider>
 
       <v-card-text>
-        <p class="text-justify">message : {{ id }}</p>
-        <p class="text-justify" > message réponse :  {{ messageId }}</p>
 
-        <p class="text-justify"> user  : {{ userId }}</p>
 
         <p class="text-justify">{{ content }}</p>
 
