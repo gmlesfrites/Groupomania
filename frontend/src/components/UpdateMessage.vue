@@ -7,7 +7,11 @@
         </v-btn>
       </template>
 
-    <v-card>
+      <v-card>
+        <v-card-title class="headline grey lighten-2">
+          Votre modification
+        </v-card-title>
+
         <v-card-text>
           
           <v-form name="form" v-model="valid">
@@ -36,7 +40,7 @@
           <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"   @click="onSubmitMethod">Valider</v-btn>
         </v-card-actions>
 
-    </v-card>
+      </v-card>
 
     </v-dialog>
 </template>

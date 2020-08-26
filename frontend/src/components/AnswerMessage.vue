@@ -6,39 +6,35 @@
         </v-btn>
       </template>
 
-    <v-card>
-        <v-card-text>
-          
-          <v-form name="form" v-model="valid">
-            <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
-            <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
+      <v-card>
+        <v-card-title class="headline grey lighten-2">
+          Votre réponse
+        </v-card-title>
 
-            <v-text-field label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" v-model="message.content" :rules="contentRules" />
-            <v-row class="caption ml-2">Exemple : J'adore les vacances et j'ai un faible pour le chocolat !</v-row>
+      <v-card-text>
+        <v-form name="form" v-model="valid">
+          <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
+          <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
 
+          <v-text-field label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" v-model="message.content" :rules="contentRules" />
+          <v-row class="caption ml-2">Exemple : J'adore les vacances et j'ai un faible pour le chocolat !</v-row>
+        </v-form>
+      </v-card-text>
 
-          </v-form>
-        
-        </v-card-text>
+      <v-row class="ml-2 " h6>
+            <small class="ml-2 mr-2 text-justify" >* Ces indications sont requises.</small>
+          </v-row>
+      <v-card-actions>
+        <v-spacer></v-spacer>
 
-        <v-row class="ml-2 " h6>
-              <small class="ml-2 mr-2 text-justify" >* Ces indications sont requises.</small>
-            </v-row>
-        <v-card-actions>
-          <v-spacer></v-spacer>
+        <v-row color="warning" v-if="feedbacks.length" class="ml-1">
+          <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
+        </v-row> 
 
-
-          <v-row color="warning" v-if="feedbacks.length" class="ml-1">
-                <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
-              </v-row> 
-
-          <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"   @click="onSubmitMethod">Valider</v-btn>
-        </v-card-actions>
-
+        <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"   @click="onSubmitMethod">Valider</v-btn>
+      </v-card-actions>
     </v-card>
-
-    </v-dialog>
-
+  </v-dialog>
 </template>
 
 <script>
