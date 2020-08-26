@@ -9,28 +9,30 @@ const API_URL_ADMIN = 'http://localhost:3000/api/message/admin/'
 
 class MessageService {  
   
-  createMessage(message) {
+  createMessage(state, message) {
+    
 
     return axios.post(
       API_URL_CREATE ,
       {
         title: message.title,
         content: message.content,
-        // id: id
       },
-      { headers: authHeader() }
+      { headers: authHeader(),  }
     )
   }
 
   answerMessage(payload) {
     const id = payload.id
+
     return axios.post(
       API_URL_LINK + id,
       {
         title: payload.message.title,
         content: payload.message.content,
         userId: store.state.auth.user.userId,
-        messageId: payload.id,
+        id: payload.id,
+        messageId: payload.messageId,
         firstname: store.state.auth.user.firstname,
         lastname : store.state.auth.user.lastname
       },

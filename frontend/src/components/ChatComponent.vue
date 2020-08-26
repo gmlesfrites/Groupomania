@@ -1,17 +1,27 @@
 <template>
-  <v-container> 
+ 
     <!-- :outlined="outlinedPost" :class="classPost"  -->
     <v-card style="border: 1px grey dotted" width="90%" class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'">
       <v-card-title>
         <h3 class="text-justify"> {{title}} </h3>
-        <small class="text-justify" > {{ createdAt }} </small>
       </v-card-title>
+      
+      <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>
+      
 
       <v-divider></v-divider>
 
       <v-card-text>
+        <p class="text-justify">message : {{ id }}</p>
+        <p class="text-justify" > message réponse :  {{ messageId }}</p>
+
+        <p class="text-justify"> user  : {{ userId }}</p>
+
         <p class="text-justify">{{ content }}</p>
-        <p class="text-justify"> {{firstname}} {{lastname}} </p>
+
+        <p class="text-justify"> {{firstname}}  </p>
+        <p class="text-justify">  {{lastname}} </p>
+
       </v-card-text>
 
 
@@ -23,7 +33,7 @@
         </v-col>
       </v-card-actions>
     </v-card>
-  </v-container>
+
 </template>
 
 <script>
@@ -45,7 +55,7 @@ export default {
     id: Number,
     userId: Number,
     createdAt: String,
-    currentUser: Number,
+    // currentUser: Number,
     firstname: String,
     lastname : String,
     messageId: Number,

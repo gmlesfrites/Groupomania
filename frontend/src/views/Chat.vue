@@ -11,12 +11,10 @@
           </v-toolbar-title>
         </v-toolbar>
 
-        <v-card>
-          <ChatComponent v-for="(content, mess) in contents" :key="mess" :title="content.title" :content="content.content" :id="content.id" :userId="currentUser.id" :createdAt="content.date" :currentUser="currentUser.id"  :messageId="content.messageId" />
-            <v-card v-for="(answer, reply) in answers" :key="reply">  
-              <ChatComponent v-if="answer.MessageId === content.id" :title="content.title" :content="content.content" :id="content.id" :userId="currentUser.id" :createdAt="content.date" :messageId="answer.id" />    
+          <ChatComponent v-for="(content, index) in contents" :key="index" :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId" :currentUser="currentUser.userId" :id="content.id" :messageId="content.messageId"/>
+            <v-card v-for="(answer, content, index) in answers" :key="index">  
+              <ChatComponent v-if="answer.messageId === content.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId"/>    
             </v-card>
-        </v-card>
 
       </v-card>
     </v-col>
@@ -73,9 +71,9 @@
         const allMessages = this.$store.state.message.messages;
         const answers = [];
         for (let i = 0; i < allMessages.length; i++) {
-          const answer = allMessages[i];
-          if (answer.messageId != null) {
-            answers.push(answer);
+          const content = allMessages[i];
+          if (content.messageId != null) {
+            answers.push(content);
           }
         }
         answers.reverse();

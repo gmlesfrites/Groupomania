@@ -68,10 +68,11 @@ export default {
       title: String,
       content: String,
       id: Number,
+      userId: Number,
       createdAt: String,
       lastname: String,
       firstname: String,
-      messageId: Number
+      // messageId: Number
   },
   methods : {
     sendMe() {   

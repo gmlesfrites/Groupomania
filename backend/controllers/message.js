@@ -177,7 +177,7 @@ exports.updateMessage = (req, res, next) => {
 exports.getAllMessages = (req, res, next) => {
     conn.query(
         // affichage date de création, titre, contenu, likes, userId du plus récent au plus ancien
-        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", title, content, userId FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
+        'SELECT DATE_FORMAT(createdAt,\"%d/%m/%Y %H:%i\") AS "date", DATE_FORMAT(updatedAt,\"%d/%m/%Y %H:%i\") AS "update", title, content, userId, id, messageId FROM development_groupomania.messages ORDER BY createdAt DESC LIMIT 20',
         (error, results, fields) => {
             if (error) {
                 return res.status(404).json({ message: " Pas de message trouvé !"})
