@@ -61,7 +61,8 @@ export default {
       titleRules: [v => !!v || "Indiquez un titre", v =>
         /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
       contentRules: [v => !!v || "Indiquez le contenu de votre message", v =>
-        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"]
+        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
+      user: this.$store.getters["auth/userState"],
     }
   },
     props: {
