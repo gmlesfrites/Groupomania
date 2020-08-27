@@ -86,7 +86,7 @@ exports.login = (req, res, next) => {
                                 privilege = 'Membre'
                             }
                             res.status(200).json({
-                                id: results[0].id,
+                                // TODO id: results[0].id,
                                 userId : results[0].userId,
                                 firstname: results[0].firstname,
                                 lastname: results[0].lastname,
@@ -95,7 +95,7 @@ exports.login = (req, res, next) => {
                                 privilege: privilege,
                                 accessToken: jwt.sign(
                                     {
-                                    id: results[0].id, 
+                                    // TODO id: results[0].id, 
                                     userId : results[0].userId,
                                     privilege : privilege, 
                                     },
@@ -188,8 +188,8 @@ exports.deleteAdminUser = (req, res, next) => {
     )
 }
 
-// Middleware limitation de demandes (50 par minute)
+// Middleware limitation de demandes (10 par minute)
 exports.limiter = expressRateLimit ({
     windowMs: 60 * 1000,
-    max: 50
+    max: 10
 })

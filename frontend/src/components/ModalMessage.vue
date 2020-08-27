@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-dialog width="auto" >
+    <v-dialog width="auto" transition="fab-transition">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3 ">
           Nouveau Message
@@ -37,7 +37,7 @@
                 <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
               </v-row> 
 
-          <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="sendMe">Publier</v-btn>
+          <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="sendMe" transition="fab-transition">Publier</v-btn>
 
         </v-card-actions>
 
@@ -71,8 +71,6 @@ export default {
       id: Number,
       userId: Number,
       createdAt: String,
-      lastname: String,
-      firstname: String,
       // messageId: Number
   },
   methods : {
@@ -84,7 +82,6 @@ export default {
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
-          this.$refs.form.reset();
           window.alert('Votre message a bien été enregistré !')
         },
         error => {
@@ -101,6 +98,7 @@ export default {
     onSubmitMethod(event) {
       if (this.onSubmit === "SendMe") {
       this.SendMe(event);
+
       }
     }
   }

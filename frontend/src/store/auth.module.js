@@ -9,15 +9,17 @@ const initialState = user
 export const auth = {
   namespaced: true,
   state: initialState,
+  
   getters : {
     userState: (state) => {
       return state.user
     }
   },
+  
   actions: {
     login({ commit }, user) {
       return AuthService.login(user).then(
-        user => {
+        (user) => {
           commit('loginSuccess', user);
           return Promise.resolve(user);
         },
@@ -61,9 +63,8 @@ export const auth = {
       state.status.loggedIn= false
       state.user = null
     },
-    deleteFailure(state, user) {
-      state.status.loggedIn = true;
-      state.user = user;
+    deleteFailure() {
+
     },
     loginSuccess(state, user) {
       state.status.loggedIn = true;

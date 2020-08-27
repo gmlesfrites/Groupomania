@@ -52,7 +52,7 @@ export default {
     id: Number,
     userId: Number,
     createdAt: String,
-    // currentUser: Number,
+    currentUser: Number,
     firstname: String,
     lastname : String,
     messageId: Number,

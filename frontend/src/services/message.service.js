@@ -8,8 +8,8 @@ const API_URL_LINK = 'http://localhost:3000/api/message/link/'
 const API_URL_ADMIN = 'http://localhost:3000/api/message/admin/'
 
 class MessageService {  
-  
-  createMessage(state, message) {
+
+  createMessage(message) {
     
 
     return axios.post(
@@ -17,6 +17,10 @@ class MessageService {
       {
         title: message.title,
         content: message.content,
+        userId: store.state.auth.user.userId,
+        // firstname: user.firstname,
+        // lastname : user.lastname
+
       },
       { headers: authHeader(),  }
     )
@@ -56,7 +60,10 @@ class MessageService {
       API_URL + id,
       {
         title: payload.message.title,
-        content: payload.message.content
+        content: payload.message.content,
+        userId: store.state.auth.user.userId,
+        firstname: store.state.auth.user.firstname,
+        lastname : store.state.auth.user.lastname
       },
       { headers: authHeader() }
     )

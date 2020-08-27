@@ -30,7 +30,9 @@ class AuthService {
       firstname: user.firstname,
       bio: user.bio,
       email: user.email,
-      password: user.password
+      password: user.password,
+      userId: user.userId,
+      isAdmin: user.isAdmin
     })
   }
 
