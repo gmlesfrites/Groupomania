@@ -12,9 +12,6 @@ export const message = {
     getAllMessages: state => {
       return state.messages;            
     }, 
-    getMessageById: (state, getters) => {
-      return getters.getAllMessages.length;
-    }
   },
   actions: {
     getAllMessages({ commit }) {
