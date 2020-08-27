@@ -17,12 +17,13 @@ export default {
   },
   methods: {
     deleteMessage() {
-      let payload = this.id;
+      let payload = this.userId;
+      console.log(payload)
       this.$store.dispatch("message/deleteMessage", payload).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
-          this.$emit("deleteFeedback", data.message);
-          console.log(data);
+          this.$emit(data.message);
+          window.alert('Votre message a bien été supprimé !')
         },
         error => {
           console.log(error);
