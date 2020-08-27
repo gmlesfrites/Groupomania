@@ -44,7 +44,7 @@ export default {
   name: 'UpdateMessage',
   data() {
     return {
-      message: new Message("", ""),
+      message: Message,
       // fromMessage: this.id,
       feedbacks: [],
       show: true,
@@ -55,21 +55,15 @@ export default {
         /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
     }
   },
-  computed: {
-    isAnswer() {
-      if (this.messageId === null || this.messageId === undefined) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-  },
   methods: {
     updateMe() {
+      let user = this.$store.getters['auth/userState']
       let payload = {
         id: this.currentId,
-        message: this.message
+        message: this.message,
+        userId: user.userId
       };
+      console.log(payload)
       this.$store.dispatch("message/updateMessage", payload).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
@@ -90,12 +84,12 @@ export default {
     },
     onSubmitMethod(event) {
       if (this.onSubmit === "updateMe") {
-        this.updatMe(event);
+        this.updateMe(event);
       }
     },
   },
-  // mounted() {
-  //   this.typeOfMessage();
-  // }
+  mounted() {
+    this.typeOfMessage();
+  }
 };
 </script>

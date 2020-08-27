@@ -54,7 +54,7 @@ export default {
   },
     data() {
       return {
-        message: "",
+        message: new Message("", ""),
         fromMessage: this.id,
         feedbacks: [], // informations sur la création du message
         show: true,
@@ -79,20 +79,19 @@ export default {
   methods: {
     answerMe() {
       let user = this.$store.getters["auth/userState"]
-      // TODO let id = this.$store.state.message.id
       let payload = {
         message: this.message,
         userId: user.userId,
-        // id: id
+
       };
-                console.log(payload);
+      console.log(payload);
       this.$store.dispatch("message/answerMessage", payload).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit("changeView", "onDisplay");
           this.$emit(data.message);
           this.$refs.answerForm.reset();
-          this.message = new Message("");
+          // this.message = new Message("");
         },
         error => {
           console.log(error);
