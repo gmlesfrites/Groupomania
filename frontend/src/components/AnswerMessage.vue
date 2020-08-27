@@ -1,5 +1,5 @@
 <template>
-  <v-dialog width="auto" transition="fab-transition">
+  <v-dialog width="auto" transition="fab-transition" v-model="dialog">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3 ">
         Répondre
@@ -32,7 +32,7 @@
           <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
         </v-row> 
 
-        <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"   @click="onSubmitMethod">Valider</v-btn>
+        <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="answerMe">Valider</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -42,10 +42,20 @@
 import Message from '../models/message'
 
 export default {
-    name: 'UpdateMessage',
+    name: 'AnswerMessage',
+    props: {
+      onSubmit: String,
+      title: String,
+      content: String,
+      userId: Number,
+      id: Number,
+      messageId: Number,
+      currentId: Number
+  },
     data() {
       return {
         message: new Message("", ""),
+        fromMessage: this.id,
         feedbacks: [], // informations sur la création du message
         show: true,
         valid: false,
@@ -53,12 +63,13 @@ export default {
           /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
         contentRules: [v => !!v || "Indiquez le contenu de votre message", v =>
           /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
-        user: this.$store.getters["auth/userState"],
+        // user: this.$store.getters["auth/userState"],
+        dialog: false
       }
     },
     computed: {
     isAnswer() {
-      if (this.messageId === null || this.messageId === undefined) {
+      if (this.id === null || this.id === undefined) {
         return false;
       } else {
         return true;
@@ -66,38 +77,39 @@ export default {
     },
   },
   methods: {
-    typeOfMessage() {
-      if (this.onSubmit === "answerMessage") {
-        this.message = new Message("");
-      }
-    },
-    onSubmitMethod(event) {
-      if (this.onSubmit === "answerMessage") {
-        this.replyMessage(event);
-      }
-    },
-    answerMessage() {
+    answerMe() {
+      let user = this.$store.getters["auth/userState"]
+      // TODO let id = this.$store.state.message.id
       let payload = {
-        id: this.currentId,
-        message: this.message
+        message: this.message,
+        userId: user.userId,
+        // id: id
       };
+                console.log(payload);
       this.$store.dispatch("message/answerMessage", payload).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit("changeView", "onDisplay");
-          this.$emit("replyFeedback", data.message);
-          this.$refs.form.reset();
-          this.message = new Message("");
-          console.log(data);
+          this.$emit(data.message);
+          // this.$refs.form.reset();
+          // this.message = new Message("");
+
         },
         error => {
           console.log(error);
         }
       );
-    }
-  },
-  mounted() {
-    this.typeOfMessage();
+    },
+    typeOfMessage() {
+      if (this.onSubmit === "answerMe") {
+        this.message = new Message("");
+      }
+    },
+    onSubmitMethod(event) {
+      if (this.onSubmit === "answerMe") {
+        this.answerMe(event);
+      }
+    },
   }
 };
 </script>

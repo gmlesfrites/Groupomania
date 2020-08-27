@@ -66,9 +66,10 @@ export const auth = {
     deleteFailure() {
 
     },
-    loginSuccess(state, user) {
+    loginSuccess(state, user ) {
       state.status.loggedIn = true;
       state.user = user;
+
     },
     loginFailure(state) {
       state.status.loggedIn = false;

@@ -84,9 +84,8 @@ export default {
         },
         error => {
           console.log(error);
-        })
-        console.log(this.message);
-
+        }
+      )
     },
     typeOfMessage() {
       if (this.onSubmit === "SendMe") {
