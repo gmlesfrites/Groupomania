@@ -12,8 +12,8 @@ export const message = {
     getAllMessages: state => {
       return state.messages;            
     }, 
-    getMessageById: (state) => (id) => {
-      return state.messages.find(messages => messages.id === id);
+    getMessageById: (state, getters) => {
+      return getters.getAllMessages.length;
     }
   },
   actions: {

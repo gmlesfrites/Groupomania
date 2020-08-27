@@ -12,7 +12,7 @@
         </v-toolbar>
         
         <v-card   class="mb-5 mt-5" width="95%" v-for="(content, index) in contents" :key="index">
-          <ChatComponent style="border: 1px grey dotted" :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId" :currentUser="currentUser.userId" :id="content.id" :messageId="content.messageId"/>
+          <ChatComponent :options="$store.state.message" :value="$store.state.activeMessage" style="border: 1px grey dotted" :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId" :currentUser="currentUser.userId" :id="content.id" :messageId="content.messageId"/>
             <v-card  width="90%" v-for="(answer, index) in answers" :key="index">  
               <ChatComponent style="border: 1px grey dotted" v-if="answer.messageId === content.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId"/>    
             </v-card>
@@ -33,7 +33,6 @@
     components: {
       Moderator,
       ModalMessage,
-      // FormMessage,
       ChatComponent,
     },
     data() {
@@ -82,7 +81,14 @@
       }
     },
     methods: {
-
+      setActiveMessage(id) {
+        this.$store.commit('setActiveMessage', id)
+      },
+    },
+    mutations: {
+      setActiveMessage(state, message) {
+        state.activeMessage = message
+      }
     },
     mounted() {
       if (!this.currentUser) {

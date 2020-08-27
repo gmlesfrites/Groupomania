@@ -1,36 +1,26 @@
 <template>
- 
-    <!-- :outlined="outlinedPost" :class="classPost"  -->
-    <v-card class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'">
-      <v-card-title>
-        <h3 class="text-justify"> {{title}} </h3>
-      </v-card-title>
-      
-      <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>
-      
+  <v-card class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'" >
+    <v-card-title>
+      <h3 class="text-justify"> {{title}} </h3>
+    </v-card-title>
+    
+    <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>
+    
 
-      <v-divider></v-divider>
+    <v-divider></v-divider>
 
-      <v-card-text>
+    <v-card-text>
+      <p class="text-justify">{{ content }}</p>
+    </v-card-text>
 
-
-        <p class="text-justify">{{ content }}</p>
-
-        <p class="text-justify"> {{firstname}}  </p>
-        <p class="text-justify">  {{lastname}} </p>
-
-      </v-card-text>
-
-
-      <v-card-actions>
-        <v-col>
-          <AnswerMessage/>
-          <UpdateMessage/>
-          <DeleteMessage/>
-        </v-col>
-      </v-card-actions>
-    </v-card>
-
+    <v-card-actions>
+      <v-col>
+        <AnswerMessage/>
+        <UpdateMessage/>
+        <DeleteMessage/>
+      </v-col>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -62,16 +52,12 @@ export default {
   data() {
     return {
       view: "onDisplay",
-      currentId: null,
       message: {
         title: this.title,
         content: this.content
       },
       formMethod: { update: "updateMessage", answer: "answerMessage" }
     };
-  },
-  computed: {
-   
   },
   methods: {
     isAnswer() {
@@ -92,6 +78,6 @@ export default {
       this.view = "onUpdate";
       this.currentId = this.id;
     },
-  }
+  },
 }
 </script>

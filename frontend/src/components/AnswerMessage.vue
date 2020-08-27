@@ -1,7 +1,7 @@
 <template>
-  <v-dialog width="auto" transition="fab-transition" v-model="dialog">
+  <v-dialog width="auto" transition="fab-transition">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3 ">
+      <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3">
         Répondre
       </v-btn>
     </template>
@@ -55,7 +55,6 @@ export default {
     data() {
       return {
         message: new Message("", ""),
-        fromMessage: this.id,
         feedbacks: [], // informations sur la création du message
         show: true,
         valid: false,
@@ -63,8 +62,6 @@ export default {
           /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
         contentRules: [v => !!v || "Indiquez le contenu de votre message", v =>
           /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
-        // user: this.$store.getters["auth/userState"],
-        dialog: false
       }
     },
     computed: {
@@ -79,8 +76,13 @@ export default {
   methods: {
     answerMe() {
       let user = this.$store.getters["auth/userState"]
+      let id= this.$store.getters["message/getAllMessages"]
+
+      console.log(id)
+
       let payload = {
         message: this.message,
+        id: this.id,
         userId: user.userId,
 
       };
@@ -91,7 +93,6 @@ export default {
           this.$emit("changeView", "onDisplay");
           this.$emit(data.message);
           this.$refs.answerForm.reset();
-          // this.message = new Message("");
         },
         error => {
           console.log(error);
