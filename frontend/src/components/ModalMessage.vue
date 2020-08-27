@@ -75,9 +75,7 @@ export default {
   },
   methods : {
     sendMe() {   
-
       this.$store.dispatch("message/createMessage", this.message)
-      
       .then(
         data => {
           this.$store.dispatch("message/getAllMessages");

@@ -1,15 +1,15 @@
 <template>
-    <v-dialog width="auto" transition="fab-transition">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3 ">
-          Répondre
-        </v-btn>
-      </template>
+  <v-dialog width="auto" transition="fab-transition">
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3 ">
+        Répondre
+      </v-btn>
+    </template>
 
-      <v-card>
-        <v-card-title class="headline grey lighten-2">
-          Votre réponse
-        </v-card-title>
+    <v-card>
+      <v-card-title class="headline grey lighten-2">
+        Votre réponse
+      </v-card-title>
 
       <v-card-text>
         <v-form name="form" v-model="valid">
@@ -22,8 +22,9 @@
       </v-card-text>
 
       <v-row class="ml-2 " h6>
-            <small class="ml-2 mr-2 text-justify" >* Ces indications sont requises.</small>
-          </v-row>
+        <small class="ml-2 mr-2 text-justify" >* Ces indications sont requises.</small>
+      </v-row>
+      
       <v-card-actions>
         <v-spacer></v-spacer>
 

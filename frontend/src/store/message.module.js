@@ -4,7 +4,7 @@ export const message = {
   namespaced: true,
   state: {
     createdMessage: { status: '' },
-    modifiedMessage: { status: '' },
+    updatedMessage: { status: '' },
     deletedMessage: { status: '' },
     messages: '',
   },
@@ -60,7 +60,7 @@ export const message = {
           return Promise.resolve(response.data)
         },
         (error) => {
-          commit('modifyMessageFailure')
+          commit('updateMessageFailure')
           return Promise.reject(error)
         }
       )
@@ -94,9 +94,11 @@ export const message = {
     getAllMessagesSuccess(state, response) {
       state.messages = response.data.results
     },
-    getAllMessagesFailure() {},
+    getAllMessagesFailure() {
+
+    },
     createMessageSuccess(state) {
-      state.createdMessage.status = 'Posted'
+      state.createdMessage.status = 'Created'
     },
     createMessageFailure(state) {
       state.createdMessage.status = 'Not created'
