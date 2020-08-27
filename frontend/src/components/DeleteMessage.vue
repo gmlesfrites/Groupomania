@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import Message from '../models/message'
+// import Message from '../models/message'
 
 
 export default {
   name : 'DeleteMessage',
   data() {
     return {
-      message: new Message("", "")
+      // message: new Message("", "")
     }
   },
   methods: {
