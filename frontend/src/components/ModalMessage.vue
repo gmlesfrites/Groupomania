@@ -14,7 +14,7 @@
 
         <v-card-text>
           
-          <v-form name="form" v-model="valid">
+          <v-form name="form" v-model="valid" ref="modalForm">
             <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
             <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
 
@@ -36,6 +36,7 @@
           <v-row color="warning" v-if="feedbacks.length" class="ml-1">
                 <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
               </v-row> 
+
 
           <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"  @click="sendMe" transition="fab-transition">Publier</v-btn>
 
@@ -80,12 +81,15 @@ export default {
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
+          this.$refs.modalForm.reset();
           window.alert('Votre message a bien été enregistré !')
         },
+
         error => {
           console.log(error);
         }
       )
+      
     },
     typeOfMessage() {
       if (this.onSubmit === "SendMe") {

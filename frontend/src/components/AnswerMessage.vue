@@ -12,7 +12,7 @@
       </v-card-title>
 
       <v-card-text>
-        <v-form name="form" v-model="valid">
+        <v-form name="form" v-model="valid" ref="answerForm">
           <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
           <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
 
@@ -54,7 +54,7 @@ export default {
   },
     data() {
       return {
-        message: new Message("", ""),
+        message: "",
         fromMessage: this.id,
         feedbacks: [], // informations sur la création du message
         show: true,
@@ -91,9 +91,8 @@ export default {
           this.$store.dispatch("message/getAllMessages");
           this.$emit("changeView", "onDisplay");
           this.$emit(data.message);
-          // this.$refs.form.reset();
-          // this.message = new Message("");
-
+          this.$refs.answerForm.reset();
+          this.message = new Message("");
         },
         error => {
           console.log(error);
