@@ -13,11 +13,11 @@ const messageControllers = require('../controllers/message');
 
 // Route pour créer un message       
 // http://localhost:3000/api/message/create
-router.post('/create',  multer, messageControllers.createMessage);
+router.post('/create', authentication, multer, messageControllers.createMessage);
 
 // Route pour répondre à un message
 // http://localhost:3000/api/message/link/:id
-router.post('/link/:id',  multer, messageControllers.answerMessage);
+router.post('/link/:id', authentication, multer, messageControllers.answerMessage);
 
 // Route pour modifier un message      
 // http://localhost:3000/api/message/:id
