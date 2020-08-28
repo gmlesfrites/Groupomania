@@ -21,6 +21,7 @@
         </v-form>
       </v-card-text>
 
+
       <v-row class="ml-2 " h6>
         <small class="ml-2 mr-2 text-justify" >* Ces indications sont requises.</small>
       </v-row>

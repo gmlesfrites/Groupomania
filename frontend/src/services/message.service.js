@@ -17,10 +17,7 @@ class MessageService {
       {
         title: message.title,
         content: message.content,
-        userId: store.state.auth.user.userId,
-        // firstname: user.firstname,
-        // lastname : user.lastname
-
+        userId: store.state.auth.user.userId
       },
       { headers: authHeader(),  }
     )
@@ -28,18 +25,17 @@ class MessageService {
 
   answerMessage(payload) {
     const id = payload
-    console.log(payload)
-
+    console.log(payload);
     return axios.post(
       API_URL_LINK + id,
       {
         title: payload.message.title,
         content: payload.message.content,
         userId: store.state.auth.user.userId,
-        id: payload.id,
-        messageId: payload.messageId,
-        firstname: store.state.auth.user.firstname,
-        lastname : store.state.auth.user.lastname
+        id: payload.message.id,
+        // messageId: 
+        // firstname: store.state.auth.user.firstname,
+        // lastname : store.state.auth.user.lastname
       },
       { headers: authHeader() }
     )
