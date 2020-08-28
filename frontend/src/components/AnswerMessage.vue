@@ -85,6 +85,7 @@ export default {
           this.$emit("changeView", "onDisplay");
           this.$emit(data.message);
           this.$refs.answerForm.reset();
+          window.alert('Votre message a bien été enregistré !')
         },
         error => {
           console.log(error);

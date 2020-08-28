@@ -12,7 +12,7 @@
       </v-card-title>
 
       <v-card-text>  
-        <v-form name="form" ref="updateForm" >
+        <v-form name="form" v-model="valid" ref="updateForm" >
           <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
           <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
 
@@ -27,13 +27,13 @@
       </v-row>
       <v-card-actions>
         <v-spacer></v-spacer>
+
         <v-row color="warning" v-if="feedbacks.length" class="ml-1">
           <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
         </v-row> 
 
         <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"   @click="updateMe">Valider</v-btn>
       </v-card-actions>
-
     </v-card>
   </v-dialog>
 </template>
@@ -43,10 +43,18 @@ import Message from '../models/message'
 
 export default {
   name: 'UpdateMessage',
+  props: {
+      onSubmit: String,
+      title: String,
+      content: String,
+      userId: Number,
+      id: Number,
+      messageId: Number,
+      currentId: Number
+  },
   data() {
     return {
       message: Message,
-      // fromMessage: this.id,
       feedbacks: [],
       show: true,
       valid: false,
@@ -56,24 +64,28 @@ export default {
         /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
     }
   },
+  computed: {
+    isUpdate() {
+      if (this.id === null || this.id === undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
   methods: {
     updateMe() {
-      let user = this.$store.getters['auth/userState'].userId
-      let id= this.$store.getters["message/getAllMessages"][0].id
+      const userId = this.$store.getters['auth/userState'].userId
+      const title = this.message.title
+      const content = this.message.content
 
-      let payload = {
-        id: id,
-        message: this.message,
-        userId: user
-      };
-      console.log(payload)
-      this.$store.dispatch("message/updateMessage", payload).then(
+      this.$store.dispatch("message/updateMessage", {userId, message:{ title, content}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
           this.$emit("changeView", "onDisplay");
           this.$refs.updateForm.reset();
-          console.log(data);
+          window.alert('Votre message a bien été enregistré !')
         },
         error => {
           console.log(error);
@@ -90,9 +102,6 @@ export default {
         this.updateMe(event);
       }
     },
-  },
-  mounted() {
-    this.typeOfMessage();
   }
 };
 </script>

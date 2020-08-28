@@ -52,12 +52,7 @@ export default {
   },
   data() {
     return {
-      // view: "onDisplay",
-      // message: {
-      //   title: this.title,
-      //   content: this.content
-      // },
-      // formMethod: { update: "updateMessage", answer: "answerMessage" }
+
     };
   },
   methods: {
@@ -68,25 +63,6 @@ export default {
         return true;
       }
     },
-    // changeView(View) {
-    //   this.view = View;
-    // },
-    // answerMessage() {
-    //   this.view = "onAnswer";
-    //   this.currentId = this.id;
-    // },
-    // updateMessage() {
-    //   this.view = "onUpdate";
-    //   this.currentId = this.id;
-    // },
-    // setActiveMessage(id) {
-    //   this.$store.commit('setActiveMessage', id)
-    // },
-  },
-  // mutations: {
-  //   setActiveMessage(state, message) {
-  //     state.activeMessage = message
-  //   }
-  // },
+  }
 }
 </script>
