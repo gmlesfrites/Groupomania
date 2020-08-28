@@ -18,8 +18,8 @@
     <v-card-actions>
       <v-col>
         <AnswerMessage :id="id"/>
-        <UpdateMessage/>
-        <DeleteMessage/>
+        <UpdateMessage :id="id"/>
+        <DeleteMessage :id="id"/>
       </v-col>
     </v-card-actions>
   </v-card>
