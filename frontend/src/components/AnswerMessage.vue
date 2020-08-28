@@ -74,12 +74,12 @@ export default {
     },
   },
   methods: {
-    answerMe(id) {
+    answerMe() {
       const userId = this.$store.getters["auth/userState"].userId
       const title = this.message.title
       const content = this.message.content
 
-      this.$store.dispatch("message/answerMessage", {userId, messageId: id, message:{ title, content}}).then(
+      this.$store.dispatch("message/answerMessage", {userId, message:{ title, content}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit("changeView", "onDisplay");
