@@ -22,6 +22,7 @@
         <p class="text-justify">Retrouvez toutes les conditions d'utilisation de cette application ici : 
           <br/>
           <router-link to="/terms"> Conditions d'utilisation </router-link> </p>
+          <p></p>
       </v-row>
     </v-container>
   </v-container>
