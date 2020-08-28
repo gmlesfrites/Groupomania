@@ -1,54 +1,34 @@
 <template>
-<v-container id="Moderator">
-  <v-toolbar color="rgb(209,81,90)">
-    <v-toolbar-title> Modération </v-toolbar-title>
-  </v-toolbar>
+	<v-row>
+		<v-spacer></v-spacer>
+    <v-card color="rgb(209,81,90)" width="50%" class="mr-6 mb-10">
+      <v-card-title  id="Moderator">
+        <span class="headline">Modération</span>
+          <v-spacer></v-spacer>
 
-  <v-app-bar-nav-icon @click="toggle"></v-app-bar-nav-icon>
-
-  <v-list v-if="show">
-    <v-card v-for="(content, index) in contents" :key="index">
-      <v-list-item :key="content.userId"> {{content.userId}}</v-list-item>
-      <v-list-item-content>
-        <v-list-item-title >{{content.title}}</v-list-item-title>
-        <v-list-item-message>{{content.content}}</v-list-item-message>
-      </v-list-item-content>
-    </v-card>
-  </v-list>
-</v-container>
-
-
+          <v-menu bottom left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+          </v-menu>
+        </v-card-title>
+      </v-card>
+  </v-row>
 </template>
 
 <script>
   export default {
-    name: 'Moderator',
-    data: () => ({
-        show: false
-    }),
-    computed: {
-      messages() {
-        const allMessages = this.$store.state.message.messages;
-        const messages = [];
-        for (let i = 0; i < allMessages.length; i++) {
-         const message = allMessages[i];
-          if (allMessages[i].messageId === true) {
-            allMessages[i].title = "Remarque";
-          }
-        messages.push(message);
-      }
-      return messages;
-      }
-    }, 
-    contents() {
-      return this.messages
-    },
+		name: 'Moderator',
+		data: () => ({
+			show: false
+		}),
     methods: {
-      toggle() {
-        if (this.show === false) {
-          this.show = true;
-        } 
-      }
-    }
-  }
+			messages() {
+			const messages = this.$store.getters['message/getAllMessages'].userId;
+			return messages
+			},
+		}
+	}
 </script>
