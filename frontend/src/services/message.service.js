@@ -34,8 +34,6 @@ class MessageService {
         userId: store.state.auth.user.userId,
         id: payload.message.id,
         // messageId: 
-        // firstname: store.state.auth.user.firstname,
-        // lastname : store.state.auth.user.lastname
       },
       { headers: authHeader() }
     )

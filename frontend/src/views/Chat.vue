@@ -56,7 +56,6 @@
       contents() {
         const allMessages = this.$store.state.message.messages;
         if (allMessages) {
-        console.log(allMessages);
         const contents = allMessages.filter(m => m.messageId === null)
         return contents;
         }
