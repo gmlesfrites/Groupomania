@@ -12,9 +12,9 @@
         </v-toolbar>
         
         <v-card class="px-2 py-2 mx-2 my-2" width="95%" v-for="(content, index) in contents" :key="index" style="border: 1px grey dotted">
-          <ChatComponent  :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId"  :id="content.id" :messageId="content.messageId"/>
-            <v-card  width="90%" v-for="(answer, index) in answers" :key="index" >  
-              <ChatComponent  v-if="answer.messageId === content.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId" />    
+          <ChatComponent :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId"  :id="content.id" :messageId="content.messageId"/>
+            <v-card  width="90%" v-for="(answer, index) in answers(content.id)" :key="index" >  
+              <ChatComponent   :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId" />    
             </v-card>
         </v-card>
       </v-card>
@@ -55,30 +55,25 @@
       },
       contents() {
         const allMessages = this.$store.state.message.messages;
-        const contents = [];
-        for (let i = 0; i < allMessages.length; i++) {
-          const content = allMessages[i];
-          if (content.messageId == null) {
-            contents.push(content);
-          }
-        }
+        if (allMessages) {
+        console.log(allMessages);
+        const contents = allMessages.filter(m => m.messageId === null)
         return contents;
+        }
+        return null
       },
       user() {
         const user = this.$store.state.auth.user;
         return user
       },
-      answers() {
+    },
+    methods : {
+      answers(id) {
         const allMessages = this.$store.state.message.messages;
-        const answers = [];
-        for (let i = 0; i < allMessages.length; i++) {
-          const content = allMessages[i];
-          if (content.messageId != null) {
-            answers.push(content);
-          }
-        }
-        answers.reverse();
-        return answers;
+        if (allMessages) 
+        {const answers = allMessages.filter(m => m.messageId === id);
+        return answers;}
+        return null
       }
     },
     mounted() {

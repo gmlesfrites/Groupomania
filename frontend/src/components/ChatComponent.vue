@@ -7,7 +7,7 @@
     </v-card-title>
     
     <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>
-    
+    <p>message identifiant {{id}}</p>
 
     <v-divider></v-divider>
 
@@ -17,7 +17,7 @@
 
     <v-card-actions>
       <v-col>
-        <AnswerMessage/>
+        <AnswerMessage :id="id"/>
         <UpdateMessage/>
         <DeleteMessage/>
       </v-col>

@@ -27,7 +27,8 @@ class MessageService {
   }
 
   answerMessage(payload) {
-    const id = payload.id
+    const id = payload
+    console.log(payload)
 
     return axios.post(
       API_URL_LINK + id,

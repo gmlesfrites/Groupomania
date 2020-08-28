@@ -16,6 +16,8 @@
           <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
           <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
 
+          <p>{{id}}</p>
+
           <v-text-field label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" v-model="message.content" :rules="contentRules" />
           <v-row class="caption ml-2">Exemple : J'adore les vacances et j'ai un faible pour le chocolat !</v-row>
         </v-form>
@@ -75,11 +77,10 @@ export default {
   },
   methods: {
     answerMe() {
-      let user = this.$store.getters["auth/userState"].userId
-      let id= this.$store.getters["message/getAllMessages"][0].id
+      let userId = this.$store.getters["auth/userState"].userId
       let title = this.message.title
       let content = this.message.content
-      let messageId = id
+
 
       // let payload = {
       //   id: id,
@@ -87,8 +88,8 @@ export default {
       //   content: content,
       //   userId: user
       // };
-      console.log(user, id, title, content, messageId);
-      this.$store.dispatch("message/answerMessage", [user, id, title, content, messageId]).then(
+      // console.log(user,  title, content);
+      this.$store.dispatch("message/answerMessage", {userId, message:{ title, content}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit("changeView", "onDisplay");
