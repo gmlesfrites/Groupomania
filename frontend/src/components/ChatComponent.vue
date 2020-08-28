@@ -1,9 +1,9 @@
 <template>
-  <v-card class="mt-10 mb-5" >
+  <v-card class="mt-10 mb-5" id="ChatComponent">
     <!-- v-show="view === 'onDisplay' || view === 'onAnswer'" -->
     <!-- :options="$store.state.message" :value="$store.state.activeMessage" -->
     <v-card-title>
-      <h3 class="text-justify"> {{title}} </h3>
+      <h3 class="text-justify" style="overflow-wrap: normal"> {{title}} </h3>
     </v-card-title>
     
     <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>

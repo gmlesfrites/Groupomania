@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar dark color="rgb(19,37,66)" >
+  <v-app-bar dark color="rgb(19,37,66)" id="Navigation">
     <a to="/" class="text-decoration-none white--text"  @click.prevent><img src="../assets/monochrome-white.png" width="18" height="18" alt="logo Groupomania"> Groupomania </a>
 
       <v-col  v-if="!currentUser" class="ml-auto" justify-end>

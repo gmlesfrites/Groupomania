@@ -86,7 +86,6 @@ exports.login = (req, res, next) => {
                                 privilege = 'Membre'
                             }
                             res.status(200).json({
-                                // TODO id: results[0].id,
                                 userId : results[0].userId,
                                 firstname: results[0].firstname,
                                 lastname: results[0].lastname,
@@ -95,7 +94,6 @@ exports.login = (req, res, next) => {
                                 privilege: privilege,
                                 accessToken: jwt.sign(
                                     {
-                                    // TODO id: results[0].id, 
                                     userId : results[0].userId,
                                     privilege : privilege, 
                                     },

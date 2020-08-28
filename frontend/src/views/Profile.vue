@@ -1,5 +1,5 @@
 <template>
-  <v-container  fluid>
+  <v-container  fluid id="Profile">
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4">
         <v-card class="elevation-12">
@@ -20,8 +20,7 @@
             <p v-if="currentUser"><strong>Privilège : </strong>{{currentUser.privilege}}</p>
             <p v-if="currentUser"><strong>Email : </strong>{{currentUser.email}}</p>
             <p v-if="currentUser"><strong>Biographie :</strong> {{currentUser.bio}} </p>
-            <p v-if="currentUser"><strong>Identifiant :</strong> {{currentUser.id}} </p>
-            
+            <p v-if="currentUser"><strong>Identifiant :</strong> {{currentUser.userId}} </p>            
 
           </v-card-text>
               

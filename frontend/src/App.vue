@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <v-main>
       <Navigation/>
         
@@ -29,5 +29,6 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    overflow-wrap: normal;
   }
 </style>

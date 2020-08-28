@@ -1,6 +1,6 @@
 <template>
 
-  <v-container class="d-flex-col mt-12">
+  <v-container class="d-flex-col mt-12" id="Terms">
     <h1>Conditions d'utilisation</h1>
     
     <v-container class="d-flex-col mt-12">

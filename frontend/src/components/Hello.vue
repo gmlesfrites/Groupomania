@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex-col mt-12">
+  <v-container class="d-flex-col mt-12" id="Hello">
     <h1>Bienvenue sur l'application Groupomania, <br/> votre réseau social d'entreprise</h1>
 
     <v-container class="d-flex-col mt-12">

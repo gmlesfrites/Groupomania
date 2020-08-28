@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-dialog width="auto" transition="fab-transition">
+    <v-dialog width="auto" transition="fab-transition" id="ModalMessage">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="rgb(209,81,90)" v-bind="attrs" v-on="on" class="ma-3 ">
           Nouveau Message

@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<v-container id="Moderator">
   <v-toolbar color="rgb(209,81,90)">
     <v-toolbar-title> Modération </v-toolbar-title>
   </v-toolbar>
@@ -23,9 +23,9 @@
 <script>
   export default {
     name: 'Moderator',
-    data() {
+    data: () => ({
         show: false
-    },
+    }),
     computed: {
       messages() {
         const allMessages = this.$store.state.message.messages;
@@ -47,9 +47,7 @@
       toggle() {
         if (this.show === false) {
           this.show = true;
-        } else {
-          this.show = false
-        }
+        } 
       }
     }
   }

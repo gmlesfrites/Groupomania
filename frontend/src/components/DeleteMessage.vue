@@ -1,5 +1,5 @@
 <template >
-  <v-btn color="rgb(209,81,90)" class="ma-3 " @click="deleteMessage" >
+  <v-btn color="rgb(209,81,90)" class="ma-3 " @click="deleteMessage" id="DeleteMessage" >
     Supprimer
   </v-btn>
 </template>
