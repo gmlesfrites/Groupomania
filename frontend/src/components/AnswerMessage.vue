@@ -82,7 +82,7 @@ export default {
 
       let payload = {
         message: this.message,
-        id: this.id,
+        id: id,
         userId: user.userId,
 
       };
