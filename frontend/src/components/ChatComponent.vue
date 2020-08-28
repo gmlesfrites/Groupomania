@@ -1,5 +1,6 @@
 <template>
-  <v-card class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'" :options="$store.state.message" :value="$store.state.activeMessage">
+  <v-card class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'" >
+    <!-- :options="$store.state.message" :value="$store.state.activeMessage" -->
     <v-card-title>
       <h3 class="text-justify"> {{title}} </h3>
     </v-card-title>
@@ -78,14 +79,14 @@ export default {
       this.view = "onUpdate";
       this.currentId = this.id;
     },
-    setActiveMessage(id) {
-      this.$store.commit('setActiveMessage', id)
-    },
+    // setActiveMessage(id) {
+    //   this.$store.commit('setActiveMessage', id)
+    // },
   },
-  mutations: {
-    setActiveMessage(state, message) {
-      state.activeMessage = message
-    }
-  },
+  // mutations: {
+  //   setActiveMessage(state, message) {
+  //     state.activeMessage = message
+  //   }
+  // },
 }
 </script>
