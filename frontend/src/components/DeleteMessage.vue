@@ -16,11 +16,10 @@ export default {
     }
   },
   methods: {
-    deleteMessage() {
-      let payload = this.id;
-      console.log(payload)
+    deleteMessage(id) {
+      const userId = this.$store.getters["auth/userState"].userId
       
-      this.$store.dispatch("message/deleteMessage", payload).then(
+      this.$store.dispatch("message/deleteMessage", {userId, id}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
