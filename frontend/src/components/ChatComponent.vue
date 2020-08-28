@@ -1,5 +1,6 @@
 <template>
-  <v-card class="mt-10 mb-5" :id="id" v-show="view === 'onDisplay' || view === 'onAnswer'" >
+  <v-card class="mt-10 mb-5" >
+    <!-- v-show="view === 'onDisplay' || view === 'onAnswer'" -->
     <!-- :options="$store.state.message" :value="$store.state.activeMessage" -->
     <v-card-title>
       <h3 class="text-justify"> {{title}} </h3>
@@ -48,16 +49,16 @@ export default {
     lastname : String,
     messageId: Number,
     onUpdateTitle: String,
-    onUpdateContent: String
+    onUpdateContent: String,
   },
   data() {
     return {
-      view: "onDisplay",
-      message: {
-        title: this.title,
-        content: this.content
-      },
-      formMethod: { update: "updateMessage", answer: "answerMessage" }
+      // view: "onDisplay",
+      // message: {
+      //   title: this.title,
+      //   content: this.content
+      // },
+      // formMethod: { update: "updateMessage", answer: "answerMessage" }
     };
   },
   methods: {
@@ -68,17 +69,17 @@ export default {
         return true;
       }
     },
-    changeView(View) {
-      this.view = View;
-    },
-    answerMessage() {
-      this.view = "onAnswer";
-      this.currentId = this.id;
-    },
-    updateMessage() {
-      this.view = "onUpdate";
-      this.currentId = this.id;
-    },
+    // changeView(View) {
+    //   this.view = View;
+    // },
+    // answerMessage() {
+    //   this.view = "onAnswer";
+    //   this.currentId = this.id;
+    // },
+    // updateMessage() {
+    //   this.view = "onUpdate";
+    //   this.currentId = this.id;
+    // },
     // setActiveMessage(id) {
     //   this.$store.commit('setActiveMessage', id)
     // },

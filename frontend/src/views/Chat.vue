@@ -11,10 +11,10 @@
           </v-toolbar-title>
         </v-toolbar>
         
-        <v-card   class="mb-5 mt-5" width="95%" v-for="(content, index) in contents" :key="index">
-          <ChatComponent style="border: 1px grey dotted" :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId" :currentUser="currentUser.userId" :id="content.id" :messageId="content.messageId"/>
+        <v-card class="mb-5 mt-5" width="95%" v-for="(content, index) in contents" :key="index">
+          <ChatComponent style="border: 1px grey dotted" :title="content.title" :content="content.content" :createdAt="content.date" :userId="content.userId"  :id="content.id" :messageId="content.messageId"/>
             <v-card  width="90%" v-for="(answer, index) in answers" :key="index">  
-              <ChatComponent style="border: 1px grey dotted" v-if="answer.messageId === content.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId"/>    
+              <ChatComponent style="border: 1px grey dotted" v-if="answer.messageId === content.id" :title="answer.title" :content="answer.content" :id="answer.id" :userId="answer.userId" :messageId="answer.messageId" />    
             </v-card>
         </v-card>
       </v-card>
@@ -38,6 +38,7 @@
     data() {
       return {
         showForm: false,
+        message: {id:'id'}
       };
     },
     computed: {

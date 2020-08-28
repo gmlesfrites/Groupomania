@@ -57,11 +57,13 @@ export default {
   },
   methods: {
     updateMe() {
-      let user = this.$store.getters['auth/userState']
+      let user = this.$store.getters['auth/userState'].userId
+      let id= this.$store.getters["message/getAllMessages"][0].id
+
       let payload = {
-        id: this.currentId,
+        id: id,
         message: this.message,
-        userId: user.userId
+        userId: user
       };
       console.log(payload)
       this.$store.dispatch("message/updateMessage", payload).then(

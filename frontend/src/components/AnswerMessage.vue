@@ -75,19 +75,20 @@ export default {
   },
   methods: {
     answerMe() {
-      let user = this.$store.getters["auth/userState"]
-      let id= this.$store.getters["message/getAllMessages"]
+      let user = this.$store.getters["auth/userState"].userId
+      let id= this.$store.getters["message/getAllMessages"][0].id
+      let title = this.message.title
+      let content = this.message.content
+      let messageId = id
 
-      console.log(id)
-
-      let payload = {
-        message: this.message,
-        id: id,
-        userId: user.userId,
-
-      };
-      console.log(payload);
-      this.$store.dispatch("message/answerMessage", payload).then(
+      // let payload = {
+      //   id: id,
+      //   title: title,
+      //   content: content,
+      //   userId: user
+      // };
+      console.log(user, id, title, content, messageId);
+      this.$store.dispatch("message/answerMessage", [user, id, title, content, messageId]).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit("changeView", "onDisplay");
