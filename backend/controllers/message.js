@@ -78,7 +78,7 @@ exports.answerMessage = (req, res, next) => {
 exports.deleteMessage = (req, res, next) => {
     const deleteMessage = req.params.id;
     conn.query(
-        'SELECT users.isAdmin, messages.id, users.id, messages.userId FROM users JOIN messages ON users.id = messages.userId WHERE messages.id = ?', deleteMessage,
+        'SELECT users.isAdmin, messages.id, users.userId, messages.userId FROM users JOIN messages ON users.userId = messages.userId WHERE messages.id = ?', deleteMessage,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
