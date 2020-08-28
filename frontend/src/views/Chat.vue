@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <Moderator/>
+    <Moderator v-if="isAdmin"/>
     <ModalMessage/>
     <!-- <ChatMain/> -->
     <v-col align="center" justify="center">
