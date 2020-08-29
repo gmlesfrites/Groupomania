@@ -55,7 +55,9 @@ class MessageService {
   }
 
   updateMessage(payload) {
-    const id = payload
+    const id = payload.message.id
+
+    console.log(id);
     return axios.put(
       API_URL + id,
       {

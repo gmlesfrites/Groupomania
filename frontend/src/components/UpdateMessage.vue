@@ -79,13 +79,13 @@ export default {
       const title = this.message.title
       const content = this.message.content
 
-      this.$store.dispatch("message/updateMessage", {userId, message:{ title, content,  id:this.id}}).then(
+      this.$store.dispatch("message/updateMessage", {userId, message:{ title, content,  id: this.id}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
           this.$emit("changeView", "onDisplay");
           this.$refs.updateForm.reset();
-          window.alert('Votre message a bien été enregistré !')
+          window.alert('Votre message a bien été modifié !')
         },
         error => {
           console.log(error);
