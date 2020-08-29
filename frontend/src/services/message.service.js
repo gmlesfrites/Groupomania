@@ -35,20 +35,16 @@ class MessageService {
     )
   }
 
-  deleteMessage(payload, headers) {
-    
-    console.log(payload);
-    console.log(payload)
+  deleteMessage(payload) {
     const id = payload.id
-    const userId = store.state.auth.user.userId
-    console.log(userId, id);
+    // const userId = store.state.auth.user.userId
+    console.log(payload);
     
-    return axios.delete(API_URL + id, { 
-
-      userId: store.state.auth.user.userId
+    return axios.delete(API_URL + id, {
+      userId: store.state.auth.user.userId,
+      id: payload.id,
     },
     { headers: authHeader() },
-    console.log(headers)
     )
   }
 

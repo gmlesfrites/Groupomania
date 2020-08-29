@@ -23,9 +23,10 @@ export default {
     },
     deleteMessage() {
       const userId = this.$store.getters["auth/userState"].userId
-      const id = this.id
+      console.log(userId);
       
-      this.$store.dispatch("message/deleteMessage", {userId, id}).then(
+
+      this.$store.dispatch("message/deleteMessage", {userId, id:this.id}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);

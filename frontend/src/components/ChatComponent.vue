@@ -1,7 +1,5 @@
 <template>
   <v-card class="mt-10 mb-5" id="ChatComponent">
-    <!-- v-show="view === 'onDisplay' || view === 'onAnswer'" -->
-    <!-- :options="$store.state.message" :value="$store.state.activeMessage" -->
     <v-card-title>
       <h3 class="text-justify" style="overflow-wrap: normal"> {{title}} </h3>
     </v-card-title>
@@ -46,23 +44,12 @@ export default {
     currentUser: Number,
     firstname: String,
     lastname : String,
-    messageId: Number,
-    onUpdateTitle: String,
-    onUpdateContent: String,
+    messageId: Number
   },
   data() {
     return {
 
     };
-  },
-  methods: {
-    isAnswer() {
-      if (this.messageId === null || this.id === undefined) {
-        return false;
-      } else {
-        return true;
-      }
-    },
   }
 }
 </script>
