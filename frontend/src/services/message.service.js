@@ -38,10 +38,11 @@ class MessageService {
   }
 
   deleteMessage(payload) {
-    const id = payload.message.id
+    const id = payload.id
+    console.log(payload);
 
     return axios.delete(API_URL + id, { 
-      id: id,
+      id: payload.messageid,
       userId: store.state.auth.user.userId
     },
     { headers: authHeader() }

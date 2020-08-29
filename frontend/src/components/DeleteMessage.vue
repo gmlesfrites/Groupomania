@@ -10,16 +10,14 @@
 
 export default {
   name : 'DeleteMessage',
-  data() {
-    return {
-      // message: new Message("", "")
-    }
-  },
+
   methods: {
-    deleteMessage(id) {
+    deleteMessage() {
       const userId = this.$store.getters["auth/userState"].userId
+      const id= this.id
+      console.log(id);
       
-      this.$store.dispatch("message/deleteMessage", {userId, id}).then(
+      this.$store.dispatch("message/deleteMessage", {userId, message:{ id:this.id}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
@@ -27,6 +25,7 @@ export default {
         },
         error => {
           console.log(error);
+          window.alert("Vous ne pouvez pas supprimer un message dont vous n'êtes pas le rédacteur ! ")
         }
       );
     },
