@@ -22,24 +22,26 @@ class MessageService {
   }
 
   answerMessage(payload) {
-    const id = payload
+    const id = payload.id
+
+    console.log(payload.message.messageId);
     return axios.post(
       API_URL_LINK + id, {
         title: payload.message.title,
         content: payload.message.content,
         userId: store.state.auth.user.userId,
         id: payload.message.id,
-        // messageId: 
+        messageId: payload.message.messageId
       },
       { headers: authHeader() }
     )
   }
 
   deleteMessage(payload) {
-    const id = payload
-    console.log(payload);
+    const id = payload.message.id
+
     return axios.delete(API_URL + id, { 
-      id: payload.message.id,
+      id: id,
       userId: store.state.auth.user.userId
     },
     { headers: authHeader() }
