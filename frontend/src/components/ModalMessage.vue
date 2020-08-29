@@ -72,7 +72,6 @@ export default {
       id: Number,
       userId: Number,
       createdAt: String,
-      // messageId: Number
   },
   methods : {
     sendMe() {   
@@ -89,18 +88,6 @@ export default {
           console.log(error);
         }
       )
-      
-    },
-    typeOfMessage() {
-      if (this.onSubmit === "SendMe") {
-      this.message = new Message();
-      }
-    },
-    onSubmitMethod(event) {
-      if (this.onSubmit === "SendMe") {
-      this.SendMe(event);
-
-      }
     }
   }
 }
