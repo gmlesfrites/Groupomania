@@ -64,6 +64,7 @@ class MessageService {
   updateMessage(payload) {
     const id = payload.message.id
     const userId = store.state.auth.user.userId
+    console.log(payload)
 
     console.log(userId, id);
     return axios.put(

@@ -14,15 +14,13 @@
             <v-divider></v-divider>
             
             <v-card-text>
-
-            <p v-if="currentUser"><strong>Prénom : </strong><span  style="text-transform: uppercase"> {{currentUser.firstname}} </span></p>
-            <p v-if="currentUser"><strong>Nom : </strong><span  style="text-transform: uppercase"> {{currentUser.lastname}} </span> </p>
-            <p v-if="currentUser"><strong>Privilège : </strong>{{currentUser.privilege}}</p>
-            <p v-if="currentUser"><strong>Email : </strong>{{currentUser.email}}</p>
-            <p v-if="currentUser"><strong>Biographie :</strong> {{currentUser.bio}} </p>
-            <p v-if="currentUser"><strong>Identifiant :</strong> {{currentUser.userId}} </p>            
-
-          </v-card-text>
+              <p v-if="currentUser"><strong>Prénom : </strong><span  style="text-transform: uppercase"> {{currentUser.firstname}} </span></p>
+              <p v-if="currentUser"><strong>Nom : </strong><span  style="text-transform: uppercase"> {{currentUser.lastname}} </span> </p>
+              <p v-if="currentUser"><strong>Privilège : </strong>{{currentUser.privilege}}</p>
+              <p v-if="currentUser"><strong>Email : </strong>{{currentUser.email}}</p>
+              <p v-if="currentUser"><strong>Biographie :</strong> {{currentUser.bio}} </p>
+              <p v-if="currentUser"><strong>Identifiant :</strong> {{currentUser.userId}} </p>      
+            </v-card-text>
               
           </v-card-text>
           <v-card-actions>

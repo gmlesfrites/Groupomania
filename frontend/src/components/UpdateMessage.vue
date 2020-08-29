@@ -64,22 +64,14 @@ export default {
         /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
     }
   },
-  computed: {
-    isUpdate() {
-      if (this.id === null || this.id === undefined) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-  },
   methods: {
     updateMe() {
-      const userId = this.$store.getters['auth/userState'].userId
+      // const userId = this.$store.getters['auth/userState'].userId
       const title = this.message.title
       const content = this.message.content
+      const userId = this.$store.getters["auth/userState"].userId
 
-      this.$store.dispatch("message/updateMessage", {userId, message:{ title, content,  id: this.id}}).then(
+      this.$store.dispatch("message/updateMessage", { message:{ title, content, id:this.id, userId}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
@@ -91,17 +83,7 @@ export default {
           console.log(error);
         }
       );
-    },
-    typeOfMessage() {
-      if (this.onSubmit === "updateMe") {
-        this.message = { title: this.title, content: this.content };
-      }
-    },
-    onSubmitMethod(event) {
-      if (this.onSubmit === "updateMe") {
-        this.updateMe(event);
-      }
-    },
+    }
   }
 };
 </script>

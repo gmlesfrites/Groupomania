@@ -92,16 +92,6 @@ export default {
         }
       );
     },
-    typeOfMessage() {
-      if (this.onSubmit === "answerMe") {
-        this.message = new Message("");
-      }
-    },
-    onSubmitMethod(event) {
-      if (this.onSubmit === "answerMe") {
-        this.answerMe(event);
-      }
-    },
   }
 };
 </script>
