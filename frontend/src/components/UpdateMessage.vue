@@ -79,7 +79,7 @@ export default {
       const title = this.message.title
       const content = this.message.content
 
-      this.$store.dispatch("message/updateMessage", {userId, message:{ title, content}}).then(
+      this.$store.dispatch("message/updateMessage", {userId, message:{ title, content,  id:this.id}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);

@@ -36,7 +36,7 @@ exports.answerMessage = (req, res, next) => {
     const answerMessage = req.params.id;
    
     conn.query(
-        // 'SELECT users.id, users.isAdmin FROM users UNION SELECT messages.id, messages.userId FROM messages',
+        // 'SELECT users.userId, users.isAdmin FROM users UNION SELECT messages.id, messages.userId FROM messages',
         'SELECT * FROM messages WHERE id=?', answerMessage,
         (error, results, fields) => {
             if (error) {
@@ -111,7 +111,7 @@ exports.deleteMessage = (req, res, next) => {
 exports.deleteAdminMessage = (req, res, next) => {
     const deleteMessage = req.params.id;
     conn.query(
-        'SELECT users.isAdmin, messages.id, users.id, messages.userId FROM users JOIN messages ON users.id = messages.userId WHERE messages.id = ?', deleteMessage,
+        'SELECT users.isAdmin, messages.id, users.userId, messages.userId FROM users JOIN messages ON users.userId = messages.userId WHERE messages.id = ?', deleteMessage,
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
@@ -144,12 +144,12 @@ exports.updateMessage = (req, res, next) => {
                 return res.status(400).json(error)
             }
             const id = results[0].userId;
-            
+            const messageId = results[0].userId;
             const messageToSend = req.body.userId;
             const title = req.body.title;
             const content = req.body.content;
    
-            //condition userId identique à celui du message initial userI à remettre
+            //condition userId identique à celui du message initial userId à remettre
             if (messageId == messageToSend ) {
 
                 // MAJ en BDD
