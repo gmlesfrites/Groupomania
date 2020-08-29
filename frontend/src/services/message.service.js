@@ -17,14 +17,12 @@ class MessageService {
         content: message.content,
         userId: store.state.auth.user.userId
       },
-      { headers: authHeader(),  }
+      { headers: authHeader() }
     )
   }
 
   answerMessage(payload) {
     const id = payload.id
-
-    console.log(payload.message.messageId);
     return axios.post(
       API_URL_LINK + id, {
         title: payload.message.title,
@@ -38,11 +36,15 @@ class MessageService {
   }
 
   deleteMessage(payload) {
-    const id = payload.id
+    
     console.log(payload);
+    
+    const id = payload.id
+    const userId = store.state.auth.user.userId
+    console.log(userId, id);
 
     return axios.delete(API_URL + id, { 
-      id: payload.messageid,
+      id: payload.id,
       userId: store.state.auth.user.userId
     },
     { headers: authHeader() }
@@ -50,14 +52,20 @@ class MessageService {
   }
 
   deleteAdminMessage(payload) {
-    const id = payload
-    return axios.delete(API_URL_ADMIN + id, { headers: authHeader() })
+    const id = payload.message.id
+
+    return axios.delete(API_URL_ADMIN + id, { 
+      id: payload.message.id,
+      userId: store.state.auth.user.userId
+    },
+    {  headers: authHeader() })
   }
 
   updateMessage(payload) {
     const id = payload.message.id
+    const userId = store.state.auth.user.userId
 
-    console.log(id);
+    console.log(userId, id);
     return axios.put(
       API_URL + id,
       {

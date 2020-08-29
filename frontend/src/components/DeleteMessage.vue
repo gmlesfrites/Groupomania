@@ -1,5 +1,5 @@
 <template >
-  <v-btn color="rgb(209,81,90)" class="ma-3 " @click="deleteMessage" id="DeleteMessage" >
+  <v-btn color="rgb(209,81,90)" class="ma-3 " @click="confirmDelete" id="DeleteMessage" >
     Supprimer
   </v-btn>
 </template>
@@ -10,14 +10,22 @@
 
 export default {
   name : 'DeleteMessage',
+  props: {
+    id: Number,
+    userId: Number
+  },
 
   methods: {
+    confirmDelete() {
+      if (window.confirm("Cette action n'est pas modifiable après confirmation ! Votre message (ainsi que les éventuelles réponses) va être supprimé.")) {
+        this.deleteMessage()
+      }
+    },
     deleteMessage() {
       const userId = this.$store.getters["auth/userState"].userId
-      const id= this.id
-      console.log(id);
+      const id = this.id
       
-      this.$store.dispatch("message/deleteMessage", {userId, message:{ id:this.id}}).then(
+      this.$store.dispatch("message/deleteMessage", {userId, id}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);

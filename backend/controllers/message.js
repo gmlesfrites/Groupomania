@@ -36,7 +36,6 @@ exports.answerMessage = (req, res, next) => {
     const answerMessage = req.params.id;
    
     conn.query(
-        // 'SELECT users.userId, users.isAdmin FROM users UNION SELECT messages.id, messages.userId FROM messages',
         'SELECT * FROM messages WHERE id=?', answerMessage,
         (error, results, fields) => {
             if (error) {
@@ -83,11 +82,11 @@ exports.deleteMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const messageId = results[0].userId;
-            const messageToDelete = req.body.userId;
+            const userIdInit= results[0].userId;
+            const userIdNow = req.body.userId;
 
             //condition userId et rôle
-            if (messageId != messageToDelete)  {
+            if (userIdInit != userIdNow)  {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action '})
             }
             
