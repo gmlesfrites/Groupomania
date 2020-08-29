@@ -143,14 +143,14 @@ exports.updateMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const id = results[0].userId;
-            const messageId = results[0].userId;
-            const messageToSend = req.body.userId;
+
+            const userIdInit= results[0].userId;
+            const userIdNow = req.body.userId;
             const title = req.body.title;
             const content = req.body.content;
    
             //condition userId identique à celui du message initial userId à remettre
-            if (messageId == messageToSend ) {
+            if (userIdInit == userIdNow ) {
 
                 // MAJ en BDD
                 conn.query(
