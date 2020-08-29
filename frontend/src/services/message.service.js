@@ -73,7 +73,7 @@ class MessageService {
         title: payload.message.title,
         content: payload.message.content,
         userId: store.state.auth.user.userId,
-        id: payload.message.id
+        // id: payload.message.id
       },
       { headers: authHeader() }
     )
