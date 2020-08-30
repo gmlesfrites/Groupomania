@@ -18,7 +18,7 @@
     <v-card-actions>
       <v-col>
         <AnswerMessage :id="id" />
-        <UpdateMessage :id="id" :userId="userId" :currentUser="currentUser" />
+        <!-- <UpdateMessage :id="id" :userId="userId" :currentUser="currentUser" /> -->
         <DeleteMessage :id="id" :userId="userId" :currentUser="currentUser" :isAdmin="isAdmin"/>
       </v-col>
     </v-card-actions>
@@ -27,14 +27,14 @@
 
 <script>
 import AnswerMessage from '../components/AnswerMessage'
-import UpdateMessage from '../components/UpdateMessage'
+// import UpdateMessage from '../components/UpdateMessage'
 import DeleteMessage from '../components/DeleteMessage'
 
 export default {
   name: 'ChatComponent',
   components: {
     AnswerMessage,
-    UpdateMessage,
+    // UpdateMessage,
     DeleteMessage
   }, 
   props: {
