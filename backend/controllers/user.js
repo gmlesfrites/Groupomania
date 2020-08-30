@@ -143,7 +143,7 @@ exports.deleteUser = (req, res, next) => {
             
             if (userToDelete) {
                 conn.query(
-                    `DELETE FROM users WHERE id= ?`, userToDelete,
+                    `DELETE FROM users WHERE userId= ?`, userToDelete,
                     (error, results, fields) => {
                         if (error) {
                             return res.status(400).json(error)

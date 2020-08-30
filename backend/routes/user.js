@@ -22,7 +22,7 @@ router.get('/', userControllers.getAllUsers);
 
 // Route pour supprimer un utilisateur  
 // http://localhost:3000/api/auth/:id
-router.delete('/:id', authentication, userControllers.deleteUser);
+router.delete('/:id', userControllers.deleteUser);
 
 // Route pour supprimer un utilisateur  
 // http://localhost:3000/api/auth/admin/:id
