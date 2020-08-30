@@ -17,8 +17,8 @@
     <v-card-actions>
       <v-col>
         <AnswerMessage :id="id"/>
-        <UpdateMessage :id="id" v-if="showModal"/>
-        <DeleteMessage :id="id" v-if="showModal"/>
+        <UpdateMessage :id="id" v-if="show"/>
+        <DeleteMessage :id="id" v-if="show"/>
       </v-col>
     </v-card-actions>
   </v-card>
