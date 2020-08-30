@@ -57,17 +57,17 @@
       }
     },
     computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
+      currentUser() {
+        return this.$store.state.auth.user;
+      }
+    },
+    methods: {
+      logOut() {
+        this.$store.dispatch('auth/logout');
+        window.alert('Vous êtes maintenant déconnecté(e)')
+        this.$router.push('/');
+      }
     }
-  },
-  methods: {
-    logOut() {
-      this.$store.dispatch('auth/logout');
-      window.alert('Vous êtes maintenant déconnecté(e)')
-      this.$router.push('/');
-    }
-  }
   }
 </script>
 
