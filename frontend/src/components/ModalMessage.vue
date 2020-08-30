@@ -18,7 +18,7 @@
             <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
             <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
 
-            <v-text-field label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" v-model="message.content" :rules="contentRules" />
+            <v-textarea filled auto-grow label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" v-model="message.content" :rules="contentRules" />
             <v-row class="caption ml-2">Exemple : J'adore les vacances et j'ai un faible pour le chocolat !</v-row>
 
 
