@@ -160,7 +160,7 @@ exports.deleteUser = (req, res, next) => {
             })
 }
 
-// Middleware de suppression d'un utilisateur par l'administrateur
+// TODO Middleware de suppression d'un utilisateur par l'administrateur
 exports.deleteAdminUser = (req, res, next) => {    
 
     conn.query(

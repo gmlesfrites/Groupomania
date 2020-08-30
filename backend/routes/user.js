@@ -24,7 +24,7 @@ router.get('/', userControllers.getAllUsers);
 // http://localhost:3000/api/auth/:id
 router.delete('/:id', userControllers.deleteUser);
 
-// Route pour supprimer un utilisateur  
+// TODO Route pour supprimer un utilisateur  
 // http://localhost:3000/api/auth/admin/:id
 router.delete('/admin/:id', authentication, userControllers.deleteAdminUser)
 
