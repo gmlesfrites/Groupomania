@@ -10,7 +10,6 @@ class LikeService {
         return axios.post(
           API_URL + id + '/like',
           { userId: store.state.auth.user.userId, id: payload },
-          { headers: authHeader() }
         )
       }
 }

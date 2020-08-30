@@ -82,13 +82,13 @@ exports.deleteMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            // const userIdInit= results[0].userId;
-            // const userIdNow = req.body.userId;
+            const userIdInit= results[0].userId;
+            const userIdNow = req.body.userId;
 
-            // //condition userId et rôle
-            // if (userIdInit != userIdNow)  {
-            //     return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action '})
-            // }
+            //condition userId
+            if (userIdInit != userIdNow)  {
+                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action '})
+            }
             
             //suppression de la BDD
             conn.query(
@@ -142,19 +142,17 @@ exports.updateMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-
             const userIdInit= results[0].userId;
             const userIdNow = req.body.userId;
             const title = req.body.title;
             const content = req.body.content;
    
             //condition userId identique à celui du message initial userId à remettre
-            if (userIdInit == userIdNow ) {
-
+            if (userIdInit === userIdNow ) {
                 // MAJ en BDD
                 conn.query(
 
-                    'UPDATE messages SET messages.title =?, messages.content =? WHERE messageId = ?', [title, content, update],
+                    'UPDATE messages SET messages.title =?, messages.content =? WHERE id = ?', [title, content, update],
 
                     (error, results, fields) => {
                         if (error) {

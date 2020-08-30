@@ -39,8 +39,6 @@ export default {
         this.show = false 
       }
     },
-    
-    
     confirmDelete() {
       if (window.confirm("Cette action n'est pas modifiable après confirmation ! Votre message (ainsi que les éventuelles réponses) va être supprimé.")) {
         this.deleteMessage()
@@ -48,9 +46,7 @@ export default {
     },
     deleteMessage() {
       const userId = this.$store.getters["auth/userState"].userId
-      console.log(userId);
-      
-
+     
       this.$store.dispatch("message/deleteMessage", {userId, id:this.id}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");

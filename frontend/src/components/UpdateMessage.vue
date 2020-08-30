@@ -79,7 +79,6 @@ export default {
       const title = this.message.title
       const content = this.message.content
       const userId = this.$store.getters["auth/userState"].userId
-      console.log(title, content,userId)
 
       this.$store.dispatch("message/updateMessage", {currentId:this.id,  message: {title, content}, id:this.id, userId}).then(
         data => {

@@ -50,7 +50,6 @@ export default {
     },
     deleteMyProfile() {
       let payload = this.$store.state.auth.user.userId;
-      console.log(payload);
 
       this.$store.dispatch("auth/deleteProfile", payload)
       .then(

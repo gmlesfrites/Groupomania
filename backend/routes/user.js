@@ -10,7 +10,7 @@ const userControllers = require('../controllers/user');
 
 //Route pour la première authentification     
 // http://localhost:3000/api/auth/signup
-router.post('/signup',  userControllers.limiter, userControllers.signup);
+router.post('/signup', authentication, userControllers.limiter, userControllers.signup);
 
 //Route pour l'identification (avec limite de connexion pour éviter force brute)    
 // http://localhost:3000/api/auth/login
@@ -18,11 +18,11 @@ router.post('/login', userControllers.limiter, userControllers.login);
 
 //Route pour récupérer tous les utilisateurs     
 // http://localhost:3000/api/auth
-router.get('/', userControllers.getAllUsers);
+router.get('/', authentication, userControllers.getAllUsers);
 
 // Route pour supprimer un utilisateur  
 // http://localhost:3000/api/auth/:id
-router.delete('/:id', userControllers.deleteUser);
+router.delete('/:id', authentication, userControllers.deleteUser);
 
 // TODO Route pour supprimer un utilisateur  
 // http://localhost:3000/api/auth/admin/:id
