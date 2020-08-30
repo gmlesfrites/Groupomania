@@ -51,7 +51,6 @@ export default {
       id: Number,
       messageId: Number,
       currentId: Number,
-      currentUser: Number
   },
   data() {
     return {
@@ -66,11 +65,6 @@ export default {
     }
   },
   methods: {
-    user(userId, currentUser) {
-      if (userId != currentUser) {
-        return null
-      }
-    },
     updateMe() {
       // const userId = this.$store.getters['auth/userState'].userId
       const title = this.message.title
