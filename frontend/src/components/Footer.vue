@@ -1,8 +1,8 @@
 <template>
   <v-container id="Footer"> 
-    <v-row class="d-flex-col mt-12">
-        <v-spacer><img src="../assets/icon-above-font.png" alt="logo de l'entreprise" width="50%"></v-spacer>
-      </v-row>   
+
+    <img src="../assets/icon-above-font.png" alt="logo de l'entreprise" height="80px">
+ 
     <v-footer dark class="row" app color="rgb(19,37,66)"> 
       <v-col>
         <p class="white--text ">Groupomania &copy; {{ new Date().getFullYear() }}</p>

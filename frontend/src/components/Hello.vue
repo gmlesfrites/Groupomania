@@ -1,8 +1,9 @@
 <template>
   <v-container class="d-flex-col mt-12" id="Hello">
-    <h1>Bienvenue sur l'application Groupomania, <br/> votre réseau social d'entreprise</h1>
 
-    <v-container class="d-flex-col mt-12">
+      <h1 class="mb-10">Bienvenue sur l'application Groupomania, <br/> votre réseau social d'entreprise</h1>
+
+
       <v-row>
         <p class="text-justify">Profitez dès à présent de cette application  dans un environnement sécurisé.</p>   
       </v-row>
@@ -23,7 +24,7 @@
           <br/>
           <router-link to="/terms"> Conditions d'utilisation </router-link> </p> 
       </v-row>
-    </v-container>
+
   </v-container>
 </template>
 
