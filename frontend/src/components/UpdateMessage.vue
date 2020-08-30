@@ -32,7 +32,7 @@
           <v-alert close-delay="1000" type="error" dismissible v-for="feedback in feedbacks" :key="feedback.message">{{ feedback.message }}</v-alert>
         </v-row> 
 
-        <v-btn class="mr-2 mb-2" color="info" :disabled="!valid"   @click="updateMe">Valider</v-btn>
+        <v-btn class="mr-2 mb-2" color="info" :disabled="!valid" @click="updateMe">Valider</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -50,7 +50,8 @@ export default {
       userId: Number,
       id: Number,
       messageId: Number,
-      currentId: Number
+      currentId: Number,
+      currentUser: Number
   },
   data() {
     return {
@@ -65,13 +66,18 @@ export default {
     }
   },
   methods: {
+    user(userId, currentUser) {
+      if (userId != currentUser) {
+        return null
+      }
+    },
     updateMe() {
       // const userId = this.$store.getters['auth/userState'].userId
       const title = this.message.title
       const content = this.message.content
       const userId = this.$store.getters["auth/userState"].userId
 
-      this.$store.dispatch("message/updateMessage", { message:{ title, content, id:this.id, userId}}).then(
+      this.$store.dispatch("message/updateMessage", {currentId:this.id, message:{ title, content, id:this.id, userId}}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
