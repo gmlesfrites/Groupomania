@@ -49,14 +49,14 @@ class MessageService {
   }
 
   deleteAdminMessage(payload) {
-    const id = payload.message.id
+    const id = payload.id
 
     return axios.delete(API_URL_ADMIN + id, { 
-      id: payload.message.id,
-      userId: store.state.auth.user.userId
-    },
-    { headers: authHeader() }
-    )
+      headers: authHeader(),
+      data: {
+        userId: payload.userId,
+      }
+    })
   }
 
   updateMessage(payload) {

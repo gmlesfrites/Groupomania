@@ -17,7 +17,6 @@ export default {
   },
   data() {
     return {
-      show: false,
       feedbacks: [], // informations de suppression
     }
   },
@@ -32,16 +31,15 @@ export default {
     },
   },
   methods: {
-    showModal(userId, currentUser, isAdmin) {
-      if (userId === currentUser || isAdmin ) {
-        this.show = true
-      } else {
-        this.show = false 
-      }
-    },
     confirmDelete() {
       if (window.confirm("Cette action n'est pas modifiable après confirmation ! Votre message (ainsi que les éventuelles réponses) va être supprimé.")) {
-        this.deleteMessage()
+
+        if (this.$store.state.auth.user.privilege === 'Modérateur') {
+          this.deleteAdminMessage()
+        } else {
+          this.deleteMessage()
+        }
+        
       }
     },
     deleteMessage() {
@@ -63,15 +61,16 @@ export default {
       );
     },
     deleteAdminMessage() {
-      let payload = this.id;
-      this.$store.dispatch("message/deleteAdminMessage", payload).then(
+      const userId = this.$store.getters["auth/userState"].userId
+
+      this.$store.dispatch("message/deleteAdminMessage", {userId, id:this.id}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
-          this.$emit("deleteFeedback", data.message);
-          console.log(data);
+          this.$emit(data.message);
+          window.alert('Le message sélectionné a bien été supprimé !')
         },
         error => {
-          console.log(error);
+          console.log(error)
         }
       );
     }

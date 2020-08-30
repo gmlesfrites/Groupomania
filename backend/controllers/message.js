@@ -82,10 +82,9 @@ exports.deleteMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
+            //condition userId
             const userIdInit= results[0].userId;
             const userIdNow = req.body.userId;
-
-            //condition userId
             if (userIdInit != userIdNow)  {
                 return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action '})
             }
@@ -114,8 +113,7 @@ exports.deleteAdminMessage = (req, res, next) => {
         (error, results, fields) => {
             if (error) {
                 return res.status(400).json(error)
-            }
-            
+            }            
             //suppression de la BDD
             conn.query(
                 `DELETE FROM messages WHERE id= ?`, deleteMessage,
