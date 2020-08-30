@@ -12,7 +12,8 @@ export default {
   name : 'DeleteMessage',
   props: {
     id: Number,
-    userId: Number
+    userId: Number,
+    currentId : Number
   },
 
   methods: {

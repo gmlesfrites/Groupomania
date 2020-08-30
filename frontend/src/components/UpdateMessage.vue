@@ -54,7 +54,7 @@ export default {
   },
   data() {
     return {
-      message: Message,
+      message:new Message,
       feedbacks: [],
       show: true,
       valid: false,
@@ -71,7 +71,7 @@ export default {
       const content = this.message.content
       const userId = this.$store.getters["auth/userState"].userId
 
-      this.$store.dispatch("message/updateMessage", {currentId:this.id, message:{ title, content, id:this.id, userId}}).then(
+      this.$store.dispatch("message/updateMessage", {currentId:this.id,  message: {title, content}, id:this.id, userId}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
           this.$emit(data.message);
