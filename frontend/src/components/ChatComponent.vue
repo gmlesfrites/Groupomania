@@ -5,8 +5,11 @@
     </v-card-title>
     
     <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>
+
+    <!-- TODO virer tout ça -->
     <p>utilisateur créateur {{userId}}</p>
     <p>utilisateur maintenant {{this.$store.getters["auth/userState"].userId}}</p>
+    <p>modérateur ?{{this.$store.getters["auth/userState"].privilege}}</p>
 
     <v-divider></v-divider>
 
