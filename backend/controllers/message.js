@@ -82,13 +82,13 @@ exports.deleteMessage = (req, res, next) => {
             if (error) {
                 return res.status(400).json(error)
             }
-            const userIdInit= results[0].userId;
-            const userIdNow = req.body.userId;
+            // const userIdInit= results[0].userId;
+            // const userIdNow = req.body.userId;
 
-            //condition userId et rôle
-            if (userIdInit != userIdNow)  {
-                return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action '})
-            }
+            // //condition userId et rôle
+            // if (userIdInit != userIdNow)  {
+            //     return res.status(401).json({ message: 'Vous ne pouvez pas effectuer cette action '})
+            // }
             
             //suppression de la BDD
             conn.query(
