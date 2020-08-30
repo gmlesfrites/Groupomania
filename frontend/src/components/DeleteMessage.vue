@@ -1,5 +1,5 @@
 <template >
-  <v-btn color="rgb(209,81,90)" class="ma-3 " @click="confirmDelete" id="DeleteMessage" >
+  <v-btn color="rgb(209,81,90)" class="ma-3 "  @click="confirmDelete" id="DeleteMessage" >
     Supprimer
   </v-btn>
 </template>
@@ -15,8 +15,32 @@ export default {
     userId: Number,
     currentId : Number
   },
-
+  data() {
+    return {
+      show: false,
+      feedbacks: [], // informations de suppression
+    }
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user.userId;
+    },
+    isAdmin() {
+      if (this.$store.state.auth.user.privilege === 'Modérateur') {
+        return true
+      } return false
+    },
+  },
   methods: {
+    showModal(userId, currentUser, isAdmin) {
+      if (userId === currentUser || isAdmin ) {
+        this.show = true
+      } else {
+        this.show = false 
+      }
+    },
+    
+    
     confirmDelete() {
       if (window.confirm("Cette action n'est pas modifiable après confirmation ! Votre message (ainsi que les éventuelles réponses) va être supprimé.")) {
         this.deleteMessage()
@@ -35,6 +59,9 @@ export default {
         },
         error => {
           console.log(error);
+          this.feedbacks.push(error.response && error.response.data) ||
+            error.message ||
+            error.toString();
           window.alert("Vous ne pouvez pas supprimer un message dont vous n'êtes pas le rédacteur ! ")
         }
       );

@@ -7,9 +7,7 @@
     <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>
 
     <!-- TODO virer tout ça -->
-    <p>utilisateur créateur {{userId}}</p>
-    <p>utilisateur maintenant {{this.$store.getters["auth/userState"].userId}}</p>
-    <p>modérateur ?{{this.$store.getters["auth/userState"].privilege}}</p>
+    <!-- <p>utilisateur créateur {{userId}} // utilisateur maintenant {{currentUser}} // modérateur ?{{isAdmin}}</p> -->
 
     <v-divider></v-divider>
 
@@ -19,9 +17,9 @@
 
     <v-card-actions>
       <v-col>
-        <AnswerMessage :id="id"/>
-        <UpdateMessage :id="id" v-if="show"/>
-        <DeleteMessage :id="id" v-if="show"/>
+        <AnswerMessage :id="id" />
+        <UpdateMessage :id="id" :userId="userId" :currentUser="currentUser" />
+        <DeleteMessage :id="id" :userId="userId" :currentUser="currentUser" :isAdmin="isAdmin"/>
       </v-col>
     </v-card-actions>
   </v-card>
@@ -34,7 +32,6 @@ import DeleteMessage from '../components/DeleteMessage'
 
 export default {
   name: 'ChatComponent',
-
   components: {
     AnswerMessage,
     UpdateMessage,
@@ -53,27 +50,21 @@ export default {
   },
   data() {
     return {
-      show:false,
+      
     }
   },
   computed: {
     currentUser() {
-      return this.$store.state.auth.user;
+      return this.$store.state.auth.user.userId;
     },
     isAdmin() {
-      if (this.$store.state.auth.user.privilege === 'modérateur') {
+      if (this.$store.state.auth.user.privilege === 'Modérateur') {
         return true
       } return false
     },
   },
   methods : {
-    showModal(userInit, currentUser, isAdmin) {
-      if (userInit != currentUser || isAdmin ) {
-        this.show = false
-      } else {
-        this.show = true 
-      }
-    }
+    
   }
 }
 </script>

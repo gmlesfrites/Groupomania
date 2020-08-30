@@ -54,8 +54,8 @@ export default {
   },
   data() {
     return {
-      message:new Message,
-      feedbacks: [],
+      feedbacks: [],  // information de mise à jour
+      message: Message,
       show: true,
       valid: false,
       titleRules: [v => !!v || "Indiquez un titre", v =>
@@ -64,12 +64,22 @@ export default {
         /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
     }
   },
+  computed: {
+    isUpdate() {
+      if (this.id === null || this.id === undefined) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
   methods: {
     updateMe() {
       // const userId = this.$store.getters['auth/userState'].userId
       const title = this.message.title
       const content = this.message.content
       const userId = this.$store.getters["auth/userState"].userId
+      console.log(title, content,userId)
 
       this.$store.dispatch("message/updateMessage", {currentId:this.id,  message: {title, content}, id:this.id, userId}).then(
         data => {
@@ -77,10 +87,14 @@ export default {
           this.$emit("changeView", "onDisplay");
           this.$emit(data.message);
           this.$refs.updateForm.reset();
+          this.message = new Message("","");
           window.alert('Votre message a bien été modifié !')
         },
         error => {
           console.log(error);
+          this.feedbacks.push(error.response && error.response.data) ||
+            error.message ||
+            error.toString();
         }
       );
     }
