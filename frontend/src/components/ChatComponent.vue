@@ -5,7 +5,8 @@
     </v-card-title>
     
     <p class="text-justify ml-4" ><small> {{ createdAt }} </small></p>
-    <p>{{userId}}</p>
+    <p>utilisateur créateur {{userId}}</p>
+    <p>utilisateur maintenant {{this.$store.getters["auth/userState"].userId}}</p>
 
     <v-divider></v-divider>
 
@@ -16,8 +17,8 @@
     <v-card-actions>
       <v-col>
         <AnswerMessage :id="id"/>
-        <UpdateMessage :id="id"  :userId="userId"/>
-        <DeleteMessage :id="id"/>
+        <UpdateMessage :id="id" v-if="showModal"/>
+        <DeleteMessage :id="id" v-if="showModal"/>
       </v-col>
     </v-card-actions>
   </v-card>
@@ -49,10 +50,18 @@ export default {
   },
   data() {
     return {
-      show:true
-    };
+      show:false,
+      
+    }
   },
   methods : {
+    showModal(userInit, userNow) {
+      if (userInit != userNow  ) {
+        this.show = false
+      } else {
+        this.show = true 
+      }
+    }
   }
 }
 </script>
