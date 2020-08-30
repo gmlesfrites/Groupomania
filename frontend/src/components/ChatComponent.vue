@@ -20,8 +20,8 @@
     <v-card-actions>
       <v-col>
         <AnswerMessage :id="id"/>
-        <UpdateMessage :id="id" v-if="show"/>
-        <DeleteMessage :id="id" v-if="show"/>
+        <UpdateMessage :id="id"/>
+        <DeleteMessage :id="id"/>
       </v-col>
     </v-card-actions>
   </v-card>
