@@ -74,8 +74,8 @@ export default {
       this.$store.dispatch("message/updateMessage", {currentId:this.id,  message: {title, content}, id:this.id, userId}).then(
         data => {
           this.$store.dispatch("message/getAllMessages");
-          this.$emit(data.message);
           this.$emit("changeView", "onDisplay");
+          this.$emit(data.message);
           this.$refs.updateForm.reset();
           window.alert('Votre message a bien été modifié !')
         },

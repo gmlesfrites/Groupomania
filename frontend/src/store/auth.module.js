@@ -78,6 +78,7 @@ export const auth = {
     logout(state) {
       state.status.loggedIn = false;
       state.user = null;
+      state.messages = null
     },
     signupSuccess(state) {
       state.status.loggedIn = false;

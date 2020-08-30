@@ -20,8 +20,8 @@
     <v-card-actions>
       <v-col>
         <AnswerMessage :id="id"/>
-        <UpdateMessage :id="id"/>
-        <DeleteMessage :id="id"/>
+        <UpdateMessage :id="id" v-if="show"/>
+        <DeleteMessage :id="id" v-if="show"/>
       </v-col>
     </v-card-actions>
   </v-card>
@@ -46,20 +46,29 @@ export default {
     id: Number,
     userId: Number,
     createdAt: String,
-    currentUser: Number,
     firstname: String,
     lastname : String,
-    messageId: Number
+    messageId: Number, 
+    privilege: String
   },
   data() {
     return {
       show:false,
-      
     }
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    isAdmin() {
+      if (this.$store.state.auth.user.privilege === 'modérateur') {
+        return true
+      } return false
+    },
+  },
   methods : {
-    showModal(userInit, userNow) {
-      if (userInit != userNow  ) {
+    showModal(userInit, currentUser, isAdmin) {
+      if (userInit != currentUser || isAdmin ) {
         this.show = false
       } else {
         this.show = true 

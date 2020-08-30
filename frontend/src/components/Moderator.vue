@@ -25,10 +25,7 @@
 			show: false
 		}),
     methods: {
-			messages() {
-			const messages = this.$store.getters['message/getAllMessages'].userId;
-			return messages
-			},
+
 		}
 	}
 </script>
