@@ -15,10 +15,10 @@
         <v-card-text>
           
           <v-form name="form" v-model="valid" ref="modalForm">
-            <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" v-model="message.title" :rules="titleRules"></v-text-field>
+            <v-text-field label="Titre de votre message *" name="title" prepend-icon="mdi-message-text-outline" type="text" id="title" counter v-model="message.title" :rules="titleRules"></v-text-field>
             <v-row class="caption ml-2">Exemple : Détente et gourmandise ! </v-row>
 
-            <v-textarea filled auto-grow label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" v-model="message.content" :rules="contentRules" />
+            <v-textarea filled auto-grow label="Votre message *" name="content" prepend-icon="mdi-message-text-outline" type="text" id="content" counter v-model="message.content" :rules="contentRules" />
             <v-row class="caption ml-2">Exemple : J'adore les vacances et j'ai un faible pour le chocolat !</v-row>
 
 
@@ -60,9 +60,9 @@ export default {
       show: true,
       valid: false,
       titleRules: [v => !!v || "Indiquez un titre", v =>
-        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
+        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres" , v => v.length <= 80 || 'Maximum 80 caractères'],
       contentRules: [v => !!v || "Indiquez le contenu de votre message", v =>
-        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres"],
+        /(?=.*[A-Za-z0-9])/.test(v) || "Uniquement du texte et/ou des chiffres", v => v.length <= 500 || 'Maximum 500 caractères'],
       user: this.$store.getters["auth/userState"],
     }
   },
