@@ -10,7 +10,7 @@ const userControllers = require('../controllers/user');
 
 //Route pour la première authentification     
 // http://localhost:3000/api/auth/signup
-router.post('/signup', authentication, userControllers.limiter, userControllers.signup);
+router.post('/signup', userControllers.limiter, userControllers.signup);
 
 //Route pour l'identification (avec limite de connexion pour éviter force brute)    
 // http://localhost:3000/api/auth/login
